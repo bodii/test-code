@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>javascript test 3 -- function* generator(生成器)</title>
+</head>
+<body>
+	<script>
+		'use strict'
+
+		/*
+			javascript 的严格模式和非严格模式下略有区别。
+			在绝大多数情况下，函数的调用方式决定了this的值。this不能在执行期间被赋值，在每次函数被调用时this的值也可能会不同。ES5引入了bind方法来设置函数的this值，而不用考虑函数如何被调用的。
+
+		 */
+		
+		
+		// 【 全局上下文 】
+			//在全局上下文中（在任何函数体外部）,this指代全局对象，无论是否在严格模式下
+		
+		console.log(this.document === document); // true
+
+		// 在浏览器中，全局对象为window对象:
+		console.log(this === window); // true
+
+		this.a = 37;
+		console.log(window.a); // 37
+
+		console.log(this.document === window.document); // true
+
+
+		// 【 函数上下文 】
+			// 在函数内部， this的值取决于函数是如何调用的。
+		
+		function f1 () {
+			return this;
+		} 
+
+		console.log(f1() === window); 
+		//在严格模式下：false  f1()返回 undefined;
+		//在非严格模式下:true
+		
+
+		/*
+			在严格模式下，this是在进入运行环境时设置的。若没有定义，this的值
+			将维持undefined 状态。同时它也能设置任意值。
+		 */
+		
+
+		// 【 对象方法中的this 】
+			// 当以对象里的方法的方式调用函数时，它们的this是调用该函数的对象。
+		
+		var o = {
+			prop: 37,
+			f: function () {
+				return this.prop;
+			}
+		};
+
+		console.log("%c"+ o.f(),"color:red"); // 37
+
+		//example 03
+		var o1 = {prop: 37};
+
+		function independent () {
+			return this.prop;
+		}
+
+		o1.f = independent;
+		console.log("%c" + o1.f(), "color:cyan"); // 37
+		// this的值只与函数f作为o1的成员被调用有关系。
+		
+
+		//example 04
+		o1.b = {
+			g: independent,
+			prop: 42
+		};
+
+		console.log("%c" + o1.b.g(), "color:blue"); // 42
+
+
+		/* 
+			原型链中的this
+			
+			相同的概念在定义在原型链中的方法也是一致的。如果该方法在于一个对象的原型链上，那么this指向的是调用这个方法的对象，表现得好像是这个方法就存在于这个对象上一样。
+		*/  
+		
+		// example 05
+		
+		var o2 = {
+			f : function () {
+				return this.a + this.b;
+			}
+		};
+		var p = Object.create(o2);
+		p.a = 1;
+		p.b = 4;
+
+		console.log("%c" + p.f(), "color:darkblue"); // 5
+		/*
+			在这个例子中，对象p没有属于它的f属性，它的f属性继承自它的
+			原型。但是这对于最终在o2中找到f属性的查找过程来说没有关系;
+			查找过程首先从p.f的引用开始，所以函数中的this指向p。也就是
+			说，因为f是作为p的方法调用的，所认它的this指向了p.这是javascript
+			的原型继承中的一个有趣的特性。
+		 */
+		
+
+
+		//【 getter 与 setter 中的 this】
+		/*再次，相同的概念也适用时的函数作为一个getter或者一个setter调用。作为getter 或setter函数都会绑定this到从设置属性或得到属性的那个对象。*/
+
+		function modulus () {
+			return Math.sqrt(this.re * this.re + this.im * this.im);
+		}
+
+		var o3 = {
+			re: 1,
+			im: -1,
+			get phase () {
+				return Math.atan2(this.im, this.re);
+			}
+		};
+
+		Object.defineProperty(
+			o3, 'modulus', {
+				get: modulus, enumerable:true, configurable:true
+			}
+		);
+
+		console.log("phase:%c" + o3.phase + " %cmodulus:%c" + o3.modulus, "color:Purple","color:black","color:lime"); // phase:-0.7853981633974483 modulus:1.4142135623730951
+
+
+		//构造函数中的this
+		/*
+			当一个函数被作为一个构造函数来使用(使用new关键字)，它的this与
+			即将被创建的新对象绑定。
+			注意：当构造器返回的默认值是一个this引用的对象时，可以手动设置返回其他的对象，如果返回值不是一个对象，返回this。
+		 */
+		
+		function c () {
+			this.a = 37;
+		}
+
+		var o4 = new c();
+		console.log("%c" + o4.a, "color:gray"); // 37
+
+		function c2 () {
+			this.a = 37;
+			return {a: 38};
+		}
+		o4 = new c2();
+		console.log("%c" + o4.a, "color:brown"); // 38
+		/*
+			在最后的例子中（c2), 因为在调用构造函数的过程中，手动的设置了返回
+			对象，与this绑定的默认对象被取消（本质上这使得语句“this.a=37;”成
+			为了“僵尸”代码, 实际上并不是真正的“僵尸”， 这条语句执行了但是对于
+			外部没有任何影响，因此完全可以忽略它）。
+		 */
+
+
+
+		 //【 call 和 apply 】
+		 /*
+		 	当一个函数的函数体中使用了this关键字时，通过所有函数都从
+		 	function 对象的原型中继承的call()方法和apply()方法调用时，
+		 	它的值是可以绑定到一个指定的对象上。
+		  */
+		 
+		 function add (c, d) {
+		 	return this.a + this.b + c +d;
+		 }
+
+		 var o5 = {a: 1, b: 3};
+		 console.log(add.call(o5, 5, 7)); // 16
+
+		 console.log(add.apply(o5, [10, 20]));
+
+
+		 function bar () {
+		 	console.log(object.prototype.toString.call(this));
+		 }
+		 //bar.call(7); //
+		 
+		 
+
+		 // bind 方法
+		 /*
+		 	ECMAScript 5 引入了function.prototype.bind.调用f.bind(someObject)会创建一个与f具有相同函数体和作用域的函数，但是在这个新函数中，this
+		 	将永久地被绑定到了bind的第一个参数，无论这个函数是如何被调用的。
+		  */
+		 
+		 function f () {
+		 	return this.a;
+		 }
+
+		 var g = f.bind({a:"azerty"});
+		 console.log(g()); // azerty
+
+		 var k = {a:37, f:f, g:g};
+		 console.log(k.f(), k.g()); //37 "azerty"
+
+
+		 // DOM事件处理函数中的this
+		 /*
+		 	当函数被用作事件处理函数时，它的this指向触发事件的元素
+		 	(一些浏览器在动态添加监听器时不遵守这个约定，除非使用addEventListener这句不太确定翻译的是否正确)。
+		  */
+		 
+		 // 被调用时，将关联的元素变成蓝色
+		 function bluify (e) {
+		 	console.log(this === e.currentTarget);
+
+		 	// 当 currentTarget 和 target 是同一个对象是为 true
+		 	console.log(this ===e.target);
+		 	this.style.backgroundColor = '#A5D9F3';
+		 }
+
+		 //获取文档中的所有元素的列表
+		 var elements = document.getElementsByTagName('*');
+
+		 //将bluify作为元素的点击监听函数， 当元素被点击时，就会变成蓝色
+		 for (var i = 0; i<elements.length; i++) {
+		 	elements[i].addEventListener('click', bluify, false);
+		 }
+
+
+		 //内联事件处理函数中的this
+		 	//当代码被内联处理函数调用时，它的this指向监听所在的DOM元素
+		 /*
+		 	<button onclick="alert(this.tagName.toLowerCase());">
+		 	Show this
+		 	</button>
+		  */
+	</script>
+	<!-- 在这种情况下， 没有设置内部函数的this,所以它指向global/window对象（即非严格模式下调用的函数未设置this时指向的默认对象） -->
+	<button onclick="alert((function(){return this})());">
+	Show inner this
+	</button>
+</body>
+</html>
