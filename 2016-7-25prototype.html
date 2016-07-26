@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>prototype 原型</title>
+</head>
+<body>
+	<script>
+		'use strict'
+
+		/*
+			Javascript对象是动态的属性“包”（指其自己的属性）。
+			javascript对象有一个指向一个原型对象的链。当试图访问
+			一个对象的属性时，它不仅仅在该对象上搜寻，还会搜寻该对
+			象的原型，以及该对象的原型的原型，依此层层向上搜索， 直到
+			找到一个名字匹配的属性或到达原型链的末尾。
+
+		*/
+
+		// example 1
+
+		/*
+		假定有一个对象 o, 其自身的属性 （own properties) 有a 和 b
+		{a: 1, b: 2}
+		O 的原型 o.[[prototype]]有属性 b 和 c:
+		{b: 3, c: 4}
+		最后， o.[[prototype]].[[prototype]] 是 null
+		这就是原型链的末尾，即 null
+		根据定义， null 没有[[prototype]]
+		综上， 整个原型链如下：
+		{a: 1, b: 2} ---> {b: 3, c: 4} ---> null
+
+		 */
+
+		var k = {b: 3, c: 4}; 
+		var o = Object.create(k);
+		o.a = 1;
+		o.b = 2;
+
+		console.log(o.a); // 1
+		console.log(o.b); // 2
+		console.log(o.c); // 4
+		console.log(o.d); // undefined
+
+
+		/*
+			Inheriting "methods" （继承方法）
+			javascript并没有其他基于类的语言所定义的“方法”。在javascript
+			里，任何函数都可以添加到对象上作为对象的属性。函数的继承与其他的
+			属性继承没有差别，包括上面的“属性遮蔽”（这种情况相当于其他语言
+			的方法重写）
+
+			当继承的函数被调用时，this指向的是当前继承的对象，而不是继承的函
+			数所有的原型对象。
+		 */
+		
+		// example 1
+		
+		var o = {
+			a: 2,
+			m: function () {
+				return this.a + 1;
+			}
+		};
+
+		console.log(o.m()); // 3
+		// 当调用o.m时， this指向o
+		
+		var p = Object.create(o);
+		// p 是一个对象，p.[[Prototype]] 是o
+		
+		p.a = 12; //创建p 的自身属性a
+		console.log(p.m()); // 13
+		// 调用p.m时，this 指向p
+		// 又因为p继承o的m函数
+		// 此时的this.a 即 p.a，即 p的自身属性a
+		
+
+		/*
+			Different ways to create objects
+			and the resulting prototype chain
+		 */
+		
+		//Objects created with syntax constructs
+		
+		var o = {a: 1};
+		// o这个对象继承了Object.prototype上面的所有属性
+		// 所以可以这样使用 o.hasOwnProperty('a') 
+		// hasOwnProperty() 方法用来判断某个对象是否含有指定的自身属性。
+		console.log(o.hasOwnProperty('a')); // true
+		// Object.prototype 的原型为null.
+		// 原型链如下：
+		// o ---> Object.prototype ---> null
+		
+		var a = ["yo", "whadup", "?"];
+		// 数组都继承于Arrar.prototype
+		// (indexOf, forEach等方法都是从它继承而来)。
+		// 原型链如下：
+		// a ---> Array.prototype ---> Object.prototype ---> null
+		
+		function f () {
+			return 2;
+		}
+
+		// 函数都继承于Function.prototype
+		//（call,bind等方法都是从它继承而来）：
+		// f ---> Function.prototype --->Object.prototype ---> null
+		
+		
+		/*
+			With a constructor 使用构造器创建对象
+			在javascript中，构造器其实就是一个普通的函数。当使用 new 操作符
+			来作用这个函数时，它就可以被称为构造方法（构造函数）。
+		 */
+		
+		function Graph () {
+			this.vertexes = [];
+			this.edges = [];
+		}
+
+		Graph.prototype = {
+			addVertex: function (v) {
+				this.vertexes.push(v);
+			}
+		};
+
+		var g = new Graph();
+		// g是生成的对象，他的自身属性有'vertexes' 和 'edges'
+		// 在g被实例化时，g.[[Prototype]] 指向了Graph.prototype
+		
+		g.addVertex(3);
+		g.addVertex(4);
+		console.log(g.vertexes); // [3, 4]
+
+
+		/**
+		 * 使用Object.create创建对象
+		 *
+		 * ECMAScript 5中引入了一个新方法：Object.create().可以调用这个
+		 * 方法创建一个新对象。新对象的原型就是调用 create 方法时传入的第一
+		 * 个参数
+		 */
+		
+		var a = {a: 1};
+		// a ---> Object.prototype --->null
+		
+		var b = Object.create(a);
+		// b ---> a ---> Object.prototype ---> null
+		console.log(b.a); // 1 (继承而来)
+
+
+		var c = Object.create(b);
+		// c ---> b ---> a ---> Object.prototype ---> null
+		
+		var d = Object.create(null);
+		// d ---> null
+		console.log(d.hasOwnProperty); // undefined;因为 d 没有继承Object.prototype
+
+
+
+		/**
+		 *  使用 class 关键字
+		 *
+		 * ECMAScript6 引入了一套新的关键字用来实现class.使用基于类语言的
+		 * 开发人员会对这些结构感到熟悉，但它们是不一样的。javascript 仍然是
+		 * 基于原型的。这些新的关键字包括 class, constructor, static, extends,
+		 * 和 super.
+		 */
+		
+		class Polygon {
+			constructor (height, width) {
+				this.height = height;
+				this.width = width;
+			}
+		}
+
+		class Square extends Polygon {
+			constructor (sideLength) {
+				super(sideLength, sideLength);
+			}
+
+			get area () {
+				return this.height * this.width;
+			}
+
+			set sideLength (newLength) {
+				this.height = newLength;
+				this.width = newLength;
+			}
+		}
+
+		var square = new Square(2);
+		console.log(square.area); // getter  //4
+		square.sideLength = 4; // setter --> Square sideLength=4
+		console.log(square.area); //getter // 16
+
+
+		/**
+		 * hasOwnProperty
+		 * 
+		 * 检测对象的属性是定义在自身上还是原型链上，有必要使用hasOwnPropery
+		 * 方法，所有继承自Object.proptotype的对象都包含这个方法。
+		 *
+		 * hasOwnProperty是javaScript中唯一一个只涉及对象自身属性而不会遍历原
+		 * 型链的方法
+		 *
+		 * 注意：仅仅通过判断值是否为 undefined 还是不足以检测一个属性是否存在，
+		 * 一个属性可能存在而值恰好为 undefined
+		 * 
+		 */
+		
+
+		// B 将继承自 A:
+		function A (a) {
+			this.varA = a;
+		}
+
+		// 以上函数 A 的定义中，既然 A.prototype.varA 总是会被 this.varA 遮蔽
+		// 那么将 varA 加入到原型（prototype)中的目的是什么？
+		
+		A.prototype = {
+			varA : null, // 既然它没有任何作用，干嘛不将 varA 从原型 （prototype) 去掉？
+			// 也许作为一种在隐藏类中优化分配空间的考虑？
+			// 将会验证如果 varA 在每个实例不被特别初始化会是什么情况。
+			doSomething : function () {
+
+			}
+		}
+
+		function B (a, b) {
+			A.call(this, a);
+			this.varB = b;
+		}
+
+		B.prototype = Object.create(A.prototype, {
+			varB : {
+				value : null,
+				enumerable : true,
+				configurable : true,
+				writalbe : true
+			},
+
+			doSomething : {
+				value : function () {
+					A.prototuype.doSomething.apply(this, arguments); // call super
+				},
+				enumerable : true,
+				configurable : true,
+				writable : true
+			}
+		});
+
+		B.prototype.constructor = B;
+
+		var b = new B();
+		b.doSomething();
+	</script>
+</body>
+</html>
