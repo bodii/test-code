@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>javascript test 1 -- function</title>
+</head>
+<body>
+	<script>
+		function abs (x) {
+			if (x >=0) {
+				return x;
+			} else {
+				return -x;
+			}
+		}
+		console.log("这是abs方法返回的结果："+abs(-3))
+
+		//函数的参数调用
+		function abs2() {
+			if (arguments.length===0){ //当调用方法时没有传参，则默认为0
+				return 0;
+			}
+			var x = arguments[0];
+			return x >= 0 ? x : -x;
+		}
+		console.log("这是abs2方法返回的结果："+ abs2());
+
+		//arguments 判断传入参数的个数
+		function foo1 (a, b, c) {
+			if(arguments.length===2){
+				a = b;
+				b = null;
+			}
+		}
+
+		//rest 参数
+			// 自定义rest
+			function foo2 (a ,b) {
+				var i, rest = [];
+				if(arguments.length > 2) {
+					for (i = 2; i < arguments.length; i++) {
+						rest.push(arguments[i])
+					}
+				}
+				console.log('a = ' + a);
+				console.log('b = ' + b);
+				console.log(rest);
+			}
+			foo2(1, 2, 3, 4);
+
+			// ES6标准引入了rest参数
+			function foo3 (a, b, ...rest) {
+				console.log('a = ' + a);
+				console.log('b = ' + b);
+				console.log('rest = ' + rest);
+			} 
+			foo3(1, 2, 3, 4);
+
+			// 测试 ...rest
+			function sum (...rest) {
+				var result = null;
+				for (var i in rest) {
+					result += rest[i];
+				}
+				return arguments.length>0 ? result : 0;
+			}
+			var i, args = [];
+			for (i=1; i<=100; i++) {
+				args.push(i);
+			}
+			if ( sum() !== 0 ) {
+				console.log('测试失败：sum() =' + sum());
+			} else if (sum(1) !==1) {
+				console.log('测试失败：sum(1) = ' + sum(1));
+			} else if (sum(2, 3) !==5) {
+				console.log('测试失败：sum(2, 3) = ' + sum(2, 3));
+			}else if (sum.apply(null, args) !==5050) {
+				console.log('测试失败：sum(1, 2, 3, ..., 100) = ' + sum.apply(null, args))
+			} else {
+				console.log('...rest 浏览器测试通过！');
+			}
+
+			/*
+			 练习题
+
+			定义一个计算圆面积的函数area_of_circle()，它有两个参数：
+				•r: 表示圆的半径；
+				•pi: 表示π的值，如果不传，则默认3.14
+			*/
+
+			function area_of_circle (r, pi) {
+				if (!arguments[1]) {
+					pi = 3.14;
+				} 
+				return r * 2 * pi;
+			}
+
+			// 测试area_of_circle()
+			if (area_of_circle(2) ===12.56 && area_of_circle(2, 3.1416) === 12.5664) {
+				console.log('area_of_circle()测试成功！');
+			}else{
+				console.log('area_of_circle()测试失败！');
+			}
+
+			/*
+				练习题 2 比大小 返回最大
+			*/
+			function max (a , b) {
+				return a > b ? a : b;
+			}
+			console.log(max(15, 20));
+
+
+			/*
+				funcNam.apply(null, array)
+				将方法的接收参数， 以数组的形式传进去
+			*/
+
+			console.log(max.apply(null, [1,10]))
+	</script>
+	
+</body>
+</html>
