@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>归约函数</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		function reduce (combine, base, array) {
+			array.forEach (function (element) {
+				base = combine(base, element);
+			});
+			return base;
+		}
+
+		function add (a, b) {
+			return a + b;
+		}
+
+		function sum (numbers) {
+			return reduce(add, 0, numbers);
+		}
+
+		console.log(sum([1, 2, 3]));
+
+
+
+
+		console.group('以下为countZeroes方法：');
+
+		function countZeroes (array) {
+			function counter (total, element) {
+				return total + (element === 0 ? 1 : 0);
+			}
+			return reduce(counter, 0, array);
+		}
+		console.log(countZeroes([1, 3, 2, 11, 0, 10, 0, 3]));
+
+
+
+		console.group('以下为countZeroes2方法：');
+
+		function count (test, array) {
+			var counted = 0;
+			array.forEach(function (element) {
+				if (test(element)) counted ++;
+			});
+			return counted;
+		}
+
+		function countZeroes2 (array) {
+			function isZero (x) { return x===0;}
+			return count(isZero, array);
+		}
+		console.log(countZeroes2([1, 3, 2, 11, 0, 10, 0, 3]));
+	</script>
+</body>
+</html>

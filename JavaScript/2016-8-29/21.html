@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象的世界</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		// 创建对象
+		Object.prototype.create = function () {
+			var object = this;
+			if (object.construct != undefined)
+				object.construct.apply(object, arguments);
+			return object;
+		};
+
+		// 继承
+		Object.prototype.extend = function (properties) {
+			var result = this;
+			forEachIn(properties, function (name, value) {
+				result[name] = value;
+			});
+			return result;
+		};
+
+		var Item = {
+			construct: function (name) {
+				this.name = name;
+			},
+			inspect: function () {
+				console.log('it is ', this.name, '.');
+			},
+			kick: function () {
+				console.log('klunk!');
+			},
+			take: function () {
+				console.log('you cannot left ', this.name, '.');
+			}
+		};
+
+
+		var lantern = Item.create('the brass lantern');
+		lantern.kick(); // klunk!
+		lantern.inspect(); // it is the brass lantern .
+
+
+		// 继承example 1
+		var DetailedItem = Item.extend({
+			construct: function (name, details) {
+				this.name = name;
+				this.details = details;
+			},
+			inspect: function () {
+				console.log('you see ', this.name, ', ', this.details, '.');
+			}
+		});
+		var giantSloth = DetailedItem.create('the giant sloth', 'it is quietly hanging from a tree, munching leaves');
+		giantSloth.inspect(); // you see  the giant sloth ,  it is quietly hanging from a tree, munching leaves .
+
+
+		// 继承example 2
+		var SmallItme = Item.extend({
+			kick: function () {
+				console.log(this.name, ' flies across the room.');
+			},
+			take: function () {
+				// 想象这里是移动item到口袋的代码
+				console.log('you take ', this.name, '.');
+			}
+		});
+
+		var pencil = SmallItme.create('the red pencil');
+		pencil.take(); // you take  the red pencil .
+
+
+		function forEachIn (object, action) {
+			for (let name in object) {
+				if (Object.prototype.propertyIsEnumerable.call(object, name))
+					action(name, object[name]);
+			}
+		}
+
+	</script>	
+</body>
+</html>

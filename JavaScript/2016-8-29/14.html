@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>this及其作用域</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		function Dictionary (startValues) {
+			this.values = startValues || {};
+		}
+
+		Dictionary.prototype.store = function (name, value) {
+			this.values[name] = value; 
+		};
+
+		Dictionary.prototype.lookup = function (name) {
+			return this.values[name];
+		};
+
+		Dictionary.prototype.contains = function (name) {
+			return Object.prototype.propertyIsEnumerable.call(this.values, name);
+		};
+
+		Dictionary.prototype.each = function (action) {
+			forEachIn(this.values, action);
+		}
+		function forEachIn (object, action) {
+			for (let property in object){
+				if (Object.prototype.propertyIsEnumerable.call(object, property))
+					action(property, object[property]);
+			}
+		}
+
+		Dictionary.prototype.names = function () {
+			var names = [];
+			this.each(function (name, value) {names.push(name)});
+			return names;
+		};
+
+				//点
+		function Point (x, y) {
+			this.x = x;
+			this.y = y;
+		}
+		Point.prototype.add = function (other) {
+			return new Point(this.x + other.x, this.y + other.y);
+		}
+
+		//网格
+		function Grid (width, height) {
+			this.width = width;
+			this.hieght = height;
+			this.cells = new Array(width * height);
+		} 
+		Grid.prototype.valueAt = function(point) {
+			return this.cells[ point.y * this.width + point.x ];
+		};
+		Grid.prototype.setValueAt = function(point, value) {
+			this.cells[point.y * this.width + point.x] = value;
+		};
+		Grid.prototype.isInside = function (point) {
+			return point.x >= 0 && point.y >=0 && 
+				   point.x  < this.width && point.y < this.height;
+		};
+		Grid.prototype.moveValue = function (from, to) {
+			this.setValueAt(to, this.valueAt(from));
+			this.setValueAt(from, undefined);
+		};
+		Grid.prototype.each = function (action) {
+			for (var y = 0; y < this.height; y++) {
+				for ( var x = 0; x < this.width; x++ ) {
+					var point = new Point(x, y);
+					action(point, this.valueAt(point));
+				}
+			}
+		};
+
+		//方向字典
+		var directions = new Dictionary(
+			{
+				'n':  new Point( 0, -1 ),
+				'ne': new Point( 1, -1 ),
+				'e':  new Point( 1, 0 ),
+				'se': new Point( 1, 1 ),
+				's':  new Point( 0, 1 ),
+				'sw': new Point( -1, 1 ),
+				'w':  new Point( -1, 0 ),
+				'nw': new Point( -1, -1 )
+			}
+		);
+
+		//从数组中获取随机数元素
+		function randomElement (array) {
+			if(!array)
+				throw new Error('This array is empty. ');
+			return array[Math.floor(Math.random() * array.length)];
+		}
+
+		//昆虫对象本身
+		function DrunkBug () {};
+		DrunkBug.prototype.act = function(surroundings) {
+			return { type: 'move', direction: randomElement(directions.names())};
+		};
+		creatureTypes.register(DrunkBug, '~');
+
+		// 当昆虫注册在字典中
+		var creatureTypes = new Dictionary();
+		creatureTypes.register = function (constructor, character) {
+			constructor.prototype.character = character;
+			this.store(character, constructor);
+		};
+		function elementFromCharacter (character) {
+			if (character == ' ')
+				return undefined;
+			else if (character == '#')
+				return wall;
+			else if (creatureTypes.contains(character))
+				return new (creatureTypes.lookup(character))();
+			else
+				throw new Error('Unknown character: ' + character);
+		}
+
+		//下面是一个新的昆虫类型及其在creatureTypes里注册字符的调用
+		function BouncingBug () {
+			this.direction = 'ne';
+		}
+		BouncingBug.prototype.act = function (surroundings) {
+			if (surroundings[this.direction] != ' ')
+				this.direction = (this.direction == 'ne' ? 'sw' : 'ne');
+			return { type: 'move', direction: this.direction};
+		};
+		creatureTypes.register(BouncingBug, '%');
+
+		console.log(randomElement(['heads', 'tails']));
+
+		console.log(directions.names());
+	</script>
+</body>
+</html>

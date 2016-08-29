@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象即字典</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		var object = {foo: 'bar'};
+		// propertyIsEnumerable 类似 hasOwnProperty,但对隐藏的属性返回false
+		// 这样就能过滤一些奇怪的东西，如：__proto__
+		var test1 = Object.prototype.propertyIsEnumerable.call(object, 'foo');
+		console.log(test1);
+
+		//对象扮演着两种角色：
+		// 1.拥有方法的值，  原型对其来说是有利的
+		// 2.属性集         原型对其是有阻碍作用
+		/*
+			每次编写前面的表达式时都要检查属性是否属于对象自身，这点很不方便。可以把它写成一个函数， 但更好的方法是针对这种情况编写一个构造函数并指定原型，以便将对象视为属性集进行获取。因为可以使用它进行名称查询，所以将其称为词典（Dictionary）。
+
+			调用Dictionary构造函数时可以不传参数，此时，它创建一个空词典，或是一个提供了初始内容的对象。
+			它公开了四种方法：
+				1.添加key/value的store方法
+				2.查询值的lookup方法
+				3.测试是否包含key的contains方法
+				4.遍历词典内容的高阶函数each方法
+
+		 */
+		
+		function Dictionary (startValues) {
+			this.values = startValues || {};
+		}
+
+		Dictionary.prototype.store = function (name, value) {
+			this.values[name] = value; 
+		};
+
+		Dictionary.prototype.lookup = function (name) {
+			return this.values[name];
+		};
+
+		Dictionary.prototype.contains = function (name) {
+			return Object.prototype.propertyIsEnumerable.call(this.values, name);
+		};
+
+		Dictionary.prototype.each = function (action) {
+			forEachIn(this.values, action);
+		}
+		function forEachIn (object, action) {
+			for (let property in object){
+				if (Object.prototype.propertyIsEnumerable.call(object, property))
+					action(property, object[property]);
+			}
+		}
+
+		//example
+		var colors = new Dictionary({
+			Grover: 'blue',
+			Elmo: 'red',
+			Bert: 'yellow'
+		});
+		console.log(colors.contains('Grover')); //true
+		console.log(colors.contains('constructor')); // false
+
+		colors.store('Ernie', 'orange'); //添加成员属性
+		colors.each(function (name, color) {
+			console.log(name, ' is ', color);
+		});
+	</script>	
+</body>
+</html>

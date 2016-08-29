@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>接口设计</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var regExp = /\['(.*?)'\]/;
+		var str = "sT(event, ['ABT-Audi_R8-2008'])";
+		var filename = regExp.exec(str);
+		console.log(filename[1])
+	</script>
+</body>
+</html>

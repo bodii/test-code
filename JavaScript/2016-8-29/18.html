@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原型继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		/**
+		 * 继承是创建新类型对象-- 子类型（subtype)
+		 *
+		 * 子类型基于父类型（supertype).子类型拥有父类型所有的的属性和方法（从父类型继承
+		 * 得到），然后修改其中的部分内容或者添加新的内容。继承最好的子类型模型可以被视为
+		 * 父类型对象的时候使用。
+		 */
+		
+		Object.prototype.inherit = function (baseConstructor) {
+			this.prototype = clone(baseConstructor.prototype);
+			this.prototype.constructor = this;
+		};
+		Object.prototype.method = function (name, func) {
+			this.prototype[name] = func;
+		}
+
+
+		function StrangeArray () {}
+		StrangeArray.inherit(Array);
+		StrangeArray.method('push', function (value) {
+			Array.prototype.push.call(this, value);
+			Array.prototype.push.call(this, value);
+		});
+
+		var strange = new StrangeArray();
+		strange.push(4)
+	</script>	
+</body>
+</html>
