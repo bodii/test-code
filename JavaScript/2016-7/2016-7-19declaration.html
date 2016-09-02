@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>javascript test 2 -- declaration</title>
+</head>
+<body>
+	<script>
+	"use strict"
+		// There are three kinds of declarations in javascript.
+		 
+		// var 
+			// Declares avariable, optionally initializing it to a value.
+		var a = 1;
+		var b = 'string';
+
+		// let
+			// Declares a block scope local variable, opetionally initializing it to a value.
+		let aa = 1;
+		let bb = 'string';
+		// example
+		var i=0;
+		for (let l = i; l < 10; l++){
+			console.log(l);
+		}
+
+		// const
+			// Declares a read-only named constant
+		const MY_FAV = 7;
+		console.log('my favorite number is :' + MY_FAV);
+
+		// 常员可以定义成对象
+		const MY_OBJECT = {'key' : 'value'};
+		console.log('object is:' + MY_OBJECT.key);
+		
+
+
+	</script>
+	
+</body>
+</html>

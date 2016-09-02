@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模块对象</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		var HTML = {
+			tag: function (name, content, properties) {
+				return {name: name, properties: properties, content: content};
+			},
+			link: function (target, text) {
+				return HTML.tag('a', [text], {href: target});
+			}
+		};
+
+		// 使用作用域函数返回模块对象， 而不用设置全局变量
+		var days  = (function () {
+			var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+			'Thursday','Friday', 'Saturday'];
+
+			return {
+				getDayName: number => names[number],
+				getDayNumber: function (name) {
+					for (let number=0, len = names.length; number < len; number++) {
+						if (names[number] == name) return number;
+					}
+				}
+			};
+		})();
+
+		console.log(days.getDayNumber('Wednesday')); // 3
+	</script>	
+</body>
+</html>

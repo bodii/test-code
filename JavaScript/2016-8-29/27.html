@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则表达式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		/**
+		 * 正则表达式 是一种在字符串数据里表示模式的语言。
+		 *
+		 * 语法
+		 * 与将字符串写在引号里的方式相同，正则表达式写在斜杠（/）
+		 * 之间。字符串的search方法与indexOf类似，indexOf返回找到
+		 * 参数的位置，但search的参数是一个正则表达式而非字符串
+		 */
+		
+		console.log('doubledare'.search(/le/)); // 4
+
+		// 由于斜杠通常表明了正则表达式的结束， 表达式里的斜杠则
+		// 必须通过反斜杠进行转义
+		
+		var slash = /\//;
+		console.log('AC/DC'.search(slash)); // 2
+
+
+		// 匹配字符集
+		// 查找第一个星号或左大括号的位置
+		var asteriskOrBrace = /[\{\*]/
+			, story = 'We noticed the *giant sloth*, hanging from a giant branch.';
+
+		console.log(story.search(asteriskOrBrace)); // 15
+
+		/*
+			点(.): 任何不是换行符的字符
+			d(\d)：任意数字
+			w(\w): 匹配任何单词（也就是任何英文、数字和下划线构成的字符
+			s(\s): 任何空字符（例如：tab、换行和空格）
+		 */
+
+		var digitSurroundedBySpace = /\s\d\s/;
+		console.log('1a 2 3d'.search(digitSurroundedBySpace)); // 2
+
+		/*
+			可以用大写字符替换相应的\d、\w、\s来反转与此与此正则表达式的意义。
+			例如，\S 匹配任何不是空字符串的字符。使用[ 和 ]时，反转模式可以以
+			^字符开始
+		 */
+		var notABC = /[^ABC]/; // 匹配不是A或B或C的字符
+		console.log('ABCBACCBBADABC'.search(notABC)); // 10
+
+		// 编写匹配 XX/XX/XXXX格式日期的正则表达式 (这是的x是数字)
+		var dateStr = 'born 15/11/2003 (mother Spot):White Fang'
+			, datePattern = /\d\d\/\d\d\/\d\d\d\d/;
+		console.log(dateStr.search(datePattern)); // 5
+
+		var datePattern2 = /\d{2}\/\d{2}\/\d{4}/;
+		console.log(dateStr.search(datePattern2));
+		console.log(datePattern2.exec(dateStr)[0]);
+	</script>	
+</body>
+</html>

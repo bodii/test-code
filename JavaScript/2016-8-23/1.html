@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>局部命名空间</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		// 月份
+		var names = ['January', 'February', 'March', 'April', 'May', 'June', 
+		'July', 'August', 'September', 'October', 'November', 'December'];
+
+		//箭头函数
+		var getMonthName = number => names[number];
+		function getMonthNumber (name) {
+			for (let number = 0; number < names.length; number++) {
+				if (names[number] == name) return number;
+			}
+		}
+
+		console.log(getMonthNumber('February'));
+		console.log(getMonthNumber('aa'))
+
+		/**
+		 * 隐藏变量，是将一个函数作为局部模块命名空间来使用
+		 */
+		
+		function buildMonthNameModule () {
+			var names2 = ['January', 'February', 'March', 'April', 'May', 'June', 
+			'July', 'August', 'September', 'October', 'November', 'December'];
+
+			var getMonthName2 = number => names2[number];
+			function getMonthNumber2 (name) {
+				for (let number = 0; number < names2.length; number++) {
+					if (names2[number] == name) return number;
+				}
+			}
+
+			window.getMonthNmae = getMonthName2;
+			window.getMonthNumber = getMonthNumber2;
+		}
+
+		buildMonthNameModule();
+
+		// provide 将这些变量设置在全局作用域上
+		function provide (values) {
+			forEachIn(values, function (name, value) {
+				window[name] = value;
+			});
+		}
+
+		// 遍历对象中的元素
+		function forEachIn (object, action) {
+			for ( var name in object) {
+				if(Object.prototype.propertyIsEnumerable.call(object, name))
+					action(name, object[name]) 
+			}
+		}
+
+		// 为了让代码更短， 可以编写局部作用域函数作为匿名函数，并且直接调用它
+		(function () {
+			var names = ['January', 'February', 'March', 'April', 'May', 'June',
+			 'July', 'August', 'September', 'October', 'November', 'December'];
+			provide({
+				getMonthName : number => names[number],
+				getMonthNumber : function (name) {
+					for (let number = 0; number < names.length; number++) {
+						names[number] == name ? number : undefined;
+					}
+				}
+			});
+		})();
+
+	</script>
+</body>
+</html>

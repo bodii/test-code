@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>匹配与替换</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		/*
+			match 方法
+			接收正则表达式作为参数。如果匹配失败就返回null;
+			如果匹配成功则返回匹配字符串组成的数组。
+
+			返回数组的第一个元素总是匹配整个模式的字符串。
+			模式里有括号时，括号匹配的部分将添加到该数组。
+		 */
+		
+		console.log('No'.match(/yes/i)); // null
+		console.log('...yes'.match(/yes/i)); // ["yes", index: 3, input: "...yes"]
+		console.log('Giant Ape'.match(/giant (\w+)/i));  
+		//["Giant Ape", "Ape", index: 0, input: "Giant Ape"]
+		
+
+		function extractDate (string) {
+			var found = string.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/);
+			if (found == null) 
+				throw new Error('No date found in "'+ string +'".');
+			return new Date(Number(found[3]), Number(found[2]) -1, Number(found[1]));
+		}
+
+		console.log(extractDate('31/12/2016')); // Sat Dec 31 2016 00:00:00 GMT+0800 (中国标准时间)
+		
+	</script>	
+</body>
+</html>

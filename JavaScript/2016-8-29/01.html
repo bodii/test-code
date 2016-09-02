@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>高阶函数</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		function negate (func) {
+			return function (x) {
+				return !func(x);
+			};
+		}
+
+		var isNotNaN = negate(isNaN);
+		console.log(isNotNaN(NaN));
+
+		function negage2 (func) {
+			return function () {
+				return !func.apply(null, arguments);
+			};
+		}
+
+		var isNotNaN2 = negage2(isNaN);
+		console.log(isNotNaN2(NaN));
+	</script>
+</body>
+</html>

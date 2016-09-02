@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习10.html</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		/*
+		调用Dictionary构造函数时可以不传参数，此时，它创建一个空词典，或是一个提供了初始内容的对象。
+			它公开了四种方法：
+				1.添加key/value的store方法
+				2.查询值的lookup方法
+				3.测试是否包含key的contains方法
+				4.遍历词典内容的高阶函数each方法
+		*/
+		function Dictionary (startValue) {
+			this.values = startValue || {};
+		}
+
+		Dictionary.prototype.store = function (name, value) {
+			this.values[name] = value;
+		};
+
+		Dictionary.prototype.lookup = function (name) {
+			return this.values[name];
+		};
+
+		Dictionary.prototype.contains = function (name) {
+			return Object.prototype.propertyIsEnumerable.call(this.values, name);
+		};
+
+		Dictionary.prototype.each = function (action) {
+			forEachIn(this.values, action);
+		};
+		function forEachIn (object, action) {
+			for (let property in object) {
+				if (Object.prototype.propertyIsEnumerable.call(object, property))
+					action(property, object[property]);
+			}
+		}
+
+		var colors = new Dictionary({Grover: 'blue',
+			Elmo: 'red',
+			Bert: 'yellow'
+		});
+
+		colors.store('Ernie', 'orange'); //添加属性与属性的值
+		console.log(colors.lookup('Grover')); // 获取属性的值
+		console.log(colors.contains('Ernie')); // 检测属性是否存在
+		console.log(colors.lookup('tie')); //当获取不存在的属性时，返回undefined
+		colors.store('tie', 'red');
+		console.log(colors.contains('tie'));
+
+		colors.each(function (name, value) {
+			console.log(name, ' is ', value);
+		});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则表达式--匹配单词和字符边界</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		console.log(/a/.test('blah')); // true
+		console.log(/^a$/.test('blah')); // false
+
+
+		/*
+			\b可以匹配“单词边界” --它可以是标点符号、空格
+			、字符的开头或结尾
+		 */
+		console.log(/cat/.test('concatenate')); //true
+		console.log(/\bcat\b/.test('concatenate')); //false
+
+		// 重复模式
+		/*
+			星号(*)：可以重复匹配任意次数（包括零次）
+			加号(+): 要求至少要匹配一次
+			问号(?)：该元素可选（它可能出现零次或一次
+		 */
+		var parentHethicText = /\(.*\)/;
+		var str = "Its (the sloth's) claws were gigantic!";
+		console.log(str.search(parentHethicText)); //4
+
+
+		var datePattern = /\d{1,2}\/\d\d?\/\d{4}/;
+		var dateStr = 'born 15/11/2003 (mother Spot):White Fang';
+		console.log(dateStr.search(datePattern)); //5
+
+		//子表达式分组
+		// 使用小括号对表达式的一部分进行分组，然后用整个分组进行匹配
+		var cartoonCrying = /boo(hoo+)+/i;
+		console.log(cartoonCrying.test('Boohoooohoohooo')); // true
+		/*
+			i: 不区分大小写
+			g: 全局匹配
+		 */
+		
+
+		// 多选一
+		// 对于更高级的“分支”模式， 可以使用竖线(|)表示允许模式在多个元素中选择一个。
+		var holyCow = /\b(sacred|holy) (cow|bovine|bull|taurus)\b/i;
+		console.log(holyCow.test('Sacred bovine')); // true
+	</script>	
+</body>
+</html>
