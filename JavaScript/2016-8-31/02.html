@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>正则的规制replace</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+
+			console.log('Borobudur'.replace(/[ou]/g, 'a'));
+			/* Barababar */
+
+
+			var names = 'Picasso, Pablo\nGauguin, Paul\nVan Gogh, Vincent';
+			var names_replace = names.replace(/([\w ]+), ([\w ]+)/g, "$2 $1");
+			console.log(names_replace);
+			/* Pablo Picasso
+			   Paul Gauguin
+			   Vincent Van Gogh */
+			
+
+			// 第二个参数还可以是函数
+			// example 01
+			var str1 = 'the cia and fbi'.replace(/\b(fbi|cia)\b/g, function (str) {
+				return str.toUpperCase();
+			});
+			console.log(str1);
+			/* the CIA and FBI */
+
+			
+			// example 02
+			var stock = '1 lemon, 2 cabbages, and 101 eggs';
+			function minusOne (match, amount, unit) {
+				amount = Number(amount) -1;
+				if (amount == 1) //如果只剩1个，册除后面的s
+					unit = unit.slice(0, unit.length -1);
+				else if (amount == 0)
+					amount = 'no';
+				return amount + ' ' + unit;
+			}
+			var str2 = stock.replace(/(\d+) (\w+)/g, minusOne);
+			console.log(str2);
+			/* no lemon, 1 cabbage, and 100 eggs */
+			/*
+			   (\d+) 分组表示函数里的amount参数
+			   (\w+) 分组表示匹配unit
+			   */
+
+			
+			// example 03
+			function escapeHTML (text) {
+				var replacements = [['&', '&amp;'], ['\"', '&quot;'],
+									['<', '&lt;'], ['>', '&gt;']];
+				forEach(replacements, fucntion (replace) {
+					text = text.replace(replace[0], replace[1]);
+				});
+				return text;
+			}
+			
+			// 新的escapeHTML方法
+			function escapeHTMLNew (text) {
+				var replacements = {'<': '&lt;', '>': '&gt;',
+									'&': '&amp;', '\"': '&quot;'};
+				return text.replace(/[<>&"]/g, function (character) {
+						return replacements[character];
+						});
+			}
+			
+		</script>
+	</body>
+</html>

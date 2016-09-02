@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>正则的匹配与替换</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			/*
+				正则的匹配与替换
+			*/
+			console.log('No'.match(/yes/i)); // null
+
+			console.log('...yes'.match(/yes/i)); // Array ['yes']
+			
+			console.log('Giant Ape'.match(/giant (\w+)/i)); // Array ['Giant Ape', 'Ape']
+
+			// 传入一个字符串，该函数会查找日期格式的内容
+			// 如果它能找到这样的日期，将该值存在Date对象中；否则，就抛出一个异常
+			function extractDate (string) {
+				var found = string.match(/\b(\d\d?)\/(\d\d?)\/(\d{4})\b/);
+				if (found == null)
+					throw new Error('No date found in "' + string + '".');
+				return new Date(Number(found[3]), Number(found[2]) -1, Number(found[1]));
+			}
+
+			// 测试extractDate函数
+			console.log(extractDate('31/8/2016'));
+		</script>
+	</body>
+</html>
