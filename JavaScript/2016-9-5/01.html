@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>浏览器事件</title>
+	</head>
+	<body>
+	<script>
+		// 注册事件句柄
+		// IE: button.attachEvent('onclick', function(){alert('Click!');});
+		// 在其它浏览器下：
+		//	button.addEventListener('click', function(){console.log('Click!');}, false);
+		// 第三个参数addEventlistener是false,表示事件应该像平常一样通过DOM树		//进行“冒泡”。传入true可以让该事件句柄的优先级高于其他事件句柄（注册
+		//在子节点上的事件句柄），但因为IE浏览器不支持这种功能，所以很少用到
+
+		function registerEventHandler(node, event, handler) {
+			if (typeof node.addEventListener == 'function')
+				node.addEventListener(event, handler, false);
+			else
+				node.attachEvent('on' + event, handler);
+		}
+		//registerEventHandler(button, 'click', function(){consle.log('Click(2)');});
+
+		// 键盘事件
+		registerEventHandler(document.body, 'keypress', function (event) {
+			event = event || window.event;
+			var charCode = event.charCode || event.keyCode;
+			if(charCode)
+				console.log('Character "', String.fromCharCode(charCode), '" was typed.');
+		});
+		
+		// normalizeEvent 函数遍历所有事件对象属性，并确保每个属性都可以在
+		// 标准的名称下找到。增加一个stop方法，用于取消事件的冒泡行为和默认
+		// 行为。有些浏览器已提供这一功能
+		function normalizeEvent(event) {
+			if (!event.stopPropagation) {
+				event.stopPropagation = function () {this.cancelBubble = true;};
+				event.preventDefault = function () {this.returnValue = false;};
+			}
+			if (!event.stop){
+				event.stop = function () {
+					this.stopPropagation();
+					this.preventDefault();
+				};
+			}
+			if (event.srcElement && !event.target)
+				event.target = event.srcElement;
+			if ((event.toElement || event.fromElement) && !event.relatedTarget)
+				event.relatedTarget = event.toElement || event.fromElement;
+			if (event.clientX != undefined && event.pageX == undefined){
+				event.pageX = event.clientX + document.body.scrollLeft;
+				event.pageY = event.clientY + document.body.scrollTop;
+			}
+			if (event.type == 'keypress')
+				event.character = String.fromCharCode(envet.charCode || envent.keyCode);
+			return event;
+		}
+		
+		// 有了这个函数， 就可以为registerEventHandler 和 unregisterEventHandler编写更方便的包装
+		function addHandler(node, type, handler) {
+			function wrapHandler(event){
+				handler(normalizeEvent(event || window.event));
+			}
+			registerEventHandler(node, type, wrapHandler);
+			return {node: node, type: type, handler: wrapHandler};
+		}
+		
+		function removeHandler (object) {
+			unregisterEventHandler(object.node, object.tpye, object.handler);
+		}
+		// addHandler 函数返回一个可以再次删除事件句柄的对象。内部函数负责
+		// 查找事件对象。可以像下面这样使用，为一个文本自动添加一个事件句柄
+		// 来防止用户输入字母Q
+		var blockQ = addHandler(textfield, 'keypress', function (event) {
+			if (event.character.toLowerCase() == 'q')
+				event.stop();
+		});
+		// 然后
+		removeHandler(blockQ);
+	</script>
+	</body>
+</html>
