@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js 动态作用域</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		var myObject = {
+			a: 2
+		};
+		var idx;
+		if(true){
+			idx = 'a';
+		}
+		console.log(myObject[idx]);
+	</script>
+</body>
+</html>
