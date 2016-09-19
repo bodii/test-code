@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>委托</title>
+	</head>
+	<body>
+		<script>
+			var Task = {
+				setID: function (ID) {this.id=ID;},
+				outputID: function (){console.log(this.id);}
+			};
+			
+			// 让XYZ委托Task
+			XYZ = Object.create(Task);
+
+			XYZ.prepareTask = function(ID, Label){
+				this.setID(ID);
+				this.label = Label;
+			};
+			
+			XYZ.outputTaskDetails = function (){
+				this.outputID();
+				console.log(this.label);
+			};
+
+			// 以上的代码风格 可称为：对象关联
+		</script>
+	</body>
+</html>

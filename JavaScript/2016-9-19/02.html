@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>(原型)继承</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			function Foo(name){
+				this.name = name;
+			}
+			Foo.prototype.myName = function (){
+				return this.name;
+			}
+			
+			function Bar(name,label){
+				Foo.call(this, name);
+				this.label = label;
+			}
+
+			// ES6
+			Object.setPrototypeOf(Bar.prototype, Foo.prototype);
+
+			Bar.prototype.myLabel = function (){
+				return this.label;
+			}
+			
+			var a = new Bar('a', 'obj a');
+			console.log(a.myName());
+			console.log(a.myLabel());
+		</script>
+	</body>
+</html>
