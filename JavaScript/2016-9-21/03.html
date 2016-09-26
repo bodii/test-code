@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>委托控件对象</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			var Widget = {
+				init: function(width, height){
+					this.width = width;
+					this.height = height;
+					this.$elem = null;
+				},
+				insert: function($where){
+					if(this.$elem) {
+						this.$elem.style.width = this.width + 'px';
+						this.$elem.style.height = this.height + 'px';
+						$where ? $where : document.body;
+						$where.appendChild(this.$elem);
+					}
+				}
+			};
+
+			var Button = Object.create(Widget);
+			
+			Button.setup = function (width, height, label){
+
+				//委托调用
+				this.init(width, height);
+				this.label = label || 'Default';
+				this.$elem = document.createElement('button');
+				this.$elem.textContent = this.label;
+			};
+			
+			Button.build = function($where){
+				this.insert($where);
+				this.$elem.onclick = this.onclick.bind(this);
+			};
+
+			Button.onclick = function () {
+				console.log('Button \'' + this.label + '\' clicked!');
+			};
+
+			(function () {
+				var $body = document.body;
+
+				var btn1 = Object.create(Button);
+				btn1.setup(125, 30, 'Hello');
+
+				var btn2 = Object.create(Button);
+				btn2.setup(150, 40, 'World');
+
+				btn1.build($body);
+				btn2.build($body);
+			})();
+			
+		</script>
+	</body>
+</html>
