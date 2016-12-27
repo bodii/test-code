@@ -1,0 +1,4 @@
+Data stream from file descriptor 1 STDOUT,
+readirected to file descriptor 5,
+Then data will go to file descriptor 4, which is associated with file
+exec.out.

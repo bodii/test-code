@@ -1,0 +1,11 @@
+paste -d ":" name.txt tel.txt | cat -n
+
+result:
+     1	Matti:555-0542
+     2	Aarnio:555-2912
+     3	Dragos:555-1234
+     4	Acostachioaie:555-6699
+     5	Mark:555-5553
+     6	Adler:555-3412
+     7	Monalisa:555-7685
+     8	Agrawal:555-1675

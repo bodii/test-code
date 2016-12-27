@@ -1,0 +1,30 @@
+#!/bin/echo Warning:this is a library which should be suorced!
+# 上面一行的作用是防止库文件被意外执行
+
+# 定义函数test_platform用来测试当前的操作系统
+test_platform ()
+{
+	# 在本地变量osname中保存当前的操作系统
+	local osname=`uname -s`
+
+	# 定义全局变量PLATFORM,并初始化为UNKNOWN
+	PLATFORM=UNKNOWN
+
+	# 根据当前的操作系统指定变量PLATFORM
+
+	case ${osname} in
+		"FreeBSD")
+			PLATFORM="FREEBSD"
+			;;
+		"SunOS")
+			PLATFORM="SOLARIS"
+			;;
+		"Linux")
+			PLATFORM="LINUX"
+			;;
+	esac
+
+	return 0
+
+}
+

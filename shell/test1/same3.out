@@ -1,0 +1,4 @@
+ls: 无法访问/bin/this_file_not_exist: 没有那个文件或目录
+/bin/bash
+/bin/dd
+/bin/ls
