@@ -22,7 +22,7 @@ log(x)						返回自然对数（以e为底的对数）
 log10(x)					返回以10为底的对数
 radians(x)					将角度转换为弧底
 degrees(x)					将弧底转换为角度
-sig(x)						求正弦值
+sin(x)						求正弦值
 asin(x)						求反正弦值
 cos(x)						求余弦值
 acos(x)						求反余弦值
