@@ -123,6 +123,7 @@ INSERT INTO `pinyin` VALUES ('A','驁'),('B','簿'),('C','錯'),('D','鵽'),('E'
 ('S','蜶'),('T','籜'),('W','鶩'),('X','鑂'),('Y','韻'),('Z','咗');
 
 创建获取汉字拼音的函数
+delimiter && (将mysql 原有的结束符;改为&&)
 
 DROP FUNCTION IF EXISTS `PINYIN`
 
