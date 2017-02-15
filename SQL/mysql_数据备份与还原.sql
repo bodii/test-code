@@ -6,6 +6,9 @@ mysqldump命令可以将数据库中的数据备份成一个文本文件。表�
 语法：
 mysqldump -u username -p dbname table1 table2 ... > backupName.sql
 
+备份某个数据库下的所有表：
+mysqldump -u username -p dbname > backupName.sql
+
 ** mysqldump命令备份的文件并非一定要求后缀名为.sql,备份成其他格式的文件
 也是可以的。
 
