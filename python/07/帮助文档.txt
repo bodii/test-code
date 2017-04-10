@@ -1,0 +1,46 @@
+help函数是您的助手。它可以显示模块的文档，以及任何Python模块的文档。
+如：
+
+import os
+
+help(os)
+
+
+
+help函数首先打印模块的文档
+
+help函数取出文档的第一行作为NAME项，剩下的作为DESCRIPTION项。
+help函数接下来概述了类的功能并显示每个类的文档，例如：
+
+CLASSES
+	exceptions.Exception
+		AngryChefException
+		SensitiveArtistException
+
+	Meal
+		Breakfast
+		Dinner
+		Lunch
+		
+
+如果只在函数或方法的定义附近编写注释，help函数将试着把注释同函数或方法联系
+起来。然而，并不是所有情况下都奏效，因为help函数按字母顺序排列方法和函数。
+例如：
+|
+| setDrink(self, drink='coffee')
+|	  # Setter for the name.
+
+注意，注释与错误的方法相关联。
+以下是原始的代码：
+def set Drink(self, drink='coffee'):
+	sefl.drink = drink
+
+# Setter for the name.
+def setName(self, name=''):
+	self.name = name
+
+这里的教训是要遵循Python中为方法建立文档的约定。为了修正这个错误，需要将每
+个方法上面出现的注释改为一个Python文档字符串。将Python文档字符串移动到紧跟
+在对应的def命令的下一行。
+
+

@@ -1,0 +1,55 @@
+任何负责的模块都应该包含执行模块功能的测试函数。测试应该创建模块中定义的类
+的实例，并调用这些实例的方法。
+
+
+例如，下面的方法提供了meal模块的一个测试(注意，如果现在运行它，它将不能工
+作，因为它还缺少本章后面定义的Dinner类）：
+
+def test():
+	'''Test function.'''
+
+	print('Module meal test.')
+
+	# Generic no arguments.
+	print('Testing Meal class.')
+	m = Meal()
+
+	m.printIt('\t')
+
+	M = Meal('green eggs and ham', 'tea')
+	m.printIt('\t')
+
+
+	# Test breakfast
+	print('Testing Breakfast class.')
+	b = Breakfast()
+	b.printIt('\t')
+
+	b.setName('breaking of the fast')
+	b.printIt('\t')
+
+
+	# Test dinner
+	print('Testing Dinner class.')
+	d = Dinner()
+	d.printIt('\t')
+
+
+	# Test lunch
+	print('Testing Lunch class.')
+	l = Lunch()
+	l.printIt('\t')
+
+	print('Calling Lunch.setFood().')
+	try:
+		l.setFood('hotdog')
+	except AngryChefException:
+		print('\t', 'The chef is angry. Pick an omelet.')
+
+
+将测试函数集成到模块中，这样测试将一直可用。
+
+注意：
+测试永远都不会结束。总是可以加入更多的测试，所以做力所能及的事情即可。
+
+

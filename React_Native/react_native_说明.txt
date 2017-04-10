@@ -1,0 +1,15 @@
+React Native
+
+它的底层引擎是JavaScript Core，调用的是原生组件而非HTML5组件(HTML+
+CSS+JavaScript构建的组件）。运行时，可以做到与Native App媲美的体验，
+同时因为JavaScript代码可以使用后端强大的Web方式管理，既可以做到高效
+开发，也可以做到快速部署和问题热修复。React Native App运行在客户的手
+机上，而控制端可以在后端，可以充分发Web的能力，就像一个牵线木偶，任凭
+你表演。 
+
+
+react
+npm install -g create-react-app
+create-react-app hello-world
+cd hello-world
+npm start

@@ -1,0 +1,16 @@
+Python解释器使用两种方法确定公有方法：
+1.如果模块中定义了变量__all__，解释器使用__all__确定哪些项是公有项。
+2.如果模块中没有定义变量__all__，解释器导入除了名称以下划线(_)开头的项目之
+外的所有项。如:printIt被认为是公有的，而_printIt则不是。
+
+可以通过from module_name import * 导入全部方法
+
+作为最佳实践，总是应该在模块中定义__all__。这样可以显式控制其他Python脚本可
+以导入的项。为了完成这项工作，可以简单地创建一个文档字符串序列，每个字符串
+分别对应想要从模块导出的每个项的名称。例如，在meal模块中，可以用下面的方式
+定义__all__:
+
+__all__ = ['Meal', 'AngryChefException', 'makeBreakfast', 'makeLunch',
+		'makeDinner', 'Breakfast', 'Lunch', 'Dinner']
+
+

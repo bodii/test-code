@@ -1,0 +1,60 @@
+可以使用三种机制安装模块：
+1.可以手动创建一个安装脚本或程序。
+2.可以创建一个针对你的操作系统的安装程序，例如Windows上的MSI或exe文件，Linux
+上的RPM文件，或Mac OS X上的DMG文件。
+3.可以使用方便的Python distutils（代表distribution utilities，分发实用程序）
+包，来创建基于Python的安装文件。
+
+
+为使用Python distutils，需要创建一个为setup.py的安装脚本。最简单的安装脚本
+可以包括如下的内容：
+from distutils.core import setup
+
+setup(name='NameOfModule',
+		version='1.0',
+		py_modules=['NameOfModule'],
+	 )
+
+需要两次包括模块的名称。用自己的模块的名称替换NameOfModule，例如本章例子中
+的meal。
+Name the script setup.py
+
+
+创建了setup.py脚本之后，可以使用下面的命令创建一个模块的发布版本：
+python setup.py sdist
+
+参数sdist是software distribution(软件分发)的缩写。
+
+
+当setup.py脚本运行完成，你应该在当前目录中看到如下的文件：
+$ ls
+
+MANIFEST	dist/		meal.py		setup.py
+
+setup.py 脚本创建了dist目录和MANIFEST文件。dist目录包括一个文件，也就是你的
+模块的压缩版本。
+
+$ ls dist
+meal-1.0.tar.gz
+
+
+
+可以将meal-1.0.tar.gz文件放到其他的系统上，并安装模块。首先，解压缩该模块，
+并对其进行扩展。在Linux、UNIX和Mac OS X下，使用下面的命令：
+$ gunzip meal-1.0.tar.gz
+$ tar xvf meal-1.0.tar
+
+meal-1.0/
+meal-1.0/meal.py
+meal-1.0/PKG-INFO
+meal-1.0/setup.py
+
+$ python setup.py install
+
+
+distutils 的好处是它能用于几乎任何Python模块。安装命令是相同的，所以无论使用
+哪一种系统，只需要知道一个安装Python模块的命令。
+distutils的另一个好处是安装程序会创建模块的文档，可以用pydoc命令查看。例如，
+$ pydoc meal
+
+
