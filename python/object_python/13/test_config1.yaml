@@ -1,0 +1,15 @@
+version: 1
+handlers:
+  console:
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+    formatter: control
+  formatters:
+    control:
+      style: '{'
+      format: '{levelname:s}:{message:s}'
+  loggers:
+    betting.OneThreeTwoSix:
+      handlers: [console]
+      level: DEBUG
+      propagate: False

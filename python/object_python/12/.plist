@@ -1,0 +1,22 @@
+<?xml version="1.0" emcoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://wwww.apple.com/DTDS/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>player</key>
+    <dict>
+        <key>betting</key>
+        <string>Flat</string>
+        <key>play</key>
+        <string>SomeStrategy</string>
+        <key>rounds</key>
+        <integer>100</integer>
+    </dict>
+    <dict>
+        <key>payout</key>
+        <array>
+            <integer>3</integer>
+            <integer>2</integer>
+        </array>
+    </dict>
+</dict>
+</plist>

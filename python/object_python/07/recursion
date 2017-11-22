@@ -1,0 +1,130 @@
+DEBUG:recursion:ackermann( (2, 4), {})
+DEBUG:recursion:ackermann( (2, 3), {})
+DEBUG:recursion:ackermann( (2, 2), {})
+DEBUG:recursion:ackermann( (2, 1), {})
+DEBUG:recursion:ackermann( (2, 0), {})
+DEBUG:recursion:ackermann( (1, 1), {})
+DEBUG:recursion:ackermann( (1, 0), {})
+DEBUG:recursion:ackermann( (0, 1), {})
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann( (0, 2), {})
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann( (1, 3), {})
+DEBUG:recursion:ackermann( (1, 2), {})
+DEBUG:recursion:ackermann( (1, 1), {})
+DEBUG:recursion:ackermann( (1, 0), {})
+DEBUG:recursion:ackermann( (0, 1), {})
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann( (0, 2), {})
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann( (0, 3), {})
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann( (0, 4), {})
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann( (1, 5), {})
+DEBUG:recursion:ackermann( (1, 4), {})
+DEBUG:recursion:ackermann( (1, 3), {})
+DEBUG:recursion:ackermann( (1, 2), {})
+DEBUG:recursion:ackermann( (1, 1), {})
+DEBUG:recursion:ackermann( (1, 0), {})
+DEBUG:recursion:ackermann( (0, 1), {})
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann( (0, 2), {})
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann( (0, 3), {})
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann( (0, 4), {})
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann( (0, 5), {})
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann( (0, 6), {})
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann( (1, 7), {})
+DEBUG:recursion:ackermann( (1, 6), {})
+DEBUG:recursion:ackermann( (1, 5), {})
+DEBUG:recursion:ackermann( (1, 4), {})
+DEBUG:recursion:ackermann( (1, 3), {})
+DEBUG:recursion:ackermann( (1, 2), {})
+DEBUG:recursion:ackermann( (1, 1), {})
+DEBUG:recursion:ackermann( (1, 0), {})
+DEBUG:recursion:ackermann( (0, 1), {})
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann( (0, 2), {})
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann( (0, 3), {})
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann( (0, 4), {})
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann( (0, 5), {})
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann( (0, 6), {})
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann( (0, 7), {})
+DEBUG:recursion:ackermann = 8
+DEBUG:recursion:ackermann = 8
+DEBUG:recursion:ackermann( (0, 8), {})
+DEBUG:recursion:ackermann = 9
+DEBUG:recursion:ackermann = 9
+DEBUG:recursion:ackermann = 9
+DEBUG:recursion:ackermann( (1, 9), {})
+DEBUG:recursion:ackermann( (1, 8), {})
+DEBUG:recursion:ackermann( (1, 7), {})
+DEBUG:recursion:ackermann( (1, 6), {})
+DEBUG:recursion:ackermann( (1, 5), {})
+DEBUG:recursion:ackermann( (1, 4), {})
+DEBUG:recursion:ackermann( (1, 3), {})
+DEBUG:recursion:ackermann( (1, 2), {})
+DEBUG:recursion:ackermann( (1, 1), {})
+DEBUG:recursion:ackermann( (1, 0), {})
+DEBUG:recursion:ackermann( (0, 1), {})
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann = 2
+DEBUG:recursion:ackermann( (0, 2), {})
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann = 3
+DEBUG:recursion:ackermann( (0, 3), {})
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann = 4
+DEBUG:recursion:ackermann( (0, 4), {})
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann = 5
+DEBUG:recursion:ackermann( (0, 5), {})
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann = 6
+DEBUG:recursion:ackermann( (0, 6), {})
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann = 7
+DEBUG:recursion:ackermann( (0, 7), {})
+DEBUG:recursion:ackermann = 8
+DEBUG:recursion:ackermann = 8
+DEBUG:recursion:ackermann( (0, 8), {})
+DEBUG:recursion:ackermann = 9
+DEBUG:recursion:ackermann = 9
+DEBUG:recursion:ackermann( (0, 9), {})
+DEBUG:recursion:ackermann = 10
+DEBUG:recursion:ackermann = 10
+DEBUG:recursion:ackermann( (0, 10), {})
+DEBUG:recursion:ackermann = 11
+DEBUG:recursion:ackermann = 11
+DEBUG:recursion:ackermann = 11

@@ -1,0 +1,22 @@
+version: 1
+handlers:
+  console:
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+    formatter: bassic
+  audit_file:
+    class: logging.FileHandler
+    filename: p3_c14_audit.log
+    encoding: utf-8
+    formatter: basic
+  formatters:
+    basic:
+      style: "{"
+      format: "{levelname:s}:{name:s}:{message:s}"
+  loggers:
+    verbose:
+      handlers: [console]
+      level: INFO
+    audit:
+      handlers: [audit_file]
+      level: INFO

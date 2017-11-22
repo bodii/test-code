@@ -1,0 +1,12 @@
+player:
+    betting: Flat
+    play: SomeStrategy
+    rounds: 100
+    stake: 50
+table:
+    dealer: Hit17
+    decks: 6
+    limit: 50
+    payout: [3, 2]
+    split: NoResplitAces
+simulator: {outputfile: p2_c13_simulation.dat, samples: 100}

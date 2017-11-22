@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blog>
+    <topics>
+        <entry ID='UUID98766'>
+            <title>first</title>
+            <body>more words</body>
+        </entry>
+        <entry ID='UUID86543'>
+            <title>second</title>
+            <body>words</body>
+        </entry>
+        <entry ID='UUID64319'>
+            <title>third</title>
+            <body>text</body>
+        </entry>
+    </topics> 
+    <indices>
+        <bytag>
+            <tag text='#sometag'>
+                <entry IDREF='UUID98766' />
+                <entry IDREF='UUID86543' />                
+            </tag>
+            <tag text='#anothertag'>
+                <entry IDREF='UUID98766' />
+                <entry IDREF='UUID64319' />                
+            </tag>
+        </bytag>
+    </indices>
+</blog>
+

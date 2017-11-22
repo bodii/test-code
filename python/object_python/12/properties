@@ -1,0 +1,17 @@
+# Example Simulation Setup
+
+player.betting: Flat
+player.play: SomeStrategy
+player.ronds: 100
+player.stake: 50
+
+table.dealer: Hit17
+table.decks: 6
+table.limit: 50
+table.payout: (3, 2)
+table.split: NoResplitAces
+
+simulator.outputfile = p2_c13_simulation8.dat
+simulator.samples = 100
+
+

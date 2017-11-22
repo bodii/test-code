@@ -1,0 +1,19 @@
+{
+    "table": {
+        "dealer":"Hit17",
+        "split":"NoResplitAces",
+        "decks":6,
+        "limit":50,
+        "payout":"[3, 2]"
+    },
+    "plaer": {
+        "pay":"SomeStrategy",
+        "betting":"Flat",
+        "rounds":100,
+        "stake":50
+    },
+    "simulator": {
+        "samples":100,
+        "outputfile":"p2_c13_simulation.dat"
+    }
+}
