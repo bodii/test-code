@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>编写高质量代码： 改善JavaScript程序的188个建议</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var d = new Date();
+		console.log(d.toString());
+
+		// 要调用Object对象定义的默认toString()方法，可以先调用
+		// Object.prototype.toString对象的默认toString()函数，再调用
+		// 该函数的apply()方法在想要检测的对象上执行。
+		var d = new Date();
+		var m = Object.prototype.toString;
+		console.log(m.apply(d));
+	</script>
+</body>
+</html>

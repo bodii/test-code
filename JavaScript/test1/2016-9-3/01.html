@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>自动焦点</title>
+    </head>
+    <body>
+        <form name="userinfo" method="post"  action="/info.html">
+            <p>Please give us your information, so that we can send you spam.</p>
+            <p>Name:<input name="name" type="text"></p>
+            <p>Email:<input name="email" type="text"></p>
+            <p>Sex: 
+                <select name="sex">
+                    <option>Won't say</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                 </select>
+            </p>
+            <p><input name="send" type="submit" value="Send!"></p>
+        </form>
+        <script>
+            var spamForm = document.forms.userinfo;
+            console.log(spamForm.method);
+            console.log(spamForm.action);
+            
+            // 设置Name的默认值
+            spamForm.elements.name.value='Eugene';
+
+            // 验证用户和邮箱都为真是返回真
+            function validInfo (form) {
+                return form.elements.name.value != '' &&
+                    /^.+@.+\.\w{2,4}$/.test(form.elements.email.vlaue);
+            }
+            
+            // 当点击Send!按钮时,执行验证
+            spamForm.elements.send.onclick = function () {
+                if (validInfo(spamForm))
+                    spamForm.submit();
+                else
+                    alert('Give us a name and a valid email address!');
+                    return false;
+            }
+
+            // 自动焦点
+            spamForm.elements.name.focus();
+            
+        </script>
+    </body>
+</html>

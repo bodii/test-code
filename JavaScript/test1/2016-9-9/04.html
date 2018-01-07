@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>'类'函数</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict'
+		function Foo(){}
+		var a = new Foo();
+		console.log(Object.getPrototypeOf(a) === Foo.prototype); //true 
+		console.log(Foo.prototype.constructor === Foo); // true
+
+		var a = new Foo();
+		console.log(a.constructor === Foo); // true
+		console.log(Object.getPrototypeOf(a)); // Foo{}
+		console.log(Foo.prototype); // Foo{}
+
+		function NothingSpecial(){
+			console.log( 'Don\'t mind me!' );
+		}
+
+		var aa = new NothingSpecial(); // Don't mind me!
+		console.log(aa); // NothingSpecial{}
+		console.log(aa.constructor); //  NothingSpecial()
+		console.log(aa.prototype); // undefined
+		console.log(Object.getPrototypeOf(aa)); // NothingSpecial{}
+		console.log(NothingSpecial.prototype); // nothingSpecial{}
+
+		function Foo1(name) {
+			this.name= name;
+		}
+		Foo1.prototype.myName = function () {
+			return this.name;
+		};
+		var a1 = new Foo1('a');
+		var b1= new Foo1('b');
+		console.log(a1.myName()); // a
+		console.log(b1.myName()); //b
+		console.log(a1); // Foo1 { name="a",  myName=function()}
+		console.log(Object.getPrototypeOf(a1)); //  Foo1 { myName=function()}
+		console.log(Foo1.prototype); // Foo{ myName = function()}
+
+	</script>
+</body>
+</html>

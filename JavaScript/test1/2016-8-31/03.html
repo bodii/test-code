@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>动态创建RegExp对象</title>
+	</head>
+	<body>
+	<script>
+		'use strict'
+		var badWords = ['ape', 'monkey', 'simian', 'gorilla', 'evolution'];
+		var pattern = new RegExp(badWords.join('|'), 'i');
+		function isAcceptable (text) {
+			return !pattern.test(text);
+		}
+		
+		console.log(isAcceptable('The quick brown fox...')); // true
+		console.log(isAcceptable('Cut that monkeybusiness out.')); // false
+		console.log(isAcceptable('Mmmm, grapes.')); // false
+
+		/*
+		   RegExp 构造函数的第一个参数包含表达式模式的字符串，第二个参数（也
+		   可以省略）用于添加忽略大小写或非全局匹配.
+		   另外，可以在词语周围添加\b模式，以避免（例如）“grapes”被识别成不
+		   可接受字符。但是，这样的改变也让“monkeybusiness”变成可接受字符，
+		   这也许是不正确。
+		   使用字符串建立正则表达时，必须注意反／的用法：通常，在解释器解释的时
+		   候反斜杠是被删除掉的，因此在正则表达式里任何反斜杠都要用反斜杠自身再
+		   转义一次
+		   */
+		var digits = new RegExp('\\d+');
+
+		// 字符串的split方法也可以接收一个正则表达式作为参数，下面的函数是将字符串分隔
+		// 成字符行的数组， '\n'和'\r\n'均可置于行与行之间。
+		function splitLines(string) {
+			return string.split(/\r?\n/);
+		}
+		
+		// 下面是所有编写.ini文件解析函数所需的代码：
+		function parseINI (string) {
+			var lines = splitLine(string);
+			var categories = [];
+
+			function newCategory (name) {
+				var cat = {name: name, fields: []};
+				categories.push(cat);
+				return cat;
+			}
+			var currentCategory = newCategory('TOP');
+
+			forEach(lines, function (line) {
+				var match;
+				if(/^\s*(;.*)?$/.test(line))
+					return;
+				else if (match = line.match(/^\[(.*)\]$/))
+					currentCategory = newCategory(match[1]);
+				else if (match = line.match(/^(\w+)=(.*)$/))
+					currentCategory.fields.push({name: match[1], value: match[2]});
+				else
+					throw new Error('line "' + line + '" is invalid.');
+			});
+			return categories;
+		}
+
+	</script>
+	</body>
+</html>
+

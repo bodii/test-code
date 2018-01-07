@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>DOM节点</title>
+    </head>
+    <body>
+        <p> This is a html tag</p>
+        <script>
+            // 移动节点
+            /*
+                appendChild并不是将一个节点插入到另一个节点中的唯一方式。
+                当一个新节点不应该在父节点的末尾出现时，insertBefore可以
+                在某个指定节点前面插入新节点。该方法的第一个参数为新节点
+                对象，第二个参数为现有的子节点。
+                如果一个节点已经拥有了表时节点位置的parentNode属性，该属
+                性会自动从当前位置移除--节点在一个文档里不能有多个位置。
+                当一个节点必须被另一个节点替换时，使用replaceChild方法，
+                该方法也是以新节点作为第一个参数，以现有节点作为第二个参
+                数。
+                最后，还有一个removeChild方法用于删除子节点。需要注意，该
+                方法在被删除节点的父节点上进行调用，将被删除子节点作为该方
+                法的参数。
+                */
+            
+            // 创建一个子节点
+            var node = document.createElement('h1');
+            var nodeText = document.createTextNode('This is a h1');
+            node.appendChild(nodeText);
+            document.body.appendChild(node);
+
+            // 删除自已
+            node.parentNode.removeChild(node);
+
+            // 封装 册除自己节点的方法
+            function remove(node) {
+                node.parentNode.removeChild(node);
+            }
+
+            //封装 在节点之前插入新的节点
+            function insertBefore(newNode, node) {
+                node.parentNode.insertBefore(newNode);
+            }
+            
+            /*
+               在创建并移动新节点时，需注意以下规则：一个文档创建的节点不
+               允许插入到另一个文档中。这就是说，如果有额外的frame或者打开
+               的窗口， 不能将其中一个文档的节点移动至另一个文档中。一个文
+               档的document对象的方法创建的节点只能呆在该文档中。
+            */
+        </script>
+    </body>
+</html>

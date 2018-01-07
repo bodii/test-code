@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>调试</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			function Foo(){}
+			var a1 = new Foo();
+			console.log(a1);
+			console.log(a1.constructor);
+			console.log(a1.constructor.name);
+
+
+			function Foo1(){}
+			var aa1 = new Foo1();
+			Foo1.prototype.constructor = function Gotcha(){};
+			console.log(aa1.constructor);
+			console.log(aa1.constructor.name);
+			console.log(aa1);
+
+
+			var Foo2 = {};
+			var a2 = Object.create(Foo2);
+			console.log(a2);
+			Object.defineProperty(Foo2, 'constructor', {
+				enumerable: false,
+				value: function Gotcha(){}
+			});
+			console.log(a2);
+		</script>
+	</body>
+</html>
