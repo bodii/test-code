@@ -1,0 +1,27 @@
+{% extends 'bootstrap/base.html' %}
+    {% block title %} {% endblock %} - 博客
+{% block navbar %}
+    <url class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="{{ url_for('hello', _external=True) }}">
+                Home
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="{{ url_for('user', name=name, _external=True) }}">
+                user
+            </a>
+        </li>
+        <li>
+            <a role="presentation" href="{{ url_for('test') }}">
+                test
+            </a>
+        </li>
+    </url>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% block page_content %}
+        {% endblock %}
+    </div>
+{% endblock %}

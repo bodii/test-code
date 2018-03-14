@@ -1,0 +1,29 @@
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" date-toggle="collapse"
+            date-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index.home') }}">Flasky</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index.home') }}">Home</a></li>
+            </ul>
+            <img class="img-rounded profile-thumbnail" src="{{ user.gravatar(size=256) }}">
+            <ul class="nav navbar-nav navbar-right">
+                ## if current_user.is_authenticated()
+                {% if a %}
+                <li><a href="{{ url_for('index.user', username=current_user.username) }}">Profile</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Sign Out</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

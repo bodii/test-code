@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% import 'bootstrap/wft.html' as wft %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit Post</h1>
+</div>
+<div>
+    {{ wtf.quick_form(form) }}
+</div>
+{{ pagedown.include_pagedown() }}
+{% endblock content %}

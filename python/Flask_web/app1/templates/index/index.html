@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import 'base/macros.html' as macros %}
+{% block meta %}
+{{ super() }}
+{% include "base/header.html" %}
+{% endblock meta %}
+{% block top_js_file %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
+{% endblock top_js_file %}
+{% block javascript %}
+<script>
+$(function(){
+    $('.flask-moment').css('display', 'Inline');
+});
+{{ pagedown.include_pagedown() }}
+</script>
+{% endblock javascript %}
+        {% block navbar_content %} 
+        {% include 'base/navbar.html' %}
+        {% endblock navbar_content %}
+    {% block content %}
+    <h1>fsdfdsf</h1>
+    {{ current_time }}
+    <p>The local date and time is {{ moment(current_time).format('lll') }} </p>
+    <p>That was {{ moment(current_time).fromNow() }} </p>
+    <div>
+        {% if currnet_user.can(Permission.WRITE_ARTICLES) %}
+        {{ wtf.quick_form(form) }}
+        {% endif %}
+    </div>
+    {# 引入文章列表 #} 
+    {% include 'posts.html' %} 
+    {# 分页 #} 
+    {% if pagination %}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, '.index') }}
+    </div>
+    {% endif %}
+
+    <div class="page-header">
+        <h1>Hello, {% if name %} {{ name }} {% else %} Stranger {% endif %}</h1>
+        {% if not known %}
+        <p>Pleased to meet you!</p>
+        {% else %}
+        <p>Happy to see you again!</p>
+        {% endif %}
+        {% if user %}
+        {{ user }}
+        {% endif %}
+    </div>
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock content %}
+
+    {% block footer %}
+    {% include 'base/footer.html' %}
+    {% endblock footer %}
+

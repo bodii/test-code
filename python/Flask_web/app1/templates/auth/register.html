@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block meta %}
+{{ super() }}
+{% include "base/header.html" %}
+{% endblock meta %}
+{% block top_js_file %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment-with-locales.js') }}"></script>
+{% endblock top_js_file %}
+{% block navbar_content %} 
+{% include 'base/navbar.html' %}
+{% endblock navbar_content %}
+{% block content %}
+    <div class="page-header">
+        <h1>Login</h1>
+    </div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+{% endblock content %}
+
+{% block footer %}
+{% include 'base/footer.html' %}
+{% endblock footer %}

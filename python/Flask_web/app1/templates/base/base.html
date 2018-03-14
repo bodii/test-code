@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% block head %}
+    <!-- meta-start -->
+    {% block meta %}<meta charset="UTF-8">{% endblock meta %}
+    <!-- meta-end -->
+    
+    <!-- title -->
+    <title>{{ title or 'Index' }}</title>
+    
+    {% block web_icon %}
+    <!-- icon -->
+    <link rel="icon" href="{{ url_for('static', filename='image/wangyi.ico') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/wangyi.ico') }}" type="image/x-icon" />
+    {% endblock web_icon %}
+
+    <!-- CSS-file-top-start-->
+    {% block top_css_file %}                       
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap_3.3.7_css.min.css') }}" rel="stylesheet">
+    {% endblock top_css_file %}
+    <!-- CSS-file-top-end -->
+
+    <!-- JS-file-top-start -->
+    {% block top_js_file %}
+    <script src="{{ url_for('static', filename='js/bootstrap_3.3.7.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery_1.12.4.min.js') }}"></script>
+    {% endblock top_js_file %}
+    <!-- JS-file-top-end -->
+
+    <!-- local-javascrpt-start -->
+    {% block javascript %}
+    {% endblock javascript %}
+    <!-- local-javascrpt-end -->
+
+    <!-- style-start -->
+    {% block style %}{% endblock style %}
+    <!-- style-end -->
+{% endblock head %}
+</head>
+
+<body>
+{% block body %}
+    {% block navbar %} 
+    <!-- navbar-start -->
+    {% block navbar_content %}{% endblock navbar_content %}
+    <!-- navbar-end -->
+    {% endblock navbar %}
+
+    <!-- content-start -->
+    {% block content %} {% endblock content %}
+    <!-- content-end -->
+
+    <!-- CSS-file-bottom-start -->
+    {% block bottom_css_file %}{% endblock bottom_css_file %}
+    <!-- CSS-file-bottom-end -->
+
+    <!-- JS-file-bottom-start -->
+    {% block bottom_js_file %}{% endblock bottom_js_file %}
+    <!-- JS-file-bottom-end -->
+
+    <!-- footer-start -->
+    {% block footer %}{% endblock footer %}
+    <!-- footer-end -->
+{% endblock body %}
+</body>
+
+</html>
