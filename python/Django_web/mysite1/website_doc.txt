@@ -1,0 +1,5 @@
+【admin 后台入口】
+localhost:8000/admin
+
+u:admin
+p:ad@123456
