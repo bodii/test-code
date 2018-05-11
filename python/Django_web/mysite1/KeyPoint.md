@@ -38,6 +38,16 @@
     1.9 创建管理员账号
     > $ python manage.py createsuperuser
 
+    2.0 运行测试
+    > $ python manage.py test polls
+    将会寻找polls应用里的测试代码
+        1.找到django.test.TestCase的一个子类
+        2.创建一个特殊的数据库供测试使用
+        3.在类中寻找测试方法-- 以test开发的方法
+        4. ...
+        5. 调用assertIs()方法, 和默认值比较
+
+
 
 
 
