@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue component learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 访问元素 & 组件 -->
+    <div id="e1">
+        
+    </div>
+
+    <script>
+        var e1 = new Vue({
+            el: '#e1',
+            data: {
+                foo: 1,
+            },
+            computed: {
+                bar: function () { /* ... */ },
+            },
+            methods: {
+                baz: function () { 
+                    /* ... */
+                    // example
+                    // return this.$root.foo; == this.foo
+                 },
+            },
+        });
+        // this.$root.foo
+
+        // 获取根组件的数据
+        e1.$root.foo
+
+        // 写入根组件的数据
+        e1.$root.foo=2
+
+        // 访问根组件的计算属性
+        e1.$root.bar
+
+        // 调用根组件的方法
+        e1.$root.baz();
+
+
+        // 访问父级组件实例
+        /*
+            和 $root类似， $parent属性可以用来从一个子组件访问父组件的实例。
+            它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以prop
+            的方式传入子组件的方式。
+        */
+        
+    </script>
+</body>
+</html>

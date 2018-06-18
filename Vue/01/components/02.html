@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue component learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+<body>
+    <!-- 动态组件 -->
+    <!-- 通过Vue的<component>元素加一个特殊的is特性来实现 -->
+    <div id="e1">
+        <template v-for="tab in tabs">
+            <button v-on:click="currentTab=tab" :class="['tab-button', currentTab === tab ? 'tab-button-active': '']">{{ tab }}</button>
+        </template>
+        <component :class="['content']" v-bind:is="currentTabComponent"></component>
+    </div>
+    <script>
+        var e1 = new Vue({
+            el: '#e1',
+            data: {
+                currentTab: 'Home',
+                tabs: ['Home', 'Posts', 'Archive'],
+            },
+            components: {
+                'tab-home': {
+                    template: `<div>Home component</div>`,
+                },
+                'tab-posts': {
+                    template: `<div>Posts component</div>`,
+                },
+                'tab-archive': {
+                    template: `<div>Archive component</div>`,
+                },
+            },
+            computed: {
+                currentTabComponent: function() {
+                    return 'tab-' + this.currentTab.toLowerCase();
+                }
+            }
+        });
+    </script>
+    <style>
+        #e1 {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #e1 .tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+        #e1 .tab-button:hover,
+        #e1 .tab-button-active {
+            background: #e0e0e0;
+        }
+        #e1 .content{
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+        }
+    </style>
+</body>
+</html>

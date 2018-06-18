@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue component learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+<body>
+    
+    <div id="components-demo">
+        <button-counter></button-counter>
+    </div>
+    <script>
+        // 定义一个名为components-demo的组件
+        Vue.component(
+            'button-counter', {
+                data: function () {
+                    return {
+                        count: 0,
+                    };
+                },
+                template: '<button v-on:click="count++">You' + 
+                    ' clicked me {{ count }} times</button>',
+            }
+        );
+
+        var componentsDemo = new Vue({
+            el: '#components-demo',
+        });
+    </script>
+
+
+
+    <div id="e2">
+        <blog-post title="My journey with Vue"></blog-post>
+        <blog-post title="Blogging with Vue"></blog-post>
+        <blog-post title="Why Vue is so fun"></blog-post>
+    </div>
+    <script>
+        Vue.component('blog-post', {
+            props: ['title'],
+            template: '<h3> {{ title }} </h3>'
+        });
+        var e2 = new Vue({
+            el: '#e2',
+        });
+    </script>
+
+
+
+    <div id='e3'>
+        <blog-post v-for="post in posts"
+                    v-bind:key="post.id"
+                    v-bind:title="post.title"
+        ></blog-post>
+    </div>
+    <script>
+        Vue.component('blog-post', {    
+            template: '<h3>{{ title }}</h3>',
+            props: ['title'],
+        });
+        var e3 = new Vue({
+            el: '#e3',
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue' },
+                    { id: 2, title: 'Blogging with Vue' },
+                    { id: 3, title: 'Why Vue is so fun' },
+                ]
+            },
+        });
+    </script>
+
+    <div id="e4">
+        <blog-post
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post"
+        ></blog-post>
+    </div>
+    <script>
+        Vue.component('blog-post', {
+            props: ['post'],
+            /*
+            template: '\ // 支持IE
+                <div class="blog-post">\
+                    <h3>{{ post.title }}</h3>\
+                    <div v-html="post.content"></div>\
+                </div>\
+            ',
+            */
+            template: ` // 不支持IE
+                <div class="blog-post">
+                    <h3>{{ post.title }}</h3>
+                    <div v-html="post.content"></div>
+                </div>
+            `,
+        });
+        var e4 = new Vue({
+            el: '#e4',
+            data: {
+                posts: [
+                    { 
+                        id: 1, title: 'My journey with Vue', 
+                        content: 'My journey with Vue My journey with Vue My journey with Vue', 
+                    },
+                    { 
+                        id: 2, title: 'Blogging with Vue',
+                        content: 'My journey with Vue My journey with Vue My journey with Vue',
+                    },
+                    { 
+                        id: 3, title: 'Why Vue is so fun',
+                        content: 'My journey with Vue My journey with Vue My journey with Vue', 
+                    },
+                ]
+            },
+        });
+    </script>
+
+    <div id="e5">
+        <div v-bind:style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+                v-for="post in posts"
+                v-bind:key="post.id"
+                v-bind:post="post"
+                v-on:enlarge-text="onEnlargeText"
+            ></blog-post>
+        </div>
+    </div>
+    <script>
+        Vue.component('blog-post', {
+            props: ['post'],
+            template:  `
+                <div class="blog-post">
+                    <h3>{{ post.title }}</h3>
+                    <button v-on:click="$emit('enlarge-text', 0.1)">Enlarge text</button>
+                    <div v-html="post.content"></div>
+                </div>
+            `,
+        });
+        var e5 = new Vue({
+            el: '#e5',
+            data: {
+                postFontSize: 1,
+                posts: [
+                    { 
+                        id: 1, title: 'My journey with Vue', 
+                        content: 'My journey with Vue My journey with Vue My journey with Vue', 
+                    },
+                    { 
+                        id: 2, title: 'Blogging with Vue',
+                        content: 'My journey with Vue My journey with Vue My journey with Vue',
+                    },
+                    { 
+                        id: 3, title: 'Why Vue is so fun',
+                        content: 'My journey with Vue My journey with Vue My journey with Vue', 
+                    },
+                ],
+            },
+            methods: {
+                onEnlargeText: function (enlargeAmount) {
+                    this.postFontSize += enlargeAmount;
+                },
+            },
+        });
+    </script>
+
+
+    <div id="e6">
+        <!-- <custom-input
+            v-bind:value="searchText"
+            v-on:input="searchText=$event"
+        ></custom-input> -->
+        <custom-input
+            v-model="searchText"
+        ></custom-input>
+    </div>
+    <script>
+        var e6 = new Vue({
+            el: '#e6',
+            data: {
+                searchText: '',
+            },
+            components: {
+                'custom-input': {
+                    template: '<input type="search" />',
+                },
+            },
+        });
+    </script>
+
+    <!-- 通过插槽分发内容 -->
+    <div id="e7">
+        <alert-box>
+            Something bad happened.
+        </alert-box>
+    </div>
+    <style>
+        #e7 .demo-alert-box {
+            width: 400px;
+            padding: 10px 20px;
+            background: #f3beb8;
+            border: 1px solid #f09898;
+        }
+        #e7 strong {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        #e7 {
+            font-family: sans-serif;
+            color: #34495e;
+        }
+    </style>
+    <script>
+        var ve7 = new Vue({
+            el: '#e7',
+            components: {
+                'alert-box': {
+                    template: `
+                        <div class="demo-alert-box">
+                            <strong>Error!</strong>
+                            <slot></slot>
+                        </div>
+                    `,
+                },
+            },
+        });
+    </script>
+</body>
+</html>
