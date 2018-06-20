@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue transitions & transform learming</title>
+        <link rel="stylesheet" href="../../public/css/animate.min.css">
+        <script src="../../vue.min.js"></script>
+        <!--  -->
+        <script src="../../public/js/velocity.min.js"></script>
+        <!-- lodash 是一个一致性、模块化、高性能的 JavaScript 实用工具库。 -->
+        <script src="../../public/js/lodash.min.js"></script>
+    </head>
+    <body>
+        <div id="e1">
+            <div class="wrapper">
+                <transition name="no-mode-translate-fade">
+                    <button v-if="on" key="on" @click="on=false">on</button>
+                    <button v-else="" key="off" @click="on=true">off</button>
+                </transition>
+            </div>
+        </div>
+        <script>
+            var e1 = new Vue({
+                el: '#e1',
+                data: {
+                    on: false,
+                },
+            });
+        </script>
+        <style>
+            #e1 .wrapper {
+                position: relative;
+                height: 18px;
+            }
+            #e1 .wrapper button {
+                position: absolute;
+            }
+            .no-mode-translate-fade-enter-active, 
+            .no-mode-translate-fade-leave-active {
+                transition: all 1s;
+            }
+            .no-mode-translate-fade-enter,
+            .no-mode-translate-fade-leave-active {
+                opacity: 0;
+            }
+            .no-mode-translate-fade-enter {
+                transform: translateX(31px);
+            }
+            .no-mode-translate-fade-leave-active {
+                transform: translateX(-31px);
+            }
+        </style>
+
+        <!-- 
+            同时生效的进入和离开的过渡不能满足所有要求，所以Vue提供了过渡模式：
+                in-out : 新元素先进行过渡，完成之后当前元素过渡离开。
+                out-in : 当前元素先进行过度， 完成之后新元素过渡进入。
+
+         -->
+        <div id="e2">
+            <div class="wrapper">
+                <transition name="in-out-translate-fade" mode="in-out">
+                    <button v-if="on" key="on" @click="on=false">on</button>
+                    <button v-else="" key="off" @click="on=true">off</button>
+                </transition>
+            </div>
+        </div>
+        <script>
+            var e2 = new Vue({
+                el: '#e2',
+                data: {
+                    on: false,
+                }
+            });
+        </script>
+        <style>
+            #e2 .wrapper {
+                position: relative;
+                height: 18px;
+            }
+            #e2 .wrapper button {
+                position: absolute;
+            }
+            .in-out-translate-fade-enter-active,
+            .in-out-translate-fade-leave-active {
+                transition: all .5s;
+            }
+            .in-out-translate-fade-enter,
+            .in-out-translate-fade-leave-active {
+                opacity: 0;
+            }
+            .in-out-translate-fade-enter {
+                transform: translateX(31px);
+            }
+            .in-out-translate-fade-leave-active {
+                transform: translateX(-31px);
+            }
+        </style>
+
+        <!-- 多外组件的过渡 -->
+        <div id="e3">
+            <input v-model="view" type="radio" value="v-a" id="a" name="view">
+                <label for="a">A</label>
+            <input v-model="view" type="radio" value="v-b" id="b" name="view">
+                <label for="b">B</label>
+            <transition name="component-fade" mode="out-in">
+                <component v-bind:is="view"></component>
+            </transition>
+        </div>
+        <script>
+            var e3 = new Vue({
+                el: '#e3',
+                data: {
+                    view: 'v-a',
+                },
+                components: {
+                    'v-a': {
+                        template: '<div>Component A</div>',
+                    },
+                    'v-b': {
+                        template: '<div>Component B</div>',
+                    },
+                },
+            });
+        </script>
+        <style>
+            #e3 .component-fade-enter-active, 
+            #e3 .component-fade-leave-active {
+                transition: opacity .3s ease;
+            }
+            #e3 .component-fade-enter,
+            #e3 .component-fade-leave-to {
+                opacity: 0;
+            }
+        </style>
+
+
+        <!-- 列表过渡 -->
+        <div id="e4">
+            <button v-on:click="add">Add</button>
+            <button v-on:click="remove">Remove</button>
+            <transition-group name="list" tag="p">
+                <span 
+                    v-for="item in items" 
+                    v-bind:key="item"
+                    class="list-item"
+                >{{ item }}</span>
+            </transition-group>
+        </div>
+        <script>
+            var e4 = new Vue({
+                el: '#e4',
+                data: {
+                    items: [1, 2, 3, 4, 5, 6, 7],
+                    nextNum: 8,
+                },
+                methods: {
+                    randomIndex: function () {
+                        return Math.floor(Math.random() * this.items.length)
+                    },
+                    add: function () {
+                        this.items.splice(this.randomIndex() , 0, this.nextNum++);
+                    },
+                    remove: function () {
+                        this.items.splice(this.randomIndex(), 1);
+                    },
+                },
+            });
+        </script>
+        <style>
+            #e4 .list-item{
+                display: inline-block;
+                margin-right: 10px;
+            }
+            #e4 .list-enter-active, 
+            #e4 .list-leave-active {
+                transition: all 1s;
+            }
+            #e4 .list-enter, 
+            #e4 .list-leave-to {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        </style>
+
+        <!-- 列表的排序过渡 -->
+        <div id="e5">
+            <button v-on:click="shuffle">Shuffle</button>
+            <transition-group name="flip-list" tag="ul">
+                <li 
+                    v-for="item in items"
+                    v-bind:key="item"
+                >{{ item }}</li>
+            </transition-group>
+        </div>
+        <script>
+            var e5 = new Vue({
+                el: '#e5',
+                data: {
+                    items: [1, 2, 3, 4, 5, 6, 7],
+                },
+                methods: {
+                    shuffle: function () {
+                        this.items = _.shuffle(this.items);
+                    },
+                },
+            });
+        </script>
+        <style>
+            #e5 .flip-list-move {
+                transition: transform 1s;
+            }
+            ul {
+                list-style-type: none;
+                margin-left: -15px;
+            }
+        </style>
+
+        <div id="e6">
+            <button v-on:click="shuffle">Shuffle</button>
+            <button v-on:click="add">Add</button>
+            <button v-on:click="remove">Remove</button>
+            <transition-group name="list-complete" tag="p">
+                <span
+                    v-for="item in items"
+                    v-bind:key="item"
+                    class="list-complete-item"
+                > {{ item }} </span>
+            </transition-group>
+        </div>
+        <script>
+            var e6 = new Vue({
+                el: '#e6',
+                data: {
+                    items : [1, 2, 3, 4, 5, 6, 7],
+                    nextNum: 8,
+                },
+                methods: {
+                    randomIndex: function () {
+                        return Math.floor(Math.random() * this.items.length);
+                    },
+                    add: function () {
+                        this.items.splice(this.randomIndex(), 0, this.nextNum++);
+                    },
+                    remove: function () {
+                        this.items.splice(this.randomIndex(), 1);
+                    },
+                    shuffle: function () {
+                        this.items = _.shuffle(this.items);
+                    },
+                },
+            });
+        </script>
+        <style>
+            #e6 .list-complete-item {
+                transition: all 1s;
+                display: inline-block;
+                margin-right: 10px;
+            }
+            #e6 .list-complete-enter,
+            #e6 .list-complete-leave-to {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            #e6 .list-complete-leave-active {
+                position: absolute;
+            }
+        </style>
+    </body>
+</html>
