@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue custom directive learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 函数简写 -->
+    <!-- 
+        在很多时候，你可能想在bind和update时触发相同行为，而不关心其它的钩子。
+        比如这样写：
+        Vue.directive('color-swatch', function (el, binding) {
+            el.style.backgroundColor = binding.value;
+        });
+     -->
+
+
+     <!-- 对象字面量 -->
+     <!-- 
+         如果指令需要多个值，可以传入一个JavaScript对象字面量。
+     -->
+     <div id="e1" v-demo="{ color: 'white', text: 'hello!' }"></div>
+     <script>
+         Vue.directive('demo', function (el, binding) {
+            console.log(binding.value.color);
+            console.log(binding.value.text);
+         });
+         var e1 = new Vue({
+            el: '#e1',
+         });
+     </script>
+
+</body>
+</html>

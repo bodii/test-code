@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vue transitioning-state learming</title>
+        <link rel="stylesheet" href="../../public/css/animate.min.css">
+        <script src="../../vue.min.js"></script>
+        <script src="../../public/js/Tween.js"></script>
+        <script src="../../public/js/color.js"></script>
+    </head>
+    <body>
+        <!-- 状态过渡 -->
+        <!-- 
+            对于数据元素本身的动效，比如：
+                数字和运算
+                颜色的显示
+                SVG节点的位置
+                元素的大小和其他的属性
+
+            所有的原始数字都被事先存储起来，可以直接转换到数字。
+            结合Vue的响应式或组件系统，使用第三方库来实现切换元素的过渡状态
+
+         -->
+
+        <!-- 状态动画与观察者 -->
+        <!-- 
+            通过观察者我们能监听到任何数值属性的数值更新。
+        -->
+        <div id="e1">
+            <input v-model="number" type="number" step="20">
+            <p>{{ animatedNumber }}</p>
+        </div>
+
+        <script>
+            var e1 = new Vue({
+                el: '#e1',
+                data: {
+                    number: 0,
+                    animatedNumber: 0,
+                },
+                watch: {
+                    number: function(newValue, oldValue) {
+                        var vm = this;
+                        function animate () {
+                            if (TWEEN.update()) {
+                                requestAnimationFrame(animate);
+                            }
+                        }
+
+                        new TWEEN.Tween({ tweeningNumber: oldValue })
+                            .easing( TWEEN.Easing.Quadratic.Out)
+                            .to({ tweeningNumber: newValue }, 500)
+                            .onUpdate(function () {
+                                vm.animatedNumber = this.tweeningNumber.toFixed(0);
+                            })
+                            .start();
+                        
+                        animate();
+                    },
+                },
+            });
+        </script>
+
+        <div id="e2">
+            <input
+                v-model="colorQuery"
+                v-on:keyup.enter="updateColor"
+                placeholder="Enter a color"
+            >
+            <button v-on:click="updateColor">Update</button>
+            <p>Preview:</p>
+            <span
+                v-bind:style="{ backgroundColor: tweenedCSSColor }"
+                class="color-preview"
+            ></span>
+            <p>{{ tweenedCSSColor }}</p>
+        </div>
+
+        <script>
+            var Color = net.brehaut.Color;
+            var e2 = new Vue({
+                el: '#e2',
+                data: {
+                    colorQuery: '',
+                    color: {
+                        red: 0,
+                        green: 0,
+                        blue: 0,
+                        alpha: 1
+                    },
+                    tweenedColor: {},
+                },
+                creaded: function () {
+                    this.tweenedColor = Object.assign({}, this.color);
+                },
+                watch: {
+                    color: function () {
+                        function animate () {
+                            if (TWEEN.update()) {
+                                requestAnimationFrame(animate);
+                            }
+                        }
+
+                        new TWEEN.Tween(this.tweenedColor)
+                            .to(this.color, 750)
+                            .start();
+
+                        animate();
+                    }
+                },
+                computed: {
+                    tweenedCSSColor: function () {
+                        return new Color({
+                            red: this.tweenedColor.red,
+                            green: this.tweenedColor.green,
+                            blue: this.tweenedColor.blue,
+                            aplha: this.tweenedColor.alpha
+                        }).toCSS();
+                    }
+                },
+                methods: {
+                    updateColor: function () {
+                        this.color = new Color(this.colorQuery).toRGB();
+                        this.colorQuery = '';
+                    }
+                }
+            });
+
+        </script>
+        <style>
+            #e2 color-preview {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+            }
+        </style>
+    </body>
+</html>
