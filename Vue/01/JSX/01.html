@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue mixins learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+    <!-- JSX -->
+
+    <!-- 如果很多render函数， 可能会不爽 -->
+    <div id="e1">
+        <anchored-heading :level="1">
+            <span>Hello</span>world!
+        </anchored-heading>
+    </div>
+    <script>
+        var e1 = new Vue({
+            el: '#e1',
+            render (h) {
+                h(
+                    'anchored-heading', {
+                        props: {
+                            level: 1,
+                        },
+                    },
+                    [
+                        h('span', 'Hello'),
+                        ' world!',
+                    ]
+                )
+            },
+        });
+    </script>
+
+</body>
+</html>

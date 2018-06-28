@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue render function learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+
+    <!-- 事件 & 按键修饰符 -->
+    <!-- 
+        对于 .passive、 .capture 和 .once事件修饰符，Vue提供了相应的前缀可以用
+        于on:
+        ++++++++++++++++++++++++++++++
+        + Modifier(s)   +    Prefix  +
+        ++++++++++++++++++++++++++++++
+        + .passive         +    &    +
+        + .capture         +    !    +
+        + .once            +    ~    +
+        + .capture.once or +    ~!   +
+        ++++++++++++++++++++++++++++++
+        
+        例如：
+            on: {
+                '!click': this.doThisInCapturingMode,
+                '~keyup': this.doThisOnce,
+                '~!mouseover': this.doThisOnceInCapturingMode,
+            }
+
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        + Modifier(s)  +  Equivalent in Handler                    +
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        +  .stop       +  event.stopPropagation()                  +
+        +  .prevent    +  event.preventDefault()                   +
+        +  .self       +  if (event.target !== event.currentTarget)+
+        +  Keys:       +  if (event.keyCode !== 13) return (change +
+        *   .enter,    *      13 to another key code for other key *
+        *   .13        *       modifiers)                          *
+        +  Modifiers   +   if (!event.ctrlKey) return (change      +
+        *    keys:     *      ctrlKey to altKey, shiftKey, or      *
+        *      .ctrl,  *       metaKey, respectively )             *
+        *      .alt,   *                                           *
+        *      .shift, *                                           *
+        *      .meta   *                                           *
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -->
+
+
+     <div id="e1">
+
+     </div>
+     <script>
+         // 使用所有修饰符的例子
+         var e1 = new Vue({
+            el: '#e1',
+            render: function (createElement) {
+                var self = this;
+                return createElement('input',{
+                    on: {
+                        keyup: function (event) {
+                            // 如果触发事件的元素不是事件绑定的元素
+                            // 则返回
+                            if (event.target !== event.currentTarget) return;
+                            // 如果按下服从的不是enter键或者
+                            // 没有同时按下shift键
+                            // 则返回
+                            if (!event.shiftKey || event.keyCode !== 13) return;
+                            // 阻止 事件冒泡
+                            event.stopPropagation();
+                            // 阻止 该元素默认的keyup事件
+                            event.preventDefault();
+                        },
+                    },
+                });
+            },
+         });
+     </script>
+</body>
+</html>

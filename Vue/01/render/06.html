@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue render function learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+
+    <!-- render函数中没有与v-model相应的api 你必须自己来实现相应的逻辑  -->
+
+    <div id="e1">
+        
+    </div>
+
+    <script>
+        var e1 =  new Vue({
+            data: {
+                value: 'model-test',
+            },
+            render: function (createElement) {
+                var self = this;
+                return createElement('input', {
+                    // DOM属性
+                    domProps: {
+                        value: self.value,
+                    },
+                    on: {
+                        input: function (event) {
+                            self.value = event.target.value;
+                            self.$emit('input', event.target.value);
+                        },
+                    },
+                });
+            },
+        });
+        e1.$mount('#e1');
+        console.log(e1.$el); // Vue实例使用的根DOM元素
+    </script>
+</body>
+</html>

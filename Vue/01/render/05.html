@@ -38,17 +38,9 @@
         <ul-demo></ul-demo>        
     </div>
     <script>
-        var e2Component =  Vue.component(
+        Vue.component(
             'ul-demo',
             {
-                data: function () {
-                    return {
-                        items: [
-                            { 'name': 'b1' },
-                            { 'name': 'b2' },
-                        ],
-                    };
-                },
                 render: function (createElement) {
                     if (this.items.length) {
                         return createElement(
@@ -62,11 +54,18 @@
                         return createElement('p', 'No items found.');
                     }
                 },
+                props: {
+                    items: {
+                        type: Array,
+                        required: true,
+                    },
+                },
             },
             
         );
-        
-        new e2Component().$mount('#e2');
+        var e2 = new Vue({
+            el: '#e2',
+        });
 
     </script>
 </body>

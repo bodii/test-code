@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue render function learming</title>
+    <script src="../../vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 插槽 -->
+    <!-- 
+        可以从 this.$slots获取VNode列表中的静态内容：
+    -->
+    <div id="e1">
+        <slot>slot test</slot>       
+    </div>
+    <script>
+        var e1 = new Vue({
+            el: '#e1',
+            components: {
+                slot: {
+                    render: function (createElement) {
+                        return createElement('div', this.$slots.default)
+                    },
+                },
+            },
+        });
+    </script>
+
+
+    <!-- this.$scopedSlots中获得能用作函数的作用域插槽，这个函数返回VNode -->
+    <div id="e2">
+        <slot>slot test text</slot>
+    </div>
+    <script>
+        var e2 = new Vue({
+            el: '#e2',
+            data: {
+                msg: 'e2 test text',
+            },
+            components: {
+                slot: {
+                    render: function (createElement) {
+                        return createElement('div', [
+                            this.$scopedSlots.default({
+                                text: this.msg,
+                            }),
+                        ]);
+                    },
+                    
+                },
+            },
+        });
+    </script>
+
+    <!-- 渲染函数向子组件中传递作用域插槽，可以利用VNode数据中的scopedSlots域 -->
+    <div id="e3">
+        <slot>slot test text 03</slot>
+    </div>
+    <script>
+        var e3 = new Vue({
+            el: '#e3',
+            render (createElement) {
+                return createElement('div', [
+                    createElement('child', {
+                        scopedSlots: {
+                            default: function (props) {
+                                return createElement('span', props.text);
+                            },
+                        },
+                    }),
+                ]);
+            },
+        });
+    </script>
+</body>
+</html>
