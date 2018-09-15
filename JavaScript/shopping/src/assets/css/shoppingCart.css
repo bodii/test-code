@@ -1,0 +1,80 @@
+#body {
+    margin: 0 15px 0 15px;
+}
+
+p.footer {
+    text-align: right;
+    font-size: 11px;
+    border-top: 1px solid #D0D0D0;
+    line-height: 32px;
+    padding: 0 10px 0 10px;
+    margin: 20px 0 0 0;
+}
+
+#container {
+    margin: 10px;
+    border: 1px solid #D0D0D0;
+    box-shadow: 0 0 8px #D0D0D0;
+}
+
+/* 表头 */
+table {
+    border-collapse:collapse;
+    width: 550px;
+}
+table.list, table, th, tr, td{
+    border:1px solid #999;
+}
+table.list .title {
+    background:cadetblue;
+    border: 1px solid #aaa;
+    color: white;
+}
+
+/* 列表内容 */
+ul.shoppingCart-row {
+    margin:20px 0px; 
+    padding:0px;
+    letter-spacing: -2px
+}
+ul.shoppingCart-row > li {
+    margin:0px;
+    border: 1px solid #eee;
+    display: inline-block;
+    text-align:center;
+    height: 30px;
+    line-height: 30px;
+    color: #666;
+}
+
+/* 商品id列 */
+th.shoppingCarts-id, li.shoppingCart-id {
+    width: 40px;
+}
+/* 商品名称列 */
+th.shoppingCarts-name, li.shoppingCart-name {
+    width: 100px;
+}
+/* 商品单价列 */
+th.shoppingCarts-price, li.shoppingCart-price {
+    width: 40px;
+}
+/* 商品数量列 */
+th.shoppingCarts-nums, li.shoppingCart-nums {
+    width: 200px;
+}
+button.shoppingCart-nums-less {
+    /*margin-left: -50px;*/
+}
+span.shoppingCart-nums-text {
+    margin: 0px 20px;
+    text-align:center;
+    width: 100px;
+}
+button.shoppingCart-nums-add {
+    margin-left: 10px;
+}
+/* 商品小计列 */
+th.shoppingCarts-subtotal, li.shoppingCart-subtotal {
+    width: 100px;
+}
