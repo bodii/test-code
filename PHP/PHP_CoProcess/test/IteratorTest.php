@@ -15,7 +15,7 @@ function gen()
 }
 
 // 是否是一个迭代生成器
-var_dump((gen() instanceof \Iterator));
+var_dump((gen() instanceof \Generator));
 
 $gen = gen(); // rewind执行，消耗掉一个yield
 var_dump($gen->send('something')); // output:bar

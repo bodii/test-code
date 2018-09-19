@@ -48,11 +48,11 @@ class Scheduler
      * NewTask function
      * 添加一个新的任务
      *
-     * @param Iterator $coroutine 迭代生成器对象
+     * @param Generator $coroutine 迭代生成器对象
      * 
      * @return integer 任务id 
      */
-    public function newTask(\Iterator $coroutine)
+    public function newTask(\Generator $coroutine)
     {
         $taskId = ++$this->maxTaskId;
         $task = new Task($taskId, $coroutine);

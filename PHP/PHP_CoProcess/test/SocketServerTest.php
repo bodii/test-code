@@ -45,11 +45,11 @@ function socketServer($port)
 /**
  * NewTask function
  *
- * @param \Iterator $coroutine 迭代生成器
+ * @param \Generator $coroutine 迭代生成器
  * 
  * @return void
  */
-function newTask(\Iterator $coroutine)
+function newTask(\Generator $coroutine)
 {
     return new SScheduler(
         function (Task $task, SScheduler $scheduler) use ($coroutine) {

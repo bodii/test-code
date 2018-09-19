@@ -57,9 +57,9 @@ class Task
      * 实例化一个迭代任务
      *
      * @param integer  $taskId    任务id, 每一个迭代对象的每一次迭代累加
-     * @param Iterator $coroutine 迭代生成器对象
+     * @param Generator $coroutine 迭代生成器对象
      */
-    public function __construct($taskId, \Iterator $coroutine)
+    public function __construct($taskId, \Generator $coroutine)
     {
         $this->taskId = $taskId;
         $this->coroutine = $coroutine;
