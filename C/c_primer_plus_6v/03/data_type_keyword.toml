@@ -1,0 +1,26 @@
+# C语言的数据类型关键字
+
+# 最初K&R给出的关键字
+initial = [
+	"int",
+	"long",
+	"short",
+	"unsigned",
+	"char",
+	"float",
+	"double"
+]
+
+# C90标准添加的关键字
+c90 = [
+	"signed",
+	"void"
+]
+
+# C99标准添加的关键字
+c99 = [
+	"_Bool",
+	"_Complex",
+	"_Imaginary"
+]
+

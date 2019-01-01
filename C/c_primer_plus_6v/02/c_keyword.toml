@@ -1,0 +1,53 @@
+# c lang(ISO) keyword
+
+# C90标准
+C90 = [
+	"auto",
+	"break",
+	"case",
+	"char",
+	"continue",
+	"default",
+	"do",
+	"double",
+	"else",
+	"extern",
+	"float",
+	"for",
+	"goto",
+	"if",
+	"inline",
+	"int",
+	"long",
+	"register",
+	"restrict",
+	"return",
+	"short",
+	"sizeof",
+	"static",
+	"struct",
+	"typedef",
+	"union",
+	"unsigned",
+	"void",
+	"while"
+]
+
+
+# C99标准
+C99 = [
+	"const",
+	"enum",
+	"signed",
+	"volatile",
+	"_Alignas",
+	"_Alignof",
+	"_Atomic",
+	"_Bool",
+	"_Complex",
+	"_Generic",
+	"_Imaginary",
+	"_Noreturn",
+	"_Static_assert",
+	"_Thread_local"
+]
