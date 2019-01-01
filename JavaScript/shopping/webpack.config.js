@@ -5,20 +5,20 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        index_ts: './src/index.ts',
-        // index_vue: './src/index.vue',
-        // index: './src/index.js'
+        shops: './src/assets/js/shops.ts',
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
-        }),   
+            filename: 'shops.html',
+            template: 'src/shops.html',
+            inject: true, // 所有js资源插入到body元素的底部
+            chunks: ['shops'],
+        }),
     ],
     output: {
         filename: '[name]_[hash].js',
         path: path.resolve(__dirname, 'dist'),
-        // publicPath: '/dist/'
     },
     module: {
         rules: [
