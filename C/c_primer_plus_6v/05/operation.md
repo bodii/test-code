@@ -46,3 +46,28 @@ C语言有大约40个运算符
 
 
 #### sizeof运算符和size_t类型
+C语言规定，sizeof返回size_t类型的值。这是一个无符号整数类型，但它不是新类型。
+C有一个typedef机制，允许程序员为现有类型创建别名：
+typedef double real;
+这样，real 就是double的别名。现在，可以声明一个real类型的变量：
+real deal; // 使用typedef
+C头文件系统可以使用typedef把size_t作为unsigned int 或unsigned long的别名。
+这样，在使用size_t类型时，编译器会根据不同的系统替换标准类型。
+C99新增了%zd转换说明用于printf()显示size_t类型的值。如果系统不支持%zd,可以使用
+%u或%lu代替%zd.
+
+
+#### 求模运算符：%
+求模运算符(modulus operator)用于整数运算。
+常用于控制程序流。
+
+
+#### 趋零截断
+如：
+11 / 5 得2, 11 % 5 得1
+11 / -5得-2, 11 % -2 得1
+-11 / -5 得2, -11 / -5得-1
+-11 / 5 得-2, -11 % 5得-1
+
+
+#### 递增运算符：++
