@@ -81,3 +81,19 @@ _Bool类型的变量只能储存1(真)或0(假).如果把其他非零数值赋�
 预先不知道要执行多少次循环。
 
 `计数循环(counting loop)`,这类循环在执行循环之前就知道要重复多少次。
+
+
+#### do while
+形式：
+`
+do
+	statement
+while ( expression );
+`
+在test为假或0之前，重复执行statement部分。
+示例：
+```c
+do
+	scanf("%d", &number);
+while (number != 20);
+```

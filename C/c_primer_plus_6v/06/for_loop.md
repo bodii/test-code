@@ -19,3 +19,12 @@ for （ initialize; test; update )
 for (n = 0; n < 10; n++)
 	printf(" %d %d\n", n, 2 * n + 1);
 ```
+
+
+#### 出口条件循环：do while
+while循环和for循环都是入口条件循环，即在循环的每次迭代之前检查测试条件，
+所以有可能根本不执行循环中的内容。
+C语言还有`出口条件循环(exit-condition loop)`,即在循环的每次迭代之后检查
+测试条件，这保证了至少执行循环体中的内容一次。这种循环被称为do while循环.
+
+
