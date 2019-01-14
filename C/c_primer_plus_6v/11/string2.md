@@ -132,4 +132,59 @@ scanf()和gets()或fgets()的区别在于它们如何确定字符串的末尾:sc
 如果使用%s转换说明，以下一个空白字符(空行、空格、制表符或换行符)作为字符串的结束(字符串不包括
 空白字符).如果指定的字段宽度，如%10s,那么scanf()将读取10个字符或读到第1个空白字符停止。
 
+fgets()读取从键盘输入的的数据更合适。
+scanf()的典型用法是读取并转换混合数据类型为某种标准形式。如，一种工具名、库存量和单价。
+scanf()和gets类似，也存在一些潜在的缺点。如果输入行的内容过长，scanf()也会导致数据溢出。不过，
+在%s转换说明中使用字段宽度可防止溢出。
 
+
+#### 字符串的输出
+C有3个标准库函数用于打印字符串：put()、fputs()和printf().
+
+
+#### fputs()函数
+fputs()函数是puts()针对文件定制的版本。它们的区别：
+* fputs()函数的第2个参数指明要写入数据的文件。如果要打印在显示器上，可以用定义在stdio.h中的
+stdout(标准输出)作为该参数。
+* 与puts()不同，fputs()不会在输出的末尾添加换行符。
+gets()丢弃输入中的换行符，但是puts()在输出中添加换行符。另一方面，fgets()保留输入中的换行符，
+fputs()不在输出中添加换行符。
+如果gets()读到文件结尾会返回空指针。对空指针求值为0(即为假),这样便可结束循环。
+可以这样写:
+```c
+char line[81];
+while (gets(line))  // 与while(gets(line) != NULL) 相同
+	puts(line);
+
+// 或
+char line[81];
+while (fgets(line, 81, stdin))
+	fputs(line, stdout);
+```
+puts()应该与gets()配对使用，fputs应与fgets()配对使用。
+gets()已被废弃, 不建议使用。
+
+相同的输出，printf()的形式更复杂些，需要输入更多代码，而且计算机执行的时间也更长.
+
+
+#### 自定义输入/输出函数
+```c
+#include <stdio.h>
+
+void put(const char * string)  /* 不会改变字符串 */
+{
+    while (*string != '\0')
+        putchar(*string++);
+}
+```
+用数组表示法编写这个函数：
+```c
+int i = 0;
+while (string[i] != '\0')
+	putchar(string[i++]);
+```
+还可以使用这种形式:
+```c
+while (*string)
+```
+当string指向空字符时，*string的值是0.
