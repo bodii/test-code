@@ -188,3 +188,5 @@ while (string[i] != '\0')
 while (*string)
 ```
 当string指向空字符时，*string的值是0.
+
+
