@@ -78,6 +78,7 @@ int main(void)
 int critic(void)
 {
 }
+```
 
 这里，变量units具有文件作用域，main()和critic()函数都有可以使用它（更准确地说，units具有
 外部链接文件作用域)
