@@ -150,3 +150,63 @@ ar2[1][2] = p2[1][2] = 12;
 使用动态内存通常比使用栈内存慢。
 
 总而言之，程序把静态对象、自动对象和动态分配的对象储存在不同的区域。
+
+
+#### ANSI C类型限定符
+C90新增了两个属性：
+恒常性(constancy) 和 易变性(volatility).
+这两个属性可以分别用关键字const和volatile来声明，以这两个关键字创建的类型是限定类型(qualified
+type).
+C99标准新增了第3个限定符：restrict,用于提高编译器优化。
+C11标准新增了第4个限定符：_Atomic.
+C11提供一个可选库，由stdatomic.h管理，以支持并发程序设计，而且_Atomic是可选支持项。
+
+C99为类型限定符增加了一个新属性： 它现在是幂等的(idempotent)!其实意思是可以在一条声明中多次使用
+同一限定符，多余的限定符将被忽略：
+```c
+const const const int n = 6; // 与const int n = 6; 相同
+```
+有了这个新属性，就可以编写类似的代码：
+```c
+typedef const int zip;
+const zip q = 8;
+```
+
+
+#### const类型限定符
+```c
+const float * pf;    /* pf 指向一个float类型的const值 */
+
+float * const pt;    /* pt 是一个const指针 */
+
+const float * const ptr;  /* ptr既不能指向另外，它所指向的值也不能改变 */
+
+float const * pfc;    /* 与const float * pfc 相同 */
+```
+
+可以同时使用const和volatile限定一个值：
+```c
+volatile const int loc;
+cosnt volatile int * ploc;
+```
+
+
+#### restrict类型限定符
+restrict关键字允许编译器优化某部分代码以更好地支持计算。它只能用于指针，表明该指针是访问
+数组对象的唯一且初始的方式。
+```c
+int ar[10];
+int * restrict restar = (int *) malloc(10 * sizeof(int));
+int * par = ar;
+```
+这里，指针restar是访问由malloc()所分配内存的唯一且初始的方式。因此，可以用restrict关键字
+限定它。而指针par既不是访问ar数组中数据的初始方式，也不是唯一方式。所以不用把它设置为restrict
+
+restric关键字有两个读者。
+一个是编译器，该关键字告知编译器可以自由假定一些优化方案
+另一个读者是用户，该关键字告知用户要使用满足restrict要求的参数。
+
+
+C提供多种管理内存的模型。除了熟悉这些模型外，还要学会如何选择不同的类别。大多数情况下，最好
+选择自动变量。如果要使用其他类别，应该有充分的理由。通常，使用自动变量、函数形参和返回值进
+行函数间的通信比使用全局变量安全。但是，保持不变的数据适合用全局变量。
