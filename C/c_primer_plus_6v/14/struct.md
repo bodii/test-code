@@ -211,3 +211,119 @@ fellow[0].income == (*him).income
 barney.income == (*him).income == him->income   // 假设him == &barney
 
 
+#### 结构和结构指针的选择
+把指针作为参数有两个优点：
+无论是以前不是现在的C实现都有能使用这种方法，而且执行起来很快，只需要传递一个地址。
+缺点是无法保护数据。被调函数中的某些操作可能会意外原来结构中的数据。
+可以使用const限定符。
+
+
+#### 结构中的字符数组和字符指针
+```c
+#define LEN 20
+
+struct names {
+	char first[LEN];
+	char last[LEN];
+};
+
+// 可以这样写：
+struct pnames {
+	char * first;
+	char * last;
+};
+// 但，panmes结构变量中的指针应该只用来在程序中管理那些已分配和在别处分配的字符串
+```
+
+
+#### 结构、指针和malloc()
+如果使用malloc()分配内存并使用指针储存该地址，那么在结构中使用指针处理字符串就比较
+合理。
+
+
+#### 复合字面量和结构(C99)
+C99的复合字面量特性可用于结构和数组。
+如果只需要一个临时结构值，复合字面量很好用。
+```c
+(struct book) { "The Idiot", "Fyodor Dostoyevsky", 6.99 };
+```
+还可以把复合字面量作为函数的参数。
+如果函数接受一个结构，可以把复合字面量作为实际参数传递：
+```c
+struct rect { double x; double y; };
+dobule rect_area(struct rect r) { return r.x * r.y; }
+
+double area;
+area = rect_area((struct rect) { 10.5, 20.0});
+
+double rect_areap(struct rect * rp) { return rp->x * rp->y; }
+area = rect_areap( &(struct rect) { 10.5, 20.0} );
+
+
+#### 伸缩型数组成员(C99)
+`伸缩型数组成员(flexible array member)`
+第1个特性是，该数组不会立即存在。
+第2个特性是，使用这个伸缩型数组成员可以缩写合适的代码，就像它确定存在并具有所需数目的元素
+一样。
+首先，声明一个伸缩型数组成员有如下规则：
+伸缩型数组成员必须是结构的最后一个成员;
+结构中必须至少有一个成员;
+伸缩数组的声明类似于普通数组，只是它的方括号中是空的。
+
+```c
+struct flex
+{
+	int count;
+	double average;
+	double scores[];   // 伸缩型数组成员
+};
+```
+带伸缩型数组成员的结构确实有一些特殊的处理要求。
+第一，不能用结构进行赋值或拷贝：
+```c
+struct flex * pf1, * pf2;   // *pf1 和 *pf2都是结构
+
+*pf2 = *pf1;   // 不要这样做
+```
+这样做只能拷贝除伸缩型数组成员以外的其他成员。确实要进行拷贝，应使用memcpy()函数.
+
+第二，不要以按值方式把这种结构传递给结构。原因相同，按值传递一个参数与赋值类似。要把
+结构的地址传递给函数
+
+第三，不要使用带伸缩型数组成员的结构作为数组成员或另一个结构的成员。
+
+
+#### 匿名结构(C11)
+```c
+struct names
+{
+	char first[20];
+	char last[20];
+};
+
+struct person
+{
+	int id;
+	struct names name; // 嵌套结构成员
+};
+
+struct person ted = { 8483, { "Ted", "Grass" } };
+```
+在C11中，可以用嵌套的匿名成员结构定义person:
+```c
+struct person
+{
+	int id;
+	struct { char first[20]; char last[20]; };   // 匿名结构
+};
+
+struct person ted = { 8483, {"Ted", "Grass"} };
+
+puts(ted.first);
+```
+
+
+#### 使用结构数组的函数
+
+#### 把结构内容保存到文件中
+
