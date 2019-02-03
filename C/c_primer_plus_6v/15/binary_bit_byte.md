@@ -104,3 +104,21 @@ stonk <<= 2;         /* 把stonk的值改为4 */
 number << n     // number乘以2的次幂
 number >> n     // 如果number为非负，则用number 除以2的n次幂
 
+#### 对齐特性(C11)	
+_Alignof运算符给出一个类型的对齐要求，在关键字_Alignof后面的圆括号中
+写上类型名即可：
+size_t d_align = _Alignof(float);
+假设d_align的值是4,意思是float类型的对齐要求是4.也就是说，4是储存类型
+值相邻地址的字节数。一般而言，对齐值都应该是2的非负整数次幂。较大的对
+齐值被称为stricter或stronger,较小的对齐值被称为weaker.
+可以使用_Alignas说明符指定一个变量或类型的对齐值。但是，不应该要求该
+值小于基本对齐值。例如，如果float类型的对齐要求是4，不要请求其对齐值
+是1或2.该说明符用作声明的一部分，说明符后面的圆括号内包含对齐值或类型：
+```c
+_Alignas(double) char c1;
+_Alignas(8) char c2;
+unsigned char _Alignas(long double) c_arr[sizeof(long double)];
+```
+在程序中包含stdalign.h头文件后，就可以把alignas和alignof分别作为_Alignas
+和_Alignof的别名。这样做可以与C++关键字匹配。
+

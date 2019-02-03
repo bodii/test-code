@@ -45,3 +45,56 @@ val = val | 0377;
 val ^= 0377;
 val = val ^ 0377;
 
+
+#### 位字段
+操作位的第2种方法是位字段(bit field)。位字段是一个signed int 或unsigned int 类型变量
+中的一组相邻的位(C99和C11新增了_Bool类型的位字段).
+位字段通过一个结构声明来建立，该结构声明为每个字段提供标签，并确定该字段的宽度，例如：
+```c
+struct {
+	unsigned int autfd: 1;
+	unsigned int bldfc: 1;
+	unsigned int undln: 1;
+	unsigned int itals: 1;
+} prnt;
+```
+prnt包含4个1位的字段，现在，可以通过普通的结构成员运算符(.)单独给这些字段赋值：
+prnt.itals = 0;
+prnt.undln = 1;
+由于每个字段恰好为1位，所以只能为其赋值1或0.变量prnt被储存在int大小的
+内存单元中式，但是在本例中只使用了其中的4位。
+
+有时，某些设置也有多个选择，因此需要多位来表示。
+```c
+struct {
+	unsigned int code1: 2;
+	unsigned int code2: 2;
+	unsigned int code3: 8;
+} prcode;
+```
+以上代码创建了两个2位的字段和一个8位的字段。
+prcode.code1 = 0;
+prcode.code2 = 3;
+prcode.code3 = 102;
+但是，要确保所赋的值不超出字段可容纳的范围。
+如果超出了一个unsigned int类型的大小，会用到下一个unsigned int 类型的存储位置。
+一个字段不允许跨越两个unsigned int 之间的边界。
+编译器会自动移动跨界的字段、保持unsigned int的边界对齐。一旦发生这种情况，第1
+个unsigned int中会留下一个未命名的"洞".
+可以用未命名的字段宽度"填充"未命名的洞.使用一个宽度为0的未命名字段迫使下一个字
+与下一个整数对齐:
+struct {
+	unsigned int filed1 : 1;
+	unsigned int        : 2;
+	unsigned int filed2 : 1;
+	unsigned int        : 0;
+	unsigned int filed3 : 1;
+} stuff;
+在stuff.filed1和stuff.filed2之间，有一个2位的空隙;stuff.filed3将储存在下一个unsigned
+int中。
+字段储存在一个int中的顺序取决于机器。
+在有些机器上，存储的顺序是从左往右，而在另一些机器上，是从右往左。
+另外，不同的机器中两个字段边界的位置也有区别。由于这些原因，位字段通常都不容易移植。
+
+C以unsigned int 作为位字段结构的基本布局单元。因此，即使一个结构唯一的成员是1位字段，
+该结构的大小也是一个unsigned int类型的大小，unsigned int在我们的系统中是32位。
