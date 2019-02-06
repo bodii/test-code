@@ -89,3 +89,19 @@ int q;                 // q不是宏，因为是未定义的
 #include "general.h"
 #endif
 
+
+#### #line和#error
+#line指令重置__LINE__和__FILE__宏报告的行号和文件名。
+```c
+#line 1000      // 把当前行号重置为1000
+#line 10 "cool.c"   // 把行号重置为10, 把文件名重置为cool.c
+```
+
+#error 指令让预处理器发出一条错误消息，该消息包含指令中的文本。如查可能的话，编译过程
+应该中断。
+```c
+#if __STDC_VERSION__ != 201121L
+#error Not C11
+#endif
+```
+
