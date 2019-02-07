@@ -45,3 +45,38 @@ void qsort(void * base, size_t nmemb, size_t size, int (* compar)(const void *, 
 ```
 ANSI C允许把指向任何数据类型的指针强制换成指向void的指针。
 
+强制类型转换：
+```c
+const double * a1 = (const double *) p1;
+```
+
+下面再来看一个比较函数的例子。假设有下面的声明：
+```c
+struct names {
+	char first[40];
+	char last[40];
+};
+
+struct names staff[100];
+
+// 调用qsort()
+qsort(staff, 100, sizeof(struct names), comp);
+
+// 这里comp是比较函数的函数名。
+#include <string.h>
+int comp(const void * p1, const void * p2)
+{
+	/* 得到正确类型的指针 */
+	const struct names * ps1 = (const struct names *) p1;
+	const struct names * ps2 = (const struct names *) p2;
+
+	int res;
+	res = strcmp(ps1->last, ps2->last);  
+	if (res != 0 )
+		return res;
+	else
+		return strcmp(ps1->first, ps2->first);
+}
+```
+该函数使用strcmp()函数进行比较。strcmp()的返回值与比较函数的要求相匹配。
+通过指针访问结构成员时必须使用->运算符。
