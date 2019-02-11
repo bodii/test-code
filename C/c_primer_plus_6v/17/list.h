@@ -49,7 +49,7 @@ bool AddItem(Item item, List * plist);
 /* plist 指向一个已初始化的链表 */
 /* pfun指向一个函数，该函数接受一个Item类型的参数，且无返回值 */
 /* 后置条件: pfun指向的函数作用于链表中的每一项一次 */
-void Traverse(const List * plist, void(*pfun)(Itme item));
+void Traverse(const List * plist, void(*pfun)(Item item));
 
 /* 操作： 释放已分配的内存(如果有的话) */
 /* plist指向一个已初始化的链表 */
