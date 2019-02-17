@@ -16,14 +16,14 @@ typedef struct item
 #define MAXITEMS 10
 typedef struct trnode
 {
-	Iterm item;
+	Item item;
 	struct trnode * left;      /* 指向左分支的指针 */
-	struct tronde * right;     /* 指向右分支的指针 */
+	struct trnode * right;     /* 指向右分支的指针 */
 } Trnode;
 
 typedef struct tree
 {
-	Trnode * root    /* 指向根节点的指针 */
+	Trnode * root;    /* 指向根节点的指针 */
 	int size;       /* 树的项 */
 } Tree;
 

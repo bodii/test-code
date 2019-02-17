@@ -2,7 +2,8 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <strlib.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "tree.h"
 
 /* 局部数据类型 */
@@ -76,7 +77,7 @@ bool AddItem(const Item * pi, Tree * ptree)
 	if (ptree->root == NULL)      /* 情况1: 树为空 */
 		ptree->root = new_node;   /* 新节点为树的根节点 */
 	else                          /* 情况2: 树不为空 */
-		AddNode(new_node, ptree); /* 在树中添加新节点 */
+		AddNode(new_node, ptree->root); /* 在树中添加新节点 */
 
 	return true;
 }
@@ -113,7 +114,7 @@ void Traverse(const Tree * ptree, void(*pfun)(Item item))
 void DeleteAll(Tree * ptree)
 {
 	if (ptree != NULL)
-		DeleteAllNode(Ptree->root);
+		DeleteAllNodes(ptree->root);
 
 	ptree->root = NULL;
 	ptree->size = 0;
@@ -130,7 +131,7 @@ static void InOrder(const Trnode * root, void(*pfun)(Item item))
 	}
 }
 
-static void DeleteAllNode(Trnode * root)
+static void DeleteAllNodes(Trnode * root)
 {
 	Trnode * pright;
 
@@ -193,7 +194,7 @@ static bool ToRight(const Item * i1, const Item * i2)
 static Trnode * MakeNode(const Item * pi)
 {
 	Trnode * new_node;
-	new_node = (Tronde *) malloc(sizeof(Trnode));
+	new_node = (Trnode *) malloc(sizeof(Trnode));
 	if (new_node != NULL)
 	{
 		new_node->item = *pi;
@@ -208,7 +209,7 @@ static Pair SeekItem(const Item * pi, const Tree * ptree)
 {
 	Pair look;
 	look.parent = NULL;
-	look.child = Ptree->root;
+	look.child = ptree->root;
 
 	if (look.child == NULL)
 		return look;
