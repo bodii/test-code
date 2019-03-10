@@ -15,10 +15,10 @@ public class SequenceStack implements Stack {
 		if (length <= 0) {
 			this.sList = new Object[10];
 			this.maxLength = 10;
+		} else {
+			this.sList = new Object[length];
+			this.maxLength = length;
 		}
-
-		this.sList = new Object[length];
-		this.maxLength = length;
 	}
 
 	public void push(Object e) {
