@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Symmetry",
+            "request": "launch",
+            "mainClass": "Symmetry",
+            "projectName": "java_e091e58a"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SenquenceList",
+            "request": "launch",
+            "mainClass": "SenquenceList",
+            "projectName": "java_e091e58a"
+        }
+    ]
+}
