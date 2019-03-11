@@ -11,8 +11,8 @@ public class LinkedQueue implements Queue {
 	private int maxLength;
 	private int size;
 
-	private int front; // 队头
-	private int rear; // 队尾
+	private int front = 0; // 队头
+	private int rear = 0; // 队尾
 
 	public LinkedQueue(int length) {
 		if (length <= 0) {
@@ -28,9 +28,9 @@ public class LinkedQueue implements Queue {
 
 		Node element = new Node(e);
 		if (size > 1) {
-			qList[size - 1].setNext(element);
+			qList[rear - 1].setNext(element);
 		}
-		qList[size] = element;
+		qList[rear] = element;
 		size++;
 		rear++;
 	}
@@ -40,14 +40,12 @@ public class LinkedQueue implements Queue {
 		checkIsEmpty();
 
 		Node topNode = qList[front];
+		Object top = topNode.getNodeValue();
 		qList[front] = null;
-		if (size > 2) {
-			qList[size - 1].setNext(null);
-		}
+
 		size--;
 		front++;
 
-		Object top = topNode.getNodeValue();
 		return top;
 	}
 
