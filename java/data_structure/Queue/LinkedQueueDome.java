@@ -25,5 +25,6 @@ public class LinkedQueueDome {
             System.out.println(canteenQueue.pop() + " 打完饭离开队伍。");
         }
 
+        System.out.println("szie: " + canteenQueue.size());
     }
 }
