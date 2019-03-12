@@ -1,6 +1,12 @@
 {
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SelectionSort",
+            "request": "launch",
+            "mainClass": "SelectionSort",
+            "projectName": "java_3c37e864"
+        },
         {
             "type": "java",
             "name": "CodeLens (Launch) - Symmetry",
