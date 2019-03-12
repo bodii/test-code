@@ -18,7 +18,7 @@ public class LinkedQueue implements Queue {
 		if (length <= 0) {
 			length = 10;
 		}
-		// this.qList = new Object[length];
+		this.qList = new Node[length];
 		this.maxLength = length;
 	}
 

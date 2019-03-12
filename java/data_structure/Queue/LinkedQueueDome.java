@@ -24,5 +24,6 @@ public class LinkedQueueDome {
         while (!canteenQueue.isEmpty()) { // 如果食堂不为空
             System.out.println(canteenQueue.pop() + " 打完饭离开队伍。");
         }
+
     }
 }
