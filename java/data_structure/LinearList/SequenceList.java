@@ -1,18 +1,18 @@
 /**
  * 线性表顺序存储操作实现
  */
-public class SenquenceList implements LinearList {
+public class SequenceList implements LinearList {
     private Object[] sList;
     private int size;
 
-    public SenquenceList(int length) {
+    public SequenceList(int length) {
         if (length == 0) {
             this.sList = new Object[10];
         }
         this.sList = new Object[length];
     }
 
-    public SenquenceList() {
+    public SequenceList() {
         this(10);
     }
 

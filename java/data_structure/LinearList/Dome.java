@@ -1,7 +1,7 @@
 public class Dome {
 
     public static void main(String[] args) {
-        SenquenceList s1 = new SenquenceList();
+        SequenceList s1 = new SequenceList();
         s1.add("Jack");
         s1.add("John");
         System.out.println(s1.get(0));
