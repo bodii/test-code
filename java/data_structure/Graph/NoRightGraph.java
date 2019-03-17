@@ -47,7 +47,7 @@ public class NoRightGraph {
 	// 打印邻接矩阵
 	public void printMatrix() {
 		System.out.println("该无权图的邻接矩阵为: ");
-		System.out.print("   ");
+		System.out.print("     ");
 		for (int i = 0; i < nodes.length; i++) {
 			System.out.print(nodes[i] + "   ");
 
