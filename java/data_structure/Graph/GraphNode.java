@@ -4,11 +4,15 @@
 public class GraphNode {
 	public Object Node;
 
-	public GraphNode(Ojbect value) {
+	public GraphNode(Object value) {
 		this.Node = value;
 	}
 
 	public String toString() {
-		return value == null ? "" : value.toString();
+		if (Node == null) {
+			return "";
+		} else {
+			return Node.toString();
+		}
 	}
 }
