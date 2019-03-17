@@ -1,7 +1,16 @@
+import java.util.Vector;
+
 public class BinaryTreeDemo {
 	public static void main(String[] args) {
 		// TreeNode tn = new TreeNode("A");
-		System.out.println(create());
+		BinaryTree bt = new BinaryTree();
+		// Vector v = bt.rootFirst(create().root);
+		// Vector v = bt.rootMid(create().root);
+		Vector v = bt.rootLast(create().root);
+		for (int i = 0; i < v.size(); i++) {
+			Object o = (Object) v.get(i);
+			System.out.println(o);
+		}
 	}
 
 	/**
