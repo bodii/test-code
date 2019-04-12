@@ -3,7 +3,7 @@
 (function() {
 	// 用随机数的方式来模拟一个获取用户信息的方法
 	var getLogin = function() {
-		var a = parseInt(Math.random() * 10).toFixed(0));
+		var a = parseInt(Math.random() * 10).toFixed(0);
 		if (a % 2 == 0) {
 			return {
 				login: false
