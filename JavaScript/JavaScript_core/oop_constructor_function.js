@@ -97,3 +97,8 @@ console.log(p1.getName());
 console.log('name' in p1);
 console.log('getName' in p1);
 console.log('gender' in p1);
+
+
+// 特性检测，只有移动端环境才支持touchstart事件
+// var isMobile = 'ontouchstart' in document;
+// console.log(isMobile);
