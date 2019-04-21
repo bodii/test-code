@@ -21,6 +21,8 @@ Person.prototype.getAge = function() {
 var Student = function(name, age, grade) {
 	// 通过call方法还原Person构造函数中的所有处理逻辑
 	Student.call(Person, name, age);
+	// 等价于
+	// Person.call(this, name, age);
 	this.grade = grade;
 }
 
