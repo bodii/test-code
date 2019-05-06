@@ -1,3 +1,4 @@
+'use static'
 /*
  模板字符串
 
@@ -35,3 +36,20 @@ let fn = () => {
 }
 
 let str = `he said: ${fn()}`;
+
+// 在一个函数中，当传入的参数是数组或者对象时，也可以使用解析结构
+const fn = ({name, age}) => {
+	return `${name} is age is ${age}`;
+}
+
+fn({name: 'TOM', age: 20 });
+
+// 对象解析结构中的默认值
+const {name, age=20} = 'tom';
+
+// 数组解析中的默认值
+const [a, b=20] = [1]
+
+// 函数参数中的默认值
+const fn = (x=20, y=30) => x + y;
+console.log(fn());
