@@ -17,6 +17,8 @@ function getJSON(url) {
 					} catch (e) {
 						reject(e);
 					}
+				} else {
+					reject(new Error(XHR.statusText));
 				}
 			}
 		}
