@@ -5,18 +5,26 @@ import java.util.ArrayList;
 class TestArraySearchIndex {
 
 	// -- 返回数组为x的全部索引
-	static int[] arraySrchIdx(int[] a, int x) {
+	static int[] arraySrchIdx(int[] a,  int x) {
 
-		ArrayList r = new ArrayList();
-		for (int i = 0; i < a.length; i++) {
+		int[] r = new int[arrayInNum(a, x)];
+		for (int i = 0, j = 0; i < a.length; i++) {
 			if (a[i] == x) {
-				r.add(i);
+				r[j] = i;
+				j++;
 			}
 		}
 
-		int[] v = r.toArray(new int[r.size()]);
-		
-		return v;
+		return r;
+	}
+
+	static int arrayInNum(int[] a, int x) {
+		int num = 0;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] == x)
+				num++;
+		}
+		return num;
 	}
 
 	// -- 打印数组元素
