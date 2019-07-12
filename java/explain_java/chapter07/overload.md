@@ -12,8 +12,11 @@ class Abc {
 		return (x + y) / 2;
 	}
 
-	static int ave(int x, int y) {
-		return x / 2 + y / 2;
+	static int ave(int[] x, int[] y) {
+		int v;
+		for (int i = 0; i < x.length; i++)
+			v = x[i] + y[i];
+		return v / 2;
 	}
 
 	public static void main(String[] args) {
