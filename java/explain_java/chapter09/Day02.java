@@ -7,6 +7,7 @@ class Day02 {
 
 	public Day02() { set(1, 1, 1); }
 	public Day02(int year) { set(year, 1, 1); }
+	public Day02(int year, int month) { set(year, month, 1); }
 	public Day02(int year, int month, int date) { set(year,month, date); }
 	public Day02(Day02 d) { set(d.year, d.month, d.date); }
 
