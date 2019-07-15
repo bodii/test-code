@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-class DayTester {
+class DayTester03 {
 	public static void main(String[] args) {
 		Scanner stdIn = new Scanner(System.in);
 
@@ -15,7 +15,7 @@ class DayTester {
 		System.out.println("day1 = " + day1);
 
 		Day02 day2 = new Day02(day1);
-		System.out.prinln("创建了与day1的日期相同的day2。");
+		System.out.println("创建了与day1的日期相同的day2。");
 
 		if (day1.equalTo(day2))
 			System.out.println("day1和day2相等。");
@@ -37,7 +37,7 @@ class DayTester {
 			a[i] = new Day02();
 
 		for (int i = 0; i < a.length; i++)
-			System.out.printf("a[%d] = %s", i , a[i]);
+			System.out.printf("a[%d] = %s\n", i , a[i]);
 
 	}
 }
