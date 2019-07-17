@@ -31,3 +31,6 @@ public final class Math {
 	public static final double PI = 3.14159265358979323846;
 }
 ```
+
+### public且final的类变量
+如果常量需要提供给类的使用者，请以public且final的类变量形式进行提供。
