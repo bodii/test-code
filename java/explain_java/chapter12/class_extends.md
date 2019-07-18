@@ -13,3 +13,8 @@ Point3D(int x, int y, int z) { // 编译器插入 super(); this.x = x; this.y = 
 ```java
 X() { super(); }
 ```
+
+虽然超类的构造函数不可以被继承，但“不接收参数的构造函数”可以被间接继承。
+
+> 超类的成员可以通过"super.成员名"进行访问。
+
