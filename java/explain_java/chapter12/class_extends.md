@@ -48,3 +48,16 @@ class Derived extends Base { }
 ### Object类
 不执行显式派生声明的类都是Object类的子类。Java中的所有类都是Object类的下位类。
 另外，Object类有时也被称为“老大类”。
+
+
+### 继承
+继承的一个好处就是可以进行`增量编程(incremental programming)`,即对已有的程序只进行最低程度的添加、
+修改，就呆以实现一个新的程序。这可以提高程序的开发效率和维护性。
+
+
+### is-A关系和实例的引用
+TimeAccount是Account的孩子，属于Account家（Account家族），这种关系称为`is-A关系`
+这种关系反过来就不成立了，Account并不是TimeAccount的一种。另外，is-A关系也称为kind-of-A关系。
+
+
+对于类类型的参数，除了可以传递该类类型的实例的引用之外，还可以传递该类的下位类类型的实例的引用。
