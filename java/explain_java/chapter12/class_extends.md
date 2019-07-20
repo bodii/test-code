@@ -70,3 +70,54 @@ poly是“多的“， morph是"形态"的意思。多态也被称为“多样�
 在编译时确定要调用的方法，这种调用结构称为`静态联编(static binding)`或前期联编(early binding).
 在运行时确定要调用的方法，这种调用结构被称为`动态联编(dynamic binding)` 或后期联编(late binding)。
 binding也可翻译为绑定。例如，动态联编也被称为动态绑定或后期绑定。
+
+
+### 引用类型的转型
+超类类型的变量可以引用子类的实例，这种类型转换称为`引用类型的放大转换(widening reference conversion)`
+或向上类型转换(up cast)
+```java
+Pet p = (Pet)new RobetPet("R2D2", "卢克");   // 显式转换
+```
+而子类类型的变量不可以引用超类的实例。不过，显示使用造型运算符进行类型的转换。
+```java
+RobotPet r1 = new Pet("Kurt", "艾一");   // err
+RobotPet r2 = (RobotPet)new Pet("Kurt", "艾一"); // ok
+```
+这里执行的类型转换称为`引用类型的缩小转换(narrowing reference conversion)` 或向
+下类型转换(down cast).
+
+引用类型的放大/缩小转换是Java的语法术语，而向上/向下类型转换则是一般的编程术语。
+```java
+r2.work(0);   // err
+```
+原则上应该避免错误执行向下类型转换，使下位类类型的变量引用上位类类型的实例。
+
+
+### instanceof运符符
+> 类类型的变量名 instanceof 类名
+如果变量x是可以默认转换为类型t的下位类，则结果为true, 否则为false;
+
+
+### @Override注解
+```java
+class RobotPet {
+	// -- 中略
+	@Override public void introduction() {
+		System.out.println("我是机器人。名字是" + getName() + "。");
+		System.out.println("我的主人是" + getMasterName() + "。");
+	}
+}
+```
+这个注释给人类和编译器传达了下述内容：
+> 接下来声明的方法是重写上位类的方法，而不是本类中新添加的方法。
+当这个方法超类不中不存在时，编译器中会发生错误。
+
+> 当方法重写上位类中的方法时，最好在声明中加上@Override注释。
+annotation 是"注释"或"注释"的意思。
+
+
+### ＠Deprecated注解
+在不断改进类或方法的过程中，有时会出现"创建了更好的类""由于类内部的规格修改，该方法
+不能再使用了"等情况，这时就可以使用@Deprecated注释。
+在不推荐使用的类或方法的前面加上@Deprecated，这样一来，使用它们的程序在编译时就会发出
+警告.
