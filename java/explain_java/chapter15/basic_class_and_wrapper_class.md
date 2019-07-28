@@ -35,3 +35,23 @@ Double d = new Double(3.14);
 Integer i = 5; // int 到Integer的自动装箱
 Double d = 3.14; // double到Double的自动装箱
 ```
+
+#### 通过方法提供各种操作
+```java
+int n = 5;
+System.out.println("n = " + n);
+// 相当于
+System.out.println("n = " + Integer(n).toString());
+```
+也就是说，当执行"字符串+数值"的运算时，处理顺序如下：
+1. 创建持有该数值的包装类的实例，对该实例应用toString方法，创建字符串。
+2. 执行字符串的拼接(字符串和转换后的字符串的拼接)
+
+对于所有的包装类，都提供了将数值转换为字符串的toString方法。
+
+toString方法的逆向转换，即将字符串转换为数值的就是parse...方法。这是类方法，其中的...部分是
+首字母在大写的基本类型的类型名。Integer类中提供了parseInt方法,Float类中则提供parseFloat方法
+
+例如,Integer.parseInt("3145") 会返回整数值3145,Long.parseLong("12345"),则返回long型的整数值
+12345L。
+
