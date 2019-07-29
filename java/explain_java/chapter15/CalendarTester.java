@@ -5,13 +5,24 @@ import java.util.Calendar;
 
 class CalendarTester {
 	public static void main(String[] args) {
-		int month, year;
+		int month = 0, year = 0;
 		Calendar c = Calendar.getInstance();
+		MyCalendar mcal = new MyCalendar();
+		
+		System.out.println("<<<<<<<<<<万年历>>>>>>>>>");
+		if (args.length >= 2) {
+			year = Integer.parseInt(args[0]);
+			month = Integer.parseInt(args[1]);
+			mcal.calendar(year, month);
+		} else if (args.length == 1) {
+			year = Integer.parseInt(args[0]);
+			mcal.yearCalendar(year);
+		} else if (args.length == 0) {
+			year =  c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH) + 1;
+			mcal.calendar(year, month);
+		}
 
-		year = !args[0].isEmpty() ?  Integer.parseInt(args[0]) : Calendar.YEAR;
-		month = !args[1].isEmpty() ? Integer.parseInt(args[1]) : Calendar.MONTH;
-		c.set(year, month);
-
-		System.out.println(c.roll(Calendar.DATE));
+		System.out.println();
 	}
 }
