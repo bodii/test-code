@@ -119,4 +119,22 @@ throw语句(throw statement)用于抛出异常，其形式为"throw表达式;".
 
 
 
+> 从Java SE 7 开始， Java中导入了一种新的语法结构的try语句，即`带资源的try语句(try-with- 
+resources statement).`
+```java
+try {
+	BufferedReader br = new BufferedReader(new FileReader("lastTime.txt"));
+	String kibun = br.readLine();
+	System.out.println("上次的心情" + kibun + "。");
+} catch (IOException e) {
+	System.out.println("这是您第1次运行本程序.");
+}
+```
+在带资源的try语句中，实现java.lang.AutoClosable接口的类型会被自动关闭。因此，可以省略资源
+的释放处理(此处为close方法的显示调用) 代码，程序会变得非常简洁。
 
+#### 创建异常类
+> Java里面异常分为两大类:checkedexception(检查异常)和unchecked exception(未检查异常)，对于未
+检查异常也叫RuntimeException(运行时异常),对于运行时异常，java编译器不要求你一定要把它捕获
+或者一定要继续抛出，但是对checkedexception(检查异常)要求你必须要在方法里面或者捕获或者继续
+抛出。
