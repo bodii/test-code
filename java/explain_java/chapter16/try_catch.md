@@ -105,3 +105,18 @@ StackTraceElement[] getStackTrace() 返回元素为printStackTrace 输出的栈�
 
 void setStackTrace(StackTraceElement[] stackTrace) 
 	设置由getStackTrace返回，并由printStackTrace和相关方法输出的栈跟踪元素
+
+
+#### throws 子句(声明可能抛出的检查异常)
+```java
+static void (check) throws Exception, RuntimeException { ... }
+```
+
+#### 方法的抛出
+throw语句(throw statement)用于抛出异常，其形式为"throw表达式;".
+指定的表达式为异常类类型实例的引用。
+另外，不可以指定Throwable的下位类之外的类(的实例的引用)
+
+
+
+
