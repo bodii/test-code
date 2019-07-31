@@ -46,4 +46,62 @@ catch (Exp1 | Exp2 e) { /* 对Exp1和Exp2的(相同) 处理 */ }
 
 
 
+### 异常处理
+Throwable 类为Object类的子类。另外，Throwable、Error、Exception都属于java.lang包
 
+#### Throwable类
+Throwable类位于异常类的层次结构的顶端。也就是说，Java中所有的异常类都是它的下位类。
+因此，存在如下规则
+* 当声明catch子句中的形参时，如果指定的类型不是Throwable的下位类，就会发生编译错误。
+* 当自已创建异常类时，必须将其创建为Throwable的下位类
+Throwable的子类为Error类和Exception类
+
+#### Error类
+这是程序没有希望(无法)恢复的重大异常。正如其名称所示，与其说是"异常",倒不如说是"错误"更为
+准确
+通常情况下，程序中无需对此类进行捕获、处理，因为即使捕获，也难以甚至无法处理.
+
+#### Exception类
+这是程序有希望(可以)恢复的异常。Exception类的下位类基本上都是称为`检查异常(checked exception)`的异常。
+不过，timeException类及其下位类为非检查异常(unchecked exception)。
+
+#### Throwable类的构造函数
+Throwable() 构建详细消息为null的异常对象
+Throwable(String message) 构建详细消息为message的异常对象
+Throwable(String message, Throwable cause) 构建详细消息为message, 原因为cause的异常对象
+Throwable(Throwable cause) 构建原因为cause的异常对象，如果cause为null, 详细消息则为null,
+否则为cause.toString();
+
+#### Throwable类的主要方法
+String getMessage() 返回详细消息
+Throwable getLocalizedMessage() 
+	返回详细消息本地化后的描述。如果在Throwable的下位类中重写本方法，则可以创建本地(地域)
+	固有的消息。如果未重写，则返回与getMessage相同的字符串
+
+Throwable getCause() 返回原因。如果原因不存在或未知，则返回null
+
+Throwable initCause(Throwable cause)
+	设置原因。本方法只可调用一次。由于构造函数的内部会自动调用本方法，因此当使用这个构造函数
+	进行构建时，一次也不可以调用。
+
+String toString() 返回将下面三个内容拼接后的简短描述的字符串。
+* 对象的类名
+* ": "(冒号和空格)
+* 对对象调用getLocalizedMessage方法后的结果
+当getLocalizedMessage返回null时，则只返回类名
+
+void printStackTrace()
+	将对象及跟踪输出到标准错误流中，输出的第一行中包含对对象调用toString方法后返回的字符串，
+	其他行则表示通过fillIInStackTrace方法记录的数据
+
+void printStackTrace(PrintStream s) 将对象及其跟踪输出到PrintStream s 中
+
+void printStackTrace(PrintWriter s) 将对象及其跟踪输出到PrintWriter s中
+
+Throwable fillInStackTrace()
+	将当前线程的栈跟踪的当前状态的相关信息记录到对象中。不过，如果栈跟踪不可写入，则不执行任何操作
+
+StackTraceElement[] getStackTrace() 返回元素为printStackTrace 输出的栈跟踪的各个信息的数组
+
+void setStackTrace(StackTraceElement[] stackTrace) 
+	设置由getStackTrace返回，并由printStackTrace和相关方法输出的栈跟踪元素
