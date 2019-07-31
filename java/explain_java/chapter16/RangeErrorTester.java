@@ -27,7 +27,7 @@ public class RangeErrorTester {
 	// -- 计算1位(0-9)整数a和b的和
 	static int add(int a, int b) throws ParameterRangeError, ResultRangeError {
 		if (!isValid(a)) throw new ParameterRangeError(a);
-		if (!isValid(b)) throw new ParameterRangeError(a);
+		if (!isValid(b)) throw new ParameterRangeError(b);
 
 		int result = a + b;
 		if (!isValid(result)) throw new ResultRangeError(result);
