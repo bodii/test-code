@@ -3,34 +3,34 @@
 import java.util.Scanner;
 
 // -- 超出最大范围
-class RangeError extends RuntimeException {
-	RangeError(int n) { super("超出数值的最大的范围：" + n); }
+class RangeError2 extends RuntimeException {
+	RangeError2(int n) { super("超出数值的最大的范围：" + n); }
 }
 
 // -- 参数超出最大范围
-class ParameterRangeError extends RangeError {
-	ParameterRangeError(int n) { super(n); }
+class ParameterRangeError2 extends RangeError2 {
+	ParameterRangeError2(int n) { super(n); }
 }
 
 // -- 结果超出最大范围
-class ResultRangeError extends RangeError {
-	ResultRangeError(int n) { super(n); }
+class ResultRangeError2 extends RangeError2 {
+	ResultRangeError2(int n) { super(n); }
 }
 
 public class RangeErrorTester2 {
 
 	// -- 检测数字是否在0-9
-	static boolean isValid (int n) throws ParameterRangeError {
+	static boolean isValid (int n) throws ParameterRangeError2 {
 		return n >= 0 && n<= 9;
 	}
 
 	// -- 合计两个数的值
-	static int add(int a, int b) throws ParameterRangeError, ResultRangeError {
-		if (!isValid(a)) throw new ParameterRangeError(a);
-		if (!isValid(b)) throw new ParameterRangeError(b);
+	static int add(int a, int b) throws ParameterRangeError2, ResultRangeError2 {
+		if (!isValid(a)) throw new ParameterRangeError2(a);
+		if (!isValid(b)) throw new ParameterRangeError2(b);
 
 		int result = a + b;
-		if (!isValid(result)) throw new ResultRangeError(result);
+		if (!isValid(result)) throw new ResultRangeError2(result);
 
 		return result;
 	}
@@ -43,7 +43,7 @@ public class RangeErrorTester2 {
 
 		try {
 			System.out.printf("a = %d, b = %d, a + b = %d\n", a, b, add(a, b));
-		} catch (ParameterRangeError | ResultRangeError e) {
+		} catch (ParameterRangeError2 | ResultRangeError2 e) {
 			System.out.println(e.toString());
 		}
 	}
