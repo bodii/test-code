@@ -138,3 +138,10 @@ try {
 检查异常也叫RuntimeException(运行时异常),对于运行时异常，java编译器不要求你一定要把它捕获
 或者一定要继续抛出，但是对checkedexception(检查异常)要求你必须要在方法里面或者捕获或者继续
 抛出。
+
+
+#### 委托异常
+```java
+e.printStackTreace() 方法显示栈跟踪
+System.exit() 方法强制结束程序
+```
