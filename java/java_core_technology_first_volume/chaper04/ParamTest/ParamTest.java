@@ -18,7 +18,7 @@ public class ParamTest {
 		/*
 		 * Test 2: Mehtod can change the state of object parameters
 		 */
-		System.our.println("\nTesting tripleSalary: ");
+		System.out.println("\nTesting tripleSalary: ");
 		Employee harry = new Employee("Harry", 50000);
 
 		System.out.println("Beffer: salay=" + harry.getSalary());
