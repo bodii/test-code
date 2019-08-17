@@ -1,4 +1,4 @@
-package equals;
+package arrayList;
 
 import java.time.*;
 import java.util.Objects;
@@ -53,6 +53,6 @@ public class Employee {
 
   public String toString() {
     return getClass().getName() + 
-    String.format("[name=%s, salary=%g, hireDay=%s]",  name, salary, hireDay);
+    String.format("[name=%s, salary=%g, hireDay=%tx]",  name, salary, hireDay);
   }
 }
