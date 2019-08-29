@@ -24,3 +24,15 @@ RuntimeException;而程序本身没有问题，但由于像I/O错误这类问题
 
 Java语言规范将派生于Error类或RuntimeException类的所有异常称为`非受查(unchecked)异常`，
 所有其他的异常称为`受查(checked)异常`。
+
+未预期的EOF后的信号:
+```java
+throw new EOFException();
+
+// 或者
+
+EOFException e = new EOFexception();
+throw e;
+```
+
+
