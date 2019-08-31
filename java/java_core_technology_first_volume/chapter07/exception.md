@@ -165,3 +165,59 @@ StackTraceElement[] frames = t.getStackTrace();
 for (StackTraceElement frame : frames)
 	analyze frame
 ```
+
+
+#### java.lang.Throwable
+* Throwable(Throwable cause)
+* Throwable(String message, Throwable cause)
+	用给定的"原因"构造一个Throwable对象
+
+* Throwable initCause(Throwable cause)
+	将这个对象设置为"原因"。如果这个对象已经被设置为"原因",则抛出一个异常。
+	返回this引用
+
+* Throwable getCause()
+	获得设为这个对象的"原因"的异常对象。如果没有设置"原因", 则返回null。
+
+* StackTraceElement[] getStacktrace()
+	获得构造这个对象时调用堆栈的跟踪。
+
+* void addSuperessed(Throwable t)
+	为这个异常增加一个"抑制"异常。这出现在带资源的try语句中，其中t是close方法抛出的
+	一个异常
+
+* Throwable[] getSuperessed()
+	得到这个异常的所有"抑制"异常 。一般来说，这些是带资源的try语句中close方法抛出的异常。
+
+
+#### java.lang.Exception
+* Exception(Throwable cause)
+* Exception(String message, Throwable cause)
+	用给定的"原因"构造一个异常对象。
+
+
+#### java.lang.RuntimeException
+* RuntimeException(Throwable cause)
+* RuntimeException(String message, Throwable cause)
+	用给定的"原因"构造一个RuntimeException对象。
+
+
+#### java.lang.StackTraceElement
+* String getFileName()
+	返回这个元素运行时对应的源文件名。如果这个信息不存在，则返回null
+
+* int getLineNumber()
+	返回这个元素运行时对应的源文件行数。如果这个信息不存在，则返回-1。
+
+* String getClassName()
+	返回这个元素运行时对应的类的完全限定名。
+
+* String getMethodName()
+	返回这个元素运行时对应的方法名。构造器名是<init>;静态初始化器名是<clinit>。
+
+* boolean isNativeMethod()
+	如果这个元素运行时在一个本地方法中，则返回true。
+
+* String toString()
+	如果存在的话，返回一个包含类名、方法名、文件名和行数的格式化字符串。
+
