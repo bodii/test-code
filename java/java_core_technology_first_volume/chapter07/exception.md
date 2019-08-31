@@ -221,3 +221,25 @@ for (StackTraceElement frame : frames)
 * String toString()
 	如果存在的话，返回一个包含类名、方法名、文件名和行数的格式化字符串。
 
+
+#### assert断言
+```java
+assert a != null;
+assert i >= 0;
+```
+断言是一种测试和调试阶段所使用的战术性工具； 而日志记录是一种在程序的整个生命周期都可以
+使用的策略性工具。
+
+
+#### java.lang.Classloader
+* void setDefaultAssertionStatus(boolean b)
+	对于通过类加载器加载的所有类来说，如果没有显式地说明类或包的断言状态，就启用或禁用断言。
+
+* void setClassAssertionStatus(String className, boolean b)
+	对于给定的类和它的内部类，启用或禁用断言。
+
+* void setPackageAssertionStatus(String packageName, boolean b)
+	对于给定和其子包中的所有类，启用或禁用断言。
+
+* void clearAsserionStatus()
+	移去所有类和包的显式断言状态设置，并禁用所有通过这个类加载器加载的类的断言。
