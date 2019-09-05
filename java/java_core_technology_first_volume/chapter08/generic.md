@@ -115,3 +115,20 @@ public static <T extends Throwable> void doWork(T t) throws T // ok {
 	}
 }
 ```
+
+
+#### 通配符类型
+
+##### 通配符概念 
+通配符类型中，允许类型参数变化。例如，通配符类型:
+```java
+Pair<? extends Employee>
+```
+
+#### 通配符的超类型限定
+通配符限定与类型变量限定十分类似，但是，还有一个附加的能力，即可以指定一个超`类型限定(
+supertype bound)`:
+```java
+? super Manager
+```
+
