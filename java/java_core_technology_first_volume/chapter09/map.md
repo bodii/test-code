@@ -35,3 +35,59 @@ forEach方法用于迭代处理映射的键值。可以提供一个接收键和�
 scores.forEach(k, v) ->
 	System.out.println("key=" + k + ", value=" + v));
 ```
+
+
+#### java.util.Map<K, V>
+* V get(Object key)
+	获取与键对应的值；返回与键对应的对象，如果在映射中没有这个对象则返回null。键可以为null。
+
+* default V getOrDefault(Object key, V defaultValue)
+	获得与键关联的值；返回与键关联的对象，或者如果未在映射中找到这个键，则返回defaultValue
+
+* V put(K key, V value)
+	将键与对应的值关系插入到映射中。如果这个键已经存在，新对象将取代与这个键对应的旧对象。
+	这个方法将返回键对应的旧值。如果这个键以前没有出现过则返回null.键可以为null，但值不能
+	为null。
+
+* void putAll(Map<? extends K, ? extends V> entries)
+	将给定映射中的所有条目添加到这个映射中。
+
+* boolean containsKey(Object key)
+	如果在映射中已经有这个键，返回true。
+
+* boolean containsValue(Object value)
+	如果映射中已经有这个值，返回true.
+
+* default void forEach(BiConsumer<? super K, ? super V> action)
+	对这个映射中的所有键／值对应用这个动作。
+
+
+#### java.uti.HashMap<K, V>
+* HashMap()
+* HashMap(int initialCapacity)
+* HashMap(int initialCapacity, float loadFactor)
+	用给定的容量和装填因子构造一个空散列映射（装填因子是一个0.0 ~ 1.0之间的数值。这个数值
+	决定散列表填充的百分比。一旦到了这个比例，就要将其再散列到更大的表中）。默认的装填因
+	子是0.75
+
+#### java.util.TreeMap<K, V>
+* TreeMap()
+	为实现Comparable接口的键构造一个空的树映射。
+
+* TreeMap(Comparator<? super K> c)
+	构造一个树映射，并使用一个指定的比较器对键进行排序。
+
+* TreeMap(Map<? extends k, ? extends V> entries)
+	构造一个树映射，并将某个映射中的所有条目添加到树映射中。
+
+* TreeMap(SortedMap<? extends K, ? extends V> enteries)
+	构造一个树映射，将某个有序映射中的所有条目添加到树映射中，并使用与给定的有序映射相同的
+	比较器。
+
+#### java.util.SortedMap<K, V>
+* Comparator<? super K> comparator()
+	返回对键进行排序的比较器。如果键是用Comparable接口的compareTo方法进行比较的，返回null。
+
+* K firstKey()
+* K lastKey()
+	返回映射中最小元素和最大元素
