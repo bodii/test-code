@@ -91,3 +91,26 @@ scores.forEach(k, v) ->
 * K firstKey()
 * K lastKey()
 	返回映射中最小元素和最大元素
+
+
+
+#### java.util.Map<K, V>
+* defailt V merge(K key, V value, BiFunction<? super V, ? super V, ? extends V> 
+remappingFunction)
+	如果key与一个非null值v关联，将函数应用到v和value,将key与结果关联，或者如果结果为null,
+	则删除这个键。否则，将key与value关联，返回get(key)。
+
+* default V compute(K key, BiFunction<? super K, ? super V, ? extends V> reappingFunction)
+	将函数应用到key和get(key)。将key与结果关联，或者如果结果为null,则删除这个键。返回get(key).
+
+* default V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V>
+remappingFunction)
+	如果key与一个非null值v关联，将函数应用到key和v，将key与结果关联，或者如果结果为null,则删除
+	这个键，返回get(key)。
+
+* default V computeIfAbsent(K key, Function<? super k, ? extends V> mapppingFunction)
+	将函数应用到key，除非key与一个非null值关联。将key与结果关联，或者如果结果为null，则
+	删除这个键。返回get(key).
+
+* default void replaceAll(BiFunction<? super K, ? super V, ? extends V> function)
+	在所有映射项上应用函数。将键与非null结果关联，对于null结果，则将相应的键删除。
