@@ -33,3 +33,31 @@ JFrame类本身只包含若干个改变框架外观的方法。当然，通过�
 * setIconImage用于告诉窗口系统在标题栏、任务切换窗口等位置显示哪个图标。
 * setTitle用于改变标题栏的文字。
 * setResizable利用一个boolean值确定框架的大小是否允许用户改变。
+
+#### 确定合适的框架大小
+为了得到屏幕的大小，需要按照下列步骤操作。调用Toolkit类的静态方法getDefaultToolkit得到一个
+Toolkit对象(Toolkit类包含很多与本地窗口系统打交道的方法)。然后，调用getScreenSize方法，这
+个方法以Dimension对象的形式返回屏幕的大小。Dimension对象同时用公有实例变量width和height保
+存着屏幕的宽度和高度。下面是相关的代码:
+```java
+Toolkit kit = Toolkit.getDefaultToolkit();
+Dimension screenSize = kit.getScreenSize();
+int screenWith = screenSize.widht;
+int screenHeight = screenSize.height;
+```
+下面，将框架大小设定为上面取值的50%,然后，告知窗口系统定位框架:
+```java
+setSize(screenWidth / 2, screenHeight / 2);
+setLocationByPlatform(true);
+```
+另外，还提供一个图标。
+```java
+Image img = new ImageIcon("icon.gif').getImage();
+setIconImage(img);
+```
+在通常情况下，将程序的主框架尺寸设置为最大。可以通过调用下列方法将框架设置为最大:
+```java
+frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+```
+
+GraphicsDevice类还允许以全屏模式执行应用。
