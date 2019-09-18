@@ -25,3 +25,30 @@ class MyListener implements ActionListener {
 只要用户点击按钮，JButton对象就会创建一个ActionEvent对象，然后调用listener.action Performed
 (event)传递事件对象。可以将多个监听器对象添加到一个像按钮这样的事件源中。这样一来，只要用
 户点击按钮，按钮就会调用所有监听器的actionPerformed方法。
+
+
+#### 简洁地指定监听器
+一个监听器类有多个实例的情况并不多见。更常见的情况是：每个监听器执行一个单独的动作。在这种
+情况下，没有必要分别建立单独的类。只需要使用一个lambda表达式:
+```java
+exitButton.addActionListener(event -> System.exit(0));
+```
+
+现在考虑这样一种情况: 有多个相互关联的动作。在这种情况下，可以实现一个辅助方法:
+```java
+public void makeButton(String name, Color backgroundColor) {
+	JButton button = new JButton(name);
+	buttonPanel.add(button);
+	button.addActionListener(
+		event -> buttonPanel.setBackground(backgroundColor)
+	);
+}
+```
+
+需要说明，lambda表达式指示参数变量backgroundColor.
+然后只需要调用:
+```java
+makeButton("yellow", Color.YELLOW);
+makeButton("blue", Color.BLUE);
+makeButton("red", Color.RED);
+```
