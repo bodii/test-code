@@ -77,7 +77,19 @@ public class MouseComponent extends JComponent {
 
 	private class MouseHandler extends MouseAdapter {
 		public void mousePressed(MouseEvent event) {
-			if (find(event.getPoint()) == null ) setCursor(Cursor.getDefaultCursor());
+			current = find(event.getPoint());
+			if (current == null) add(event.getPoint());
+		}
+
+		public void mouseClicked(MouseEvent event) {
+			current = find(event.getPoint());
+			if (current != null && event.getClickCount() >= 2) remove(current);
+		}
+	}
+
+	private class MouseMotionHandler implements MouseMotionListener {
+		public void mouseMoved(MouseEvent event) {
+			if (find(event.getPoint()) == null) setCursor(Cursor.getDefaultCursor());
 			else setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		}
 
