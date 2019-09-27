@@ -34,7 +34,7 @@ public class MenuFrame extends JFrame {
         fileMenu.add(new TestAction("New"));
 
         JMenuItem openItem = fileMenu.add(new TestAction("Open"));
-        openItem.setAccelerator(KeyStroke.getKeyStroke("ctrl 0"));
+        openItem.setAccelerator(KeyStroke.getKeyStroke("ctrl O"));
 
         fileMenu.addSeparator();
 
@@ -48,7 +48,7 @@ public class MenuFrame extends JFrame {
 
         fileMenu.add(
             new AbstractAction("Exit") {
-                public void actionPerFormed(ActionEvent event) {
+                public void actionPerformed(ActionEvent event) {
                     System.exit(0);
                 }
             }
