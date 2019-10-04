@@ -9,3 +9,8 @@ Java Web Start 是一项在Interent上发布应用程序的技术。Java Web Sta
 的机制一样。
 * 数字签名应用程序可以被赋予访问本地机器的任意权限。未签名的应用程序只能运行在"沙箱"中，
 它可以阻止具有潜在危险的操作。
+
+
+#### 发布Java Web Start应用
+要想准备一个通过Java Web Start发布的应用程序，应该将其打包到一个或多个JAR文件中。然后创建
+一个Java Network Launch Protocol(JNLP)格式的描述文件。将这些文件放在Web服务器上。
