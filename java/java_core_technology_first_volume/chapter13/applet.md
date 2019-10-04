@@ -21,3 +21,15 @@ applet就是一个扩展了java.applet.Applet类的Java类。
 appletviewer NotHelloWolrdApplet.html
 ```
 applet查看器程序的命令行参数是HTML文件名，而不是类文件。
+
+
+很容易把一个图形化Java应用转换为可以嵌入在Web页面中的applet.
+具体步骤:
+1. 建立一个HTML页面，其中包含加载applet代码的适当标记。
+2. 提供JApplet类的一个子类。将这个类标记为public。否则applet将无法加载。
+3. 删去应用中的main方法。不要为应用构造构架窗口。你的应用将在浏览器中显示。
+4. 把所有初始化代码从框架窗口移至applet的init方法。不需要明确构造applet对象，浏览器会实例化applet对象并调用init方法。
+5. 删setSize调用；对applet来说，用HTML文件中的width和height参数就可以指定大小。
+6. 删除SetDefaultCloseOperation调用。applet不能关闭；浏览器退出时applet就会终止运行。
+7. 如果应用调用setTitle，则删除这个方法调用。applet没有标题栏。
+8. 不要调用setVisible(true)。applet会自动显示。
