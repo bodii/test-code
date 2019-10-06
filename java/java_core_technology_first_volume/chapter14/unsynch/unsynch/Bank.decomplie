@@ -1,0 +1,239 @@
+Classfile /home/wong/coding/test-code/java/java_core_technology_first_volume/chapter14/unsynch/unsynch/Bank.class
+  Last modified 2019年10月6日; size 1191 bytes
+  MD5 checksum 5a1460e02ba619f2f34914a64f1437d5
+  Compiled from "Bank.java"
+public class unsynch.Bank
+  minor version: 0
+  major version: 57
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #14                         // unsynch/Bank
+  super_class: #8                         // java/lang/Object
+  interfaces: 0, fields: 1, methods: 4, attributes: 1
+Constant pool:
+   #1 = Methodref          #8.#31         // java/lang/Object."<init>":()V
+   #2 = Fieldref           #14.#32        // unsynch/Bank.accounts:[D
+   #3 = Methodref          #33.#34        // java/util/Arrays.fill:([DD)V
+   #4 = Fieldref           #35.#36        // java/lang/System.out:Ljava/io/PrintStream;
+   #5 = Methodref          #37.#38        // java/lang/Thread.currentThread:()Ljava/lang/Thread;
+   #6 = Methodref          #39.#40        // java/io/PrintStream.print:(Ljava/lang/Object;)V
+   #7 = String             #41            //  %10.2f from %d to %d
+   #8 = Class              #42            // java/lang/Object
+   #9 = Methodref          #43.#44        // java/lang/Double.valueOf:(D)Ljava/lang/Double;
+  #10 = Methodref          #45.#46        // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+  #11 = Methodref          #39.#47        // java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #12 = String             #48            //  Total Balance: %10.2f%n
+  #13 = Methodref          #14.#49        // unsynch/Bank.getTotalBalance:()D
+  #14 = Class              #50            // unsynch/Bank
+  #15 = Utf8               accounts
+  #16 = Utf8               [D
+  #17 = Utf8               <init>
+  #18 = Utf8               (ID)V
+  #19 = Utf8               Code
+  #20 = Utf8               LineNumberTable
+  #21 = Utf8               transfer
+  #22 = Utf8               (IID)V
+  #23 = Utf8               StackMapTable
+  #24 = Utf8               getTotalBalance
+  #25 = Utf8               ()D
+  #26 = Class              #16            // "[D"
+  #27 = Utf8               size
+  #28 = Utf8               ()I
+  #29 = Utf8               SourceFile
+  #30 = Utf8               Bank.java
+  #31 = NameAndType        #17:#51        // "<init>":()V
+  #32 = NameAndType        #15:#16        // accounts:[D
+  #33 = Class              #52            // java/util/Arrays
+  #34 = NameAndType        #53:#54        // fill:([DD)V
+  #35 = Class              #55            // java/lang/System
+  #36 = NameAndType        #56:#57        // out:Ljava/io/PrintStream;
+  #37 = Class              #58            // java/lang/Thread
+  #38 = NameAndType        #59:#60        // currentThread:()Ljava/lang/Thread;
+  #39 = Class              #61            // java/io/PrintStream
+  #40 = NameAndType        #62:#63        // print:(Ljava/lang/Object;)V
+  #41 = Utf8                %10.2f from %d to %d
+  #42 = Utf8               java/lang/Object
+  #43 = Class              #64            // java/lang/Double
+  #44 = NameAndType        #65:#66        // valueOf:(D)Ljava/lang/Double;
+  #45 = Class              #67            // java/lang/Integer
+  #46 = NameAndType        #65:#68        // valueOf:(I)Ljava/lang/Integer;
+  #47 = NameAndType        #69:#70        // printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+  #48 = Utf8                Total Balance: %10.2f%n
+  #49 = NameAndType        #24:#25        // getTotalBalance:()D
+  #50 = Utf8               unsynch/Bank
+  #51 = Utf8               ()V
+  #52 = Utf8               java/util/Arrays
+  #53 = Utf8               fill
+  #54 = Utf8               ([DD)V
+  #55 = Utf8               java/lang/System
+  #56 = Utf8               out
+  #57 = Utf8               Ljava/io/PrintStream;
+  #58 = Utf8               java/lang/Thread
+  #59 = Utf8               currentThread
+  #60 = Utf8               ()Ljava/lang/Thread;
+  #61 = Utf8               java/io/PrintStream
+  #62 = Utf8               print
+  #63 = Utf8               (Ljava/lang/Object;)V
+  #64 = Utf8               java/lang/Double
+  #65 = Utf8               valueOf
+  #66 = Utf8               (D)Ljava/lang/Double;
+  #67 = Utf8               java/lang/Integer
+  #68 = Utf8               (I)Ljava/lang/Integer;
+  #69 = Utf8               printf
+  #70 = Utf8               (Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+{
+  public unsynch.Bank(int, double);
+    descriptor: (ID)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=4, args_size=3
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: iload_1
+         6: newarray       double
+         8: putfield      #2                  // Field accounts:[D
+        11: aload_0
+        12: getfield      #2                  // Field accounts:[D
+        15: dload_2
+        16: invokestatic  #3                  // Method java/util/Arrays.fill:([DD)V
+        19: return
+      LineNumberTable:
+        line 13: 0
+        line 14: 4
+        line 15: 11
+        line 16: 19
+
+  public void transfer(int, int, double);
+    descriptor: (IID)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=7, locals=5, args_size=4
+         0: aload_0
+         1: getfield      #2                  // Field accounts:[D
+         4: iload_1
+         5: daload
+         6: dload_3
+         7: dcmpg
+         8: ifge          12
+        11: return
+        12: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        15: invokestatic  #5                  // Method java/lang/Thread.currentThread:()Ljava/lang/Thread;
+        18: invokevirtual #6                  // Method java/io/PrintStream.print:(Ljava/lang/Object;)V
+        21: aload_0
+        22: getfield      #2                  // Field accounts:[D
+        25: iload_1
+        26: dup2
+        27: daload
+        28: dload_3
+        29: dsub
+        30: dastore
+        31: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        34: ldc           #7                  // String  %10.2f from %d to %d
+        36: iconst_3
+        37: anewarray     #8                  // class java/lang/Object
+        40: dup
+        41: iconst_0
+        42: dload_3
+        43: invokestatic  #9                  // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+        46: aastore
+        47: dup
+        48: iconst_1
+        49: iload_1
+        50: invokestatic  #10                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        53: aastore
+        54: dup
+        55: iconst_2
+        56: iload_2
+        57: invokestatic  #10                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        60: aastore
+        61: invokevirtual #11                 // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+        64: pop
+        65: aload_0
+        66: getfield      #2                  // Field accounts:[D
+        69: iload_2
+        70: dup2
+        71: daload
+        72: dload_3
+        73: dadd
+        74: dastore
+        75: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        78: ldc           #12                 // String  Total Balance: %10.2f%n
+        80: iconst_1
+        81: anewarray     #8                  // class java/lang/Object
+        84: dup
+        85: iconst_0
+        86: aload_0
+        87: invokevirtual #13                 // Method getTotalBalance:()D
+        90: invokestatic  #9                  // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+        93: aastore
+        94: invokevirtual #11                 // Method java/io/PrintStream.printf:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;
+        97: pop
+        98: return
+      LineNumberTable:
+        line 19: 0
+        line 20: 12
+        line 21: 21
+        line 22: 31
+        line 23: 65
+        line 24: 75
+        line 25: 98
+      StackMapTable: number_of_entries = 1
+        frame_type = 12 /* same */
+
+  public double getTotalBalance();
+    descriptor: ()D
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=4, locals=8, args_size=1
+         0: dconst_0
+         1: dstore_1
+         2: aload_0
+         3: getfield      #2                  // Field accounts:[D
+         6: astore_3
+         7: aload_3
+         8: arraylength
+         9: istore        4
+        11: iconst_0
+        12: istore        5
+        14: iload         5
+        16: iload         4
+        18: if_icmpge     38
+        21: aload_3
+        22: iload         5
+        24: daload
+        25: dstore        6
+        27: dload_1
+        28: dload         6
+        30: dadd
+        31: dstore_1
+        32: iinc          5, 1
+        35: goto          14
+        38: dload_1
+        39: dreturn
+      LineNumberTable:
+        line 28: 0
+        line 29: 2
+        line 30: 27
+        line 29: 32
+        line 33: 38
+      StackMapTable: number_of_entries = 2
+        frame_type = 255 /* full_frame */
+          offset_delta = 14
+          locals = [ class unsynch/Bank, double, class "[D", int, int ]
+          stack = []
+        frame_type = 248 /* chop */
+          offset_delta = 23
+
+  public int size();
+    descriptor: ()I
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #2                  // Field accounts:[D
+         4: arraylength
+         5: ireturn
+      LineNumberTable:
+        line 37: 0
+}
+SourceFile: "Bank.java"
