@@ -83,6 +83,30 @@ function is_null_field () {
     fi
 }
 
+function get_mines() {
+	m=$(shuf -e a b c d e f g X -n 1)
+	if [[ "$m" != "X" ]]
+	then
+		for Limit in ${!m}
+		do
+			field=$(shuf -i 0-5 -n 1)
+			index=$((i+Limit))
+			is_free_field $index $field
+		done
+	elif [[ "$m" = "X" ]]
+	then
+		g=0
+		room[$i]=X
+		for j in {42..49}
+		do
+			out="gameover"
+			k=${out:%g:1}
+			room[$j]=${k^^}
+			((g+=1))
+		done
+	fi
+}
+
 function get_free_fields () {
     free_fields=0
     for n in $(seq 1 ${#roo[@]})
@@ -127,8 +151,13 @@ function get_coordinates() {
         get_free_fields
         if [[ "$m" = "X" ]]
         then
-        elif
+			printf "\n\n\t $RED%s: $NC %s %d\n" "GAME OVER" "your scored" "$score"
+			printf "\n\n\t%s\n\n" "You were just $free_fields mines away."
+			exit 0
+        elif [[ $free_fields -eq 0 ]] 
         then
+			printf "\n\n\t $GREEN%s: %s $NC %d\n\n" "You Win" "your scored" "$score"
+			exit 0
         fi
     fi
 }
@@ -158,4 +187,16 @@ function is_free_field() {
 # --------------------------------------------------------
 # --------------------------------------------------------
 
-exit 0
+# main
+trap time_to_quit INT
+printf "\e[2J\e[H"
+usage
+read -p "Type Enter to continue. And good luck!"
+plough
+while true
+do
+	printf "Remember: to choose col- g, row - 5, give input - g5 \n\n"
+	read -p "info: enter the coordinates: " opt
+	get_coordinates
+done
+
