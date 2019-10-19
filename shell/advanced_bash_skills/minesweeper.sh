@@ -33,6 +33,9 @@ NC="\033[0m" # no color
 # 声明
 declare -a room # 声明一个room数组，他用来表示雷区的每一格
 
+# --------------------------------------------------------
+# 游戏开始说明文档
+# --------------------------------------------------------
 function usage() {
     cat <<_EOF_
     This game is made for fun, it has simple rules.
@@ -50,12 +53,18 @@ function usage() {
 _EOF_
 }
 
+# --------------------------------------------------------
+# 游戏退出说明文档
+# --------------------------------------------------------
 function time_to_quit() {
     printf '\n\n%s\n\n' "info: Sadly! You opted to quit!!"
     exit 1
 } 
 
 
+# --------------------------------------------------------
+# 显示游戏区
+# --------------------------------------------------------
 function plough() {
     r=0
     printf '\n\n'
@@ -75,6 +84,9 @@ function plough() {
     printf '\n\n'
 }
 
+# --------------------------------------------------------
+# 雷
+# --------------------------------------------------------
 function is_null_field () {
     local e=$1 #在数组room中，我们已经用过循环变量'r'了，这次我们用 'e'
     if [[ -z "${room[$e]}" ]]
@@ -83,46 +95,8 @@ function is_null_field () {
     fi
 }
 
-function get_mines() {
-	m=$(shuf -e a b c d e f g X -n 1)
-	if [[ "$m" != "X" ]]
-	then
-		for Limit in ${!m}
-		do
-			field=$(shuf -i 0-5 -n 1)
-			index=$((i+Limit))
-			is_free_field $index $field
-		done
-	elif [[ "$m" = "X" ]]
-	then
-		g=0
-		room[$i]=X
-		for j in {42..49}
-		do
-			out="gameover"
-			k=${out:%g:1}
-			room[$j]=${k^^}
-			((g+=1))
-		done
-	fi
-}
-
-function get_free_fields () {
-    free_fields=0
-    for n in $(seq 1 ${#roo[@]})
-    do
-        if [[ "${room[$n]}" = "." ]]
-        then
-            ((free_fields+=1))
-        fi
-    done
-}
-
-# plough
-
-
 # --------------------------------------------------------
-# 创建玩家逻辑
+# 获取坐标
 # --------------------------------------------------------
 function get_coordinates() {
     colm=${opt:0:1}     # 得到第一个字符，一个字母
@@ -163,6 +137,20 @@ function get_coordinates() {
 }
 
 # --------------------------------------------------------
+# 2. 记录已选择和可用单元格的个数
+# --------------------------------------------------------
+function get_free_fields () {
+    free_fields=0
+    for n in $(seq 1 ${#roo[@]})
+    do
+        if [[ "${room[$n]}" = "." ]]
+        then
+            ((free_fields+=1))
+        fi
+    done
+}
+
+# --------------------------------------------------------
 # 3. 创建判断单元格是否可选的逻辑
 # --------------------------------------------------------
 function is_free_field() {
@@ -179,13 +167,35 @@ function is_free_field() {
 }
 
 # --------------------------------------------------------
+# 4. 创建游戏结束逻辑
 # --------------------------------------------------------
+function get_mines() {
+	m=$(shuf -e a b c d e f g X -n 1)
+	if [[ "$m" != "X" ]]
+	then
+		for Limit in ${!m}
+		do
+			field=$(shuf -i 0-5 -n 1)
+			index=$((i+Limit))
+			is_free_field $index $field
+		done
+	elif [[ "$m" = "X" ]]
+	then
+		g=0
+		room[$i]=X
+		for j in {42..49}
+		do
+			out="gameover"
+			k=${out:%g:1}
+			room[$j]=${k^^}
+			((g+=1))
+		done
+	fi
+}
 
-# --------------------------------------------------------
-# --------------------------------------------------------
 
-# --------------------------------------------------------
-# --------------------------------------------------------
+
+
 
 # main
 trap time_to_quit INT
