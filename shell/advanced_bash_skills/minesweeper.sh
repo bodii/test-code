@@ -133,11 +133,11 @@ function get_coordinates() {
         c ) o=3;;
         d ) o=4;;
         e ) o=5;;
-        f  ) o=6;;
+        f ) o=6;;
         g ) o=7;;
         h ) o=8;;
-        i  ) o = 9;;
-        j  ) o=10;;
+        i ) o=9;;
+        j ) o=10;;
     esac
 
     i=$(((ro*10)+o))    # 遵循运算规则，算出最终值
