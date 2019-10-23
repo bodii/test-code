@@ -45,7 +45,7 @@ public class NutritionFacts3 {
 		}
 
 		public NutritionFacts3 build() {
-			return new NutritionFact3(this);
+			return new NutritionFacts3(this);
 		}
 	}
 
