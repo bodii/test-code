@@ -19,7 +19,7 @@ public class MPanel extends JPanel {
     private ImageIcon food = new ImageIcon("food.png");
 
     // 头的方向
-    private ImageIcon headDirectIon  = Snake.getHead();
+    private ImageIcon headDirectIon  = Snake.getHeadDirection();
 
     // 开始前的提示信息
     public boolean isStarted = false;
@@ -59,7 +59,7 @@ public class MPanel extends JPanel {
             g.drawString("Press Space to Start", 350, 350);
         }
 
-        Snake.getHead().paintIcon(this, g, 100, 100);
+        Snake.setHead(this, g);
         Snake.getBody().paintIcon(this, g, 75, 100);
         Snake.getBody().paintIcon(this, g, 50, 100);
 
@@ -82,38 +82,62 @@ class Snake {
     private static final ImageIcon left = new ImageIcon("left.png");
     private static final ImageIcon right = new ImageIcon("right.png");
 
-    // 方向
-    private static ImageIcon direction = right;
+    // 头部方向
+    private static ImageIcon headDirection = right;
 
-    public static ImageIcon setHead(String d) {
-        switch (d) {
-            case "up" :
-                direction = up;
-                break;
-            case "down":
-                direction = down;
-                break;
-            case "left":
-                direction = left;
-                break;
-            case "right":
-                direction = right;
-                break;
-            default:
-                direction = right;
-        }
-
-        return direction;
+    /**
+     * 设置蛇头的位置和方向
+     * @param d
+     * @return
+     */
+    public static void setHead(MPanel p, Graphics g) {
+        getHead().paintIcon(p, g, 100, 100);
     }
 
-    public static ImageIcon getHead() {
-        return direction;
+
+    private static ImageIcon getHead() {
+        return headDirection;
+    }
+
+    /**
+     * 设置蛇头的位置
+     * 
+     * @param d
+     * @return
+     */
+    public static ImageIcon setHeadDirection(String d) {
+        switch (d) {
+            case "up" :
+                headDirection = up;
+                break;
+            case "down":
+                headDirection = down;
+                break;
+            case "left":
+                headDirection = left;
+                break;
+            case "right":
+                headDirection = right;
+                break;
+            default:
+                headDirection = right;
+        }
+
+        return headDirection;
+    }
+
+    /**
+     * 获取头的方向
+     * 
+     * @return
+     */
+    public static ImageIcon getHeadDirection() {
+        return headDirection;
     }
 
     public static ImageIcon getBody() {
         return body;
     }
-
 }
 
 
@@ -153,16 +177,16 @@ class GetKeyEvent implements KeyListener {
         if (s.isStarted) {
             // 如果是点中的左键或H键
             if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_H) {
-                Snake.setHead("left");
+                Snake.setHeadDirection("left");
                 s.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_L) {
-                Snake.setHead("right");
+                Snake.setHeadDirection("right");
                 s.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_K) {
-                Snake.setHead("up");
+                Snake.setHeadDirection("up");
                 s.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_J) {
-                Snake.setHead("down");
+                Snake.setHeadDirection("down");
                 s.repaint(); // 重绘内容
             }
         }
