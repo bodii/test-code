@@ -59,10 +59,7 @@ public class MPanel extends JPanel {
             g.drawString("Press Space to Start", 350, 350);
         }
 
-        Snake.setHead(this, g);
-        Snake.getBody().paintIcon(this, g, 75, 100);
-        Snake.getBody().paintIcon(this, g, 50, 100);
-
+        Snake.initSnake(this, g);
 
     }
 
@@ -84,14 +81,20 @@ class Snake {
 
     // 头部方向
     private static ImageIcon headDirection = right;
+    // 蛇头坐标
+    private static SnakeCoordiate headCoordinate;
+    // 蛇身坐标
+    private static SnakeCoordiate[] bodyCoordinate; 
+    private static int bodyLen = 2; // 默认蛇的身体长度
+    public static final int latticeSize = 25; // 每个格子的大小
 
     /**
      * 设置蛇头的位置和方向
      * @param d
      * @return
      */
-    public static void setHead(MPanel p, Graphics g) {
-        getHead().paintIcon(p, g, 100, 100);
+    public static void setHead(MPanel p, Graphics g, SnakeCoordiate coordiate) {
+        headDirection.paintIcon(p, g, coordiate.x, coordiate.y);
     }
 
 
@@ -137,6 +140,22 @@ class Snake {
 
     public static ImageIcon getBody() {
         return body;
+    }
+
+    public static void setBody(MPanel p, Graphics g, SnakeCoordiate[] coordiates) {
+        for (int i = 0; i < coordiates.length; i++)
+            body.paintIcon(p, g, coordiates[i].x, coordiates[i].y);
+    }
+
+    public static void initSnake(MPanel p, Graphics g) {
+        bodyLen = 2;
+        int headCoordinateInt = 100;
+        headCoordinate = new SnakeCoordiate(headCoordinateInt);
+        setHead(p, g, new SnakeCoordiate(headCoordinateInt));
+        for (int i = 1; i <= bodyLen; i++) {
+           bodyCoordinate[i] = new SnakeCoordiate(headCoordinateInt - latticeSize * i, headCoordinateInt);
+        }
+        setBody(p, g, bodyCoordinate);
     }
 }
 
@@ -199,5 +218,30 @@ class GetKeyEvent implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+}
+
+class SnakeCoordiate {
+    public int x = 0;
+    public int y = 0;
+    public int[]  direction = new int[2]; // 定位
+
+    SnakeCoordiate(int coordiate) {
+        this(coordiate, coordiate);
+    }
+
+    SnakeCoordiate(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int[] direction() {
+        direction[0] = x;
+        direction[1] = y;
+        return direction;
+    }
+
+    public SnakeCoordiate coordiate() {
+        return this;
     }
 }
