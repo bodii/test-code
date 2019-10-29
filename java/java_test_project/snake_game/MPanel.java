@@ -18,8 +18,10 @@ public class MPanel extends JPanel {
     // 食物
     private ImageIcon food = new ImageIcon("food.png");
 
+    private Snake sanke = new Snake();
+
     // 头的方向
-    private ImageIcon headDirectIon  = Snake.getHeadDirection();
+    private ImageIcon headDirectIon = sanke.getHeadDirection();
 
     // 开始前的提示信息
     public boolean isStarted = false;
@@ -59,7 +61,7 @@ public class MPanel extends JPanel {
             g.drawString("Press Space to Start", 350, 350);
         }
 
-        Snake.initSnake(this, g);
+        sanke.init(this, g);
 
     }
 
@@ -72,33 +74,37 @@ public class MPanel extends JPanel {
  */
 class Snake {
     // 身体
-    private static final ImageIcon body = new ImageIcon("body.png");
+    private final ImageIcon body = new ImageIcon("body.png");
     // 头
-    private static final ImageIcon up = new ImageIcon("up.png");
-    private static final ImageIcon down = new ImageIcon("down.png");
-    private static final ImageIcon left = new ImageIcon("left.png");
-    private static final ImageIcon right = new ImageIcon("right.png");
+    private final ImageIcon up = new ImageIcon("up.png");
+    private final ImageIcon down = new ImageIcon("down.png");
+    private final ImageIcon left = new ImageIcon("left.png");
+    private final ImageIcon right = new ImageIcon("right.png");
 
     // 头部方向
-    private static ImageIcon headDirection = right;
+    private ImageIcon headDirection = right;
     // 蛇头坐标
-    private static SnakeCoordiate headCoordinate;
+    private Coordinate headCoordinate;
     // 蛇身坐标
-    private static SnakeCoordiate[] bodyCoordinate; 
-    private static int bodyLen = 2; // 默认蛇的身体长度
-    public static final int latticeSize = 25; // 每个格子的大小
+    private Coordinate[] bodyCoordinate; 
+    private int bodyLen = 2; // 默认蛇的身体长度
+    public final int latticeSize = 25; // 每个格子的大小
+
+    public void setBodyLen(int l) {
+        bodyLen = l;
+    }
 
     /**
      * 设置蛇头的位置和方向
      * @param d
      * @return
      */
-    public static void setHead(MPanel p, Graphics g, SnakeCoordiate coordiate) {
-        headDirection.paintIcon(p, g, coordiate.x, coordiate.y);
+    public void setHead(MPanel p, Graphics g, Coordinate c) {
+        headDirection.paintIcon(p, g, c.x, c.y);
     }
 
 
-    private static ImageIcon getHead() {
+    private ImageIcon getHead() {
         return headDirection;
     }
 
@@ -108,7 +114,7 @@ class Snake {
      * @param d
      * @return
      */
-    public static ImageIcon setHeadDirection(String d) {
+    public ImageIcon setHeadDirection(String d) {
         switch (d) {
             case "up" :
                 headDirection = up;
@@ -134,31 +140,48 @@ class Snake {
      * 
      * @return
      */
-    public static ImageIcon getHeadDirection() {
+    public ImageIcon getHeadDirection() {
         return headDirection;
     }
 
-    public static ImageIcon getBody() {
+    public ImageIcon getBody() {
         return body;
     }
 
-    public static void setBody(MPanel p, Graphics g, SnakeCoordiate[] coordiates) {
-        for (int i = 0; i < coordiates.length; i++)
-            body.paintIcon(p, g, coordiates[i].x, coordiates[i].y);
+    public void setBody(MPanel p, Graphics g, Coordinate c) {
+        body.paintIcon(p, g, c.x, c.y);
     }
 
-    public static void initSnake(MPanel p, Graphics g) {
+    public void init(MPanel p, Graphics g) {
         bodyLen = 2;
         int headCoordinateInt = 100;
-        headCoordinate = new SnakeCoordiate(headCoordinateInt);
-        setHead(p, g, new SnakeCoordiate(headCoordinateInt));
+        headCoordinate = new Coordinate(headCoordinateInt);
+        setHead(p, g, headCoordinate);
         for (int i = 1; i <= bodyLen; i++) {
-           bodyCoordinate[i] = new SnakeCoordiate(headCoordinateInt - latticeSize * i, headCoordinateInt);
+            Coordinate b = new Coordinate(
+                headCoordinateInt - latticeSize * i, 
+                headCoordinateInt
+            );
+            bodyCoordinate[i] = b;
+            setBody(p, g, b);
         }
-        setBody(p, g, bodyCoordinate);
     }
 }
 
+
+class Food {
+    // 食物
+    private ImageIcon food = new ImageIcon("food.png");
+    private Coordinate coordinate = new Coordinate();
+
+    Foo() {
+        return food;
+    }
+
+    public hide() {
+
+    }
+}
 
 /**
  * GetKeyEvent class
@@ -221,27 +244,24 @@ class GetKeyEvent implements KeyListener {
     }
 }
 
-class SnakeCoordiate {
+/**
+ * Coordinate class
+ * 坐标类
+ */
+class Coordinate {
     public int x = 0;
     public int y = 0;
-    public int[]  direction = new int[2]; // 定位
 
-    SnakeCoordiate(int coordiate) {
-        this(coordiate, coordiate);
+    Coordinate(int ox ,int oy) {
+        x = ox;
+        y = oy;
     }
 
-    SnakeCoordiate(int x, int y) {
-        this.x = x;
-        this.y = y;
+    Coordinate(int o) {
+        this(o, o);
     }
 
-    public int[] direction() {
-        direction[0] = x;
-        direction[1] = y;
-        return direction;
-    }
-
-    public SnakeCoordiate coordiate() {
-        return this;
-    }
+    // Coordinate(Coordinate c) {
+    //     this(c.x, c.y);
+    // }
 }
