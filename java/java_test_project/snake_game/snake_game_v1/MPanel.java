@@ -182,6 +182,10 @@ class Snake {
         return headDirection;
     }
 
+    public Coordinate getHeadCoordinate() {
+        return headCoordinate;
+    }
+
     public ImageIcon getBody() {
         return body;
     }
@@ -218,7 +222,7 @@ class Food {
     private MPanel p;
     private Graphics g;
 
-    Food(MPanel panel, Graphics grap) {
+    public Food(MPanel panel, Graphics grap) {
         p = panel;
         g = grap;
     }
@@ -238,14 +242,23 @@ class Food {
         coordinate = new Coordinate(0);
     }
 
+    public void setFood(Coordinate coordinate) {
+        food.paintIcon(p, g, coordinate.x, coordinate.y);
+    }
+
+    public void randFood() {
+        Random rand = new Random();
+        int cx = rand.nextInt(GameArea.bodyWdith / GameArea.latticeSize) * GameArea.latticeSize + GameArea.bodyX;
+        int cy = rand.nextInt(GameArea.bodyHeight / GameArea.latticeSize) * GameArea.latticeSize + GameArea.bodyY;
+        setFood(new Coordinate(cx, cy));
+    }
+
     public void unset() {
         food = null;
     }
 
     public void init() {
-        Random rand = new Random();
-        coordinate = new Coordinate(rand.nextInt(GameArea.bodyWdith / GameArea.latticeSize) * GameArea.latticeSize);
-        food.paintIcon(p, g, coordinate.x, coordinate.y);
+        randFood();
     }
 }
 
@@ -290,6 +303,7 @@ class SnakeKeyEvent implements KeyListener {
                 p.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_L) {
                 snake.setHeadDirection("right");
+                snake.setHead(snake.getHeadCoordinate());
                 p.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_K) {
                 snake.setHeadDirection("up");
@@ -319,15 +333,32 @@ class Coordinate {
     public int x = 0;
     public int y = 0;
 
-    Coordinate(int ox ,int oy) {
+    public Coordinate(int ox ,int oy) {
+        // 设置边界minX
+        if ((ox - GameArea.bodyX) < 0 ) {
+            ox = GameArea.bodyX;
+        }
+        // 设置边界minY
+        if ((oy - GameArea.bodyY) < 0) {
+            oy = GameArea.bodyY;
+        }
+        // 设置边界maxX
+        if ((ox - (GameArea.bodyX + GameArea.bodyWdith - GameArea.latticeSize)) > 0) {
+            ox = GameArea.bodyX + GameArea.bodyWdith - GameArea.latticeSize;
+        }
+        // 设置边界maxY
+        if ((oy - (GameArea.bodyY + GameArea.bodyHeight - GameArea.latticeSize)) > 0) {
+            oy = GameArea.bodyY + GameArea.bodyHeight - GameArea.latticeSize;
+        }
+
         x = ox;
         y = oy;
     }
 
-    Coordinate(int o) {
+    public Coordinate(int o) {
         this(o, o);
     }
 
-    Coordinate() {
+    public Coordinate() {
     }
 }
