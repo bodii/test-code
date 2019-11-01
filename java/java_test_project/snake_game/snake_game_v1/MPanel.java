@@ -63,8 +63,8 @@ public class MPanel extends JPanel {
         snake.init();
 
         // 初始化一个食物
-        food = new Food(this, g);
-        food.init();
+        // food = new Food(this, g);
+        // food.init();
 
         // 添加键盘监听事件
         addKeyListener(new SnakeKeyEvent(this, snake));
@@ -171,6 +171,8 @@ class Snake {
             default:
                 headDirection = right;
         }
+        
+        setHead(getHeadCoordinate());
     }
 
     /**
@@ -295,23 +297,20 @@ class SnakeKeyEvent implements KeyListener {
             p.isStarted = !p.isStarted; // 设置开始的值取反
             p.repaint(); // 重绘内容
         }
-
+        
         if (p.isStarted) {
             // 如果是点中的左键或H键
             if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_H) {
                 snake.setHeadDirection("left");
-                p.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_L) {
                 snake.setHeadDirection("right");
-                snake.setHead(snake.getHeadCoordinate());
-                p.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_K) {
                 snake.setHeadDirection("up");
-                p.repaint(); // 重绘内容
             } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_J) {
                 snake.setHeadDirection("down");
-                p.repaint(); // 重绘内容
             }
+            System.out.println(snake.getHeadCoordinate().x);
+            p.repaint(); // 重绘内容
         }
     }
 
