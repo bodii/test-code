@@ -19,7 +19,12 @@ def select_sort(alist: list):
 
         
 
-alist = [7, 5, 3, 6, 44, 22, 99, 11]
-select_sort(alist)
+if __name__ == '__main__':
+    alist = [7, 5, 3, 6, 44, 22, 99, 11]
+    print('原列表: ')
+    print(alist)
 
-print(alist)
+    print('排序后的列表: ')
+    select_sort(alist)
+
+    print(alist)

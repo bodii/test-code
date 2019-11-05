@@ -14,7 +14,12 @@ def bubbleSort(alist: list):
                 alist[i], alist[j] = alist[j], alist[i]
 
 
-alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
+if __name__ == '__main__':
+    alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 
-bubbleSort(alist)
-print(alist)
+    print('原列表: ')
+    print(alist)
+
+    print('排序后的列表: ')
+    bubbleSort(alist)
+    print(alist)
