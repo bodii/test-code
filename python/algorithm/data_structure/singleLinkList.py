@@ -141,6 +141,8 @@ class SingleLinkList:
         while currentNode is not None:
             if currentNode.elem == item:
                 return True
+            else:
+                currentNode = currentNode.next
 
         return False
 
@@ -156,6 +158,7 @@ if __name__ == '__main__':
     singleLinkList.append(66)
     singleLinkList.remove(17)
     singleLinkList.insert(4, 14)
+    print(singleLinkList.search(14))
     singleLinkList.travel()
 
     # 初始化一个空的单向链表
