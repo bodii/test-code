@@ -32,7 +32,7 @@ class Node:
 # 构造单向链表类
 class SingleLinkList:
     def __init__(self, node=None):
-        if node != None:
+        if node is not None:
             self.__head = Node(node)
         else:
             self.__head = None
@@ -48,7 +48,7 @@ class SingleLinkList:
         node = Node(item)
         currentNode = self.__head
         if  self.is_empty() == False:
-            while currentNode.next != None:
+            while currentNode.next is not None:
                 currentNode = currentNode.next
             
             currentNode.next = node
@@ -72,25 +72,40 @@ class SingleLinkList:
         for i in range(1, length + 1):
             if i == index:
                 node.next = currentNode
-                prevNode.next = node
+                if i == 1:
+                    self.__head = node
+                else:
+                    prevNode.next = node
+                    currentNode = node
                 return True
             else:
                 prevNode = currentNode
                 currentNode = currentNode.next
 
+        if length + 1 == index:
+            prevNode.next = node
+            currentNode = node
+            return True
+        
+        return False
+
     # 删除元素
     def remove(self, item) -> bool:
-        currentNode = self.__head
-        prevNode = currentNode
+        prevNode = None
+        currentNode = self.__head 
         status = False
 
-        while currentNode != None:
+        while currentNode is not None:
             if currentNode.elem == item:
-                prevNode = currentNode.next
+                if prevNode is not None:
+                    prevNode.next = currentNode.next
+                else:
+                    self.__head = currentNode.next
+                    prevNode = currentNode.next
                 status = True
             else:
-                currentNode = currentNode.next
-            prevNode.next = currentNode.next
+                prevNode = currentNode
+            currentNode = currentNode.next 
 
         return status
 
@@ -100,7 +115,7 @@ class SingleLinkList:
     def length(self) -> int:
         count = 0
         currentNode = self.__head
-        while currentNode != None:
+        while currentNode is not None:
             count += 1
             currentNode = currentNode.next
 
@@ -113,7 +128,7 @@ class SingleLinkList:
     # 遍历当前链表
     def travel(self) -> str:
         currentNode = self.__head
-        while currentNode != None:
+        while currentNode is not None:
             print(currentNode.elem, end='\t')
             currentNode = currentNode.next
         print('')
@@ -123,7 +138,7 @@ class SingleLinkList:
     # 查询一个元素
     def search(self, item) -> bool:
         currentNode = self.__head
-        while currentNode != None:
+        while currentNode is not None:
             if currentNode.elem == item:
                 return True
 
@@ -140,7 +155,7 @@ if __name__ == '__main__':
     singleLinkList.add(17)
     singleLinkList.append(66)
     singleLinkList.remove(17)
-    # singleLinkList.insert(7, 14)
+    singleLinkList.insert(4, 14)
     singleLinkList.travel()
 
     # 初始化一个空的单向链表
