@@ -21,9 +21,9 @@ class Stack:
 
     def peek(self):
         """
-        向头部获取一个元素
+        向尾部获取一个元素
         """
-        return self.__container[0]
+        return self.__container[self.size() - 1]
 
     def is_empty(self) -> bool:
         """
