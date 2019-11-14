@@ -25,7 +25,7 @@ class Tree:
             self.root = node
         else:
             queue = []
-
+            queue.append(self.root)
             while queue:
                 curNode = queue.pop(0)
                 if curNode.lchild is None:
