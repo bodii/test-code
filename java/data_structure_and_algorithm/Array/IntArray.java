@@ -218,8 +218,8 @@ public class IntArray {
 			)
 		);
 		result.append("[");
-		for (int i : data) 
-			result.append(i + ", ");
+		for (int i = 0; i < size; i++) 
+			result.append(data[i] + ", ");
 		result.replace(result.length()-2, result.length(), "]");
 
 		return result.toString();
