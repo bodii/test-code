@@ -1,5 +1,9 @@
 package array;
 
+/**
+ * TestIntArray class
+ * 测试整型数组类
+ */
 public class TestIntArray {
 	public static void main(String[] args) {
 		IntArray it = new IntArray();

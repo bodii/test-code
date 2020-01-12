@@ -1,5 +1,9 @@
 package array;
 
+/**
+ * TestArray class
+ * 测试Array数组泛型类
+ */
 public class TestArray {
 	public static void main(String[] args) {
 		Array<String> sa = new Array<>();
