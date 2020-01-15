@@ -24,7 +24,7 @@ class Solution2 {
 
 */
 
-class Test {
+class Test2 {
     public static void main(String[] args) {
         Solution2 s = new Solution2();
         int[] nums = new int[]{1,1,2,2};
