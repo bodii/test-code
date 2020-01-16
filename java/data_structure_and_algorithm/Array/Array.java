@@ -154,7 +154,7 @@ public class Array<E> {
 	 * 
 	 * @return int 返回被删除的元素
 	 */
-	public E remvoeFirst() {
+	public E removeFirst() {
 		return remove(0);
 	}
 
