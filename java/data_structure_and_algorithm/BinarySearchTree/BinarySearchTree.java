@@ -1,5 +1,7 @@
 package binary_search_tree;
 
+import java.util.Stack;
+
 /**
  * 二分搜索树泛型类(二叉树)
  * 二分搜索树的内部元素要具有可比性
@@ -74,7 +76,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
      * @param e 元素
      */
     public void add(E e) {
-        add(e, root);
+        root = add(e, root);
     }
 
     /**
@@ -88,20 +90,20 @@ public class BinarySearchTree<E extends Comparable<E>> {
     //         node.e = e;
     //         size ++;
     //         return;
-    //     } else if (node.e.compareTo(e) < 0 && node.left == null ) {
+    //     } else if (e.compareTo(node.e)< 0 && node.left == null ) {
     //         node.left = new Node(e);
     //         size ++;
     //         return;
-    //     } else if (node.e.compareTo(e) > 0 && node.right == null) {
+    //     } else if (e.compareTo(node.e)> 0 && node.right == null) {
     //         node.right = new Node(e);
     //         size ++;
     //         return;
     //     } else if (node.e.equals(e))
     //         return;
 
-    //     if (node.e.compareTo(e) < 0) 
+    //     if (e.compareTo(node.e)< 0) 
     //         add(e, node.left);
-    //     else if (node.e.compareTo(e) > 0)
+    //     else if (e.compareTo(node.e)> 0)
     //         add(e, node.right);
     // }
 
@@ -119,9 +121,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return new Node(e);
         }
 
-        if (node.e.compareTo(e) < 0)
+        if (e.compareTo(node.e)< 0)
             node.left = add(e, node.left);
-        else if (node.e.compareTo(e) > 0)
+        else if (e.compareTo(node.e)> 0)
             node.right = add(e, node.right);
 
         return node;
@@ -148,9 +150,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if (node == null)
             return false;
 
-        if (node.e.compareTo(e) == 0)
+        if (e.compareTo(node.e)== 0)
             return true;
-        else if (node.e.compareTo(e) < 0)
+        else if (e.compareTo(node.e)< 0)
             return contains(e, node.left);
         else
             return contains(e, node.right);
@@ -197,5 +199,87 @@ public class BinarySearchTree<E extends Comparable<E>> {
         inOrder(node.left);
         System.out.println(node);
         inOrder(node.right);
+    }
+
+    /**
+     * 二分搜索树的后序遍历
+     */
+    public void postOrder() {
+        postOrder(root);
+    }
+
+    /**
+     *  二分搜索树的后序遍历(私有方法)
+     * 
+     * @param node
+     */
+    private void postOrder(Node node) {
+        if (node == null)
+            return;
+
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.println(node);
+    }
+
+    /**
+     * 二分搜索树的递归前序遍历
+     */
+    public void preOrderNR() {
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            Node current = stack.pop();
+            System.out.println(current);
+
+            if(current.right != null)
+                stack.push(current.right);
+            if (current.left != null)
+                stack.push(current.left);
+        }
+    }
+
+    /**
+     * 将当前二分搜索树转换成字符串
+     */
+    @Override public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("Binary search tree of size = %d\n", size));
+        generateBSTString(root, 0, result);
+        return result.toString();
+    }
+
+    /**
+     * 生成二分搜索树节点与深度字符串
+     * 
+     * @param node 当前节点
+     * @param depth 当前节点距离根节点的深度
+     * @param result 生成的字符串
+     */
+    private void generateBSTString(Node node, int depth, StringBuilder result) {
+        if (node == null ) {
+            result.append(generateDepthString(depth) + "null\n");
+            return;
+        }
+
+        result.append(generateDepthString(depth) + node.e + "\n");
+        generateBSTString(node.left, depth + 1, result);
+        generateBSTString(node.right, depth + 1, result);
+    }
+
+    /**
+     * 生成二分搜索树深度的字符串
+     * e.g. depth=1 "--"; depth=3 "------".
+     * 
+     * @param depth int 深度值
+     * @return 拼接好的深度字符串
+     */
+    private String generateDepthString(int depth) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < depth; i++)
+            result.append("--");
+
+        return result.toString();
     }
 }
