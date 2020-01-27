@@ -1,6 +1,8 @@
 package binary_search_tree;
 
+import java.util.Queue;
 import java.util.Stack;
+import java.util.LinkedList;
 
 /**
  * 二分搜索树泛型类(二叉树)
@@ -237,6 +239,144 @@ public class BinarySearchTree<E extends Comparable<E>> {
             if (current.left != null)
                 stack.push(current.left);
         }
+    }
+
+    /**
+     * 二分搜索树的层序遍历(广度优先)
+     */
+    public void levelOrder() {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node current = queue.remove();
+            System.out.println(current);
+
+            if (current.left != null) 
+                queue.add(current.left);
+            if (current.right != null)
+                queue.add(current.right);
+        }
+    }
+
+    /**
+     * 获取二分搜索树中最小的元素(最左元素)
+     * 
+     * @return E 最小元素
+     */
+    public E min() {
+        nonEmpty();
+
+        return minNode(root).e;
+    }
+
+    /**
+     * 获取二分搜索树中最小元素的节点(递归遍历)
+     * 
+     * @param node 当前节点
+     * @return 遍历的当前左节点
+     */
+    private Node minNode(Node node) {
+        if (node.left == null) 
+            return node;
+
+        return minNode(node.left);
+    }
+
+    /**
+     * 获取二分搜索树中最大的元素(最右元素)
+     * 
+     * @return E 最大元素
+     */
+    public E max() {
+        nonEmpty();
+
+        return maxNode(root).e;
+    }
+
+    /**
+     *  获取二分搜索树中最小元素的节点(递归遍历)
+     * 
+     * @param node 当前节点
+     * @return  遍历的当前右节点
+     */
+    private Node maxNode(Node node) {
+        if (node.right == null)
+            return node;
+
+        return maxNode(node.right);
+    }
+
+    /**
+     * 删除二分搜索树中的最小元素
+     * 
+     * @return 被删除的元素
+     */
+    public E removeMin() {
+        E min = min();
+        root = removeMin(root);
+
+        return min;
+    }
+
+    /**
+     * 删除二分搜索树中的最左(最小)元素的节点
+     * 
+     * @param node 当前节点
+     * @return 下一个节点
+     */
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size --;
+            return rightNode;
+        }
+
+        node.left = removeMin(node.left);
+
+        return node;
+    }
+
+    /**
+     * 删除二分搜索树中最大的元素
+     * 
+     * @return 最大的元素
+     */
+    public E removeMax() {
+        E max = max();
+        root = removeMax(root);
+
+        return max;
+    }
+
+    /**
+     * 删除二分搜索树中的最右(最大)元素的节点
+     * 
+     * @param node 当前节点
+     * @return 下一个节点
+     */
+    private Node removeMax(Node node) {
+        if (node.right == null) {
+            Node leftNode = node.left;
+            node.right = null;
+            size --;
+
+            return leftNode;
+        }
+
+        node.right = removeMax(node.right);
+
+        return node;
+    }
+
+    /**
+     * 检测当前二分搜索树是否不为空，则否抛出异常
+     * 
+     * @throws IllegalArgumentException
+     */
+    private void nonEmpty() {
+        if (size ==0)
+            throw new IllegalArgumentException("Binary search tree is empty.");
     }
 
     /**

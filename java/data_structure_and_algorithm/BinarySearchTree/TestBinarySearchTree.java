@@ -24,5 +24,19 @@ public class TestBinarySearchTree {
         System.out.println("\n将当前二分搜索树转换成字符串: ");
         System.out.println(bst);
 
+        System.out.println("\n二分搜索树的层序遍历: ");
+        bst.levelOrder();
+
+        System.out.println("\n二分搜索树的最小(最左)元素是："  + bst.min());
+        System.out.println("\n二分搜索树的最大(最右)元素是："  + bst.max());
+
+        System.out.println("\n删除二分搜索树的最小(最左)："  + bst.removeMin());
+        System.out.println("\n删除二分搜索树的最大(最右)元素是："  + bst.removeMax());
+
+        System.out.println("\n删除当前二分搜索树最小和最大元素后: ");
+        System.out.println(bst);
+
+
+
     }
 }
