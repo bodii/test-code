@@ -370,6 +370,59 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     /**
+     * 删除二分搜索树的某个元素的节点
+     * 
+     * @param e 对应的元素
+     */
+    public void remove(E e) {
+        remove(root, e);
+    }
+
+    /**
+     * 根据递归遍历查找并删除二分搜索树的指定元素的节点
+     * @param node
+     * @param e
+     * @return
+     */
+    private Node remove(Node node, E e) {
+        if (node == null)
+            return null;
+
+        if (e.compareTo(node.e) < 0) {
+            node.left = remove(node.left, e);
+            return node;
+        } else if (e.compareTo(node.e) > 0) {
+            node.right = remove(node.right, e);
+            return node;
+        } else {
+            // 如果左子树为空，则将右子树返回
+            if (node.left == null) {
+                Node rightNode = node.right;
+                node.right = null;
+                size --;
+                return rightNode;
+            } 
+
+            // 如果右子树为空，则将左子树返回
+            if (node.right == null) {
+                Node leftNode = node.left;
+                node.left = null;
+                size --;
+                return leftNode;
+            }
+
+            // 如果左右子树均不为空
+            // 将右子树的最小元素节点删除并作为新节点，替换掉要删除的节点
+            Node newNode = minNode(node.right); // 获取当前节点右子树的最小元素节点
+            newNode.right = removeMin(node.right); // 将当前节点右子树的最小元素节点删除后返回的节点树，作为新节点的右子树
+            newNode.left = node.left; // 将当前节点的左子树，赋给新节点
+            node.left = node.right = null;  // 将当前节点的左右子树销毁
+            return newNode; // 返回新的节点树
+        }
+
+    }
+
+    /**
      * 检测当前二分搜索树是否不为空，则否抛出异常
      * 
      * @throws IllegalArgumentException
