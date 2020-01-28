@@ -413,7 +413,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
             // 如果左右子树均不为空
             // 将右子树的最小元素节点删除并作为新节点，替换掉要删除的节点
-            Node newNode = minNode(node.right); // 获取当前节点右子树的最小元素节点
+            Node newNode = minNode(node.right); // 获取当前节点右子树的最小元素节点(或最大值节点也行，也叫前驱)
             newNode.right = removeMin(node.right); // 将当前节点右子树的最小元素节点删除后返回的节点树，作为新节点的右子树
             newNode.left = node.left; // 将当前节点的左子树，赋给新节点
             node.left = node.right = null;  // 将当前节点的左右子树销毁
