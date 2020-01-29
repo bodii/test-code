@@ -129,6 +129,7 @@ public class BinarySearchTreeMap<K extends Comparable<K>, V> implements Mapable<
             return node;
         } else if (k.compareTo(node.k) > 0) {
             node.right = remove(k, node.right);
+            return node;
         } else {
             if (node.left == null) {
                 MapNode rightNode = node.right;
@@ -152,8 +153,6 @@ public class BinarySearchTreeMap<K extends Comparable<K>, V> implements Mapable<
 
             return minNode;
         }
-
-        return node;
     }
 
     /**
