@@ -22,6 +22,19 @@ public class   Array<E> {
 	}
 
 	/**
+	 * 构造函数
+	 *  用于将一个用户传入的的数组转化成当前的数组体
+	 * @param arr 传入的数组
+	 */
+	public Array(E[] arr) {
+		data = (E[]) new Object[arr.length];
+		for (int i = 0; i < arr.length; i ++)
+			data[i] = arr[i];
+
+		size = arr.length;
+	}
+
+	/**
 	 * 获取数组的元素个数
 	 */
 	public int getSize() {

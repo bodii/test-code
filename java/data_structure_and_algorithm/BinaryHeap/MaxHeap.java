@@ -18,6 +18,20 @@ public class MaxHeap<E extends Comparable<E>> {
     }
 
     /**
+     * 构造函数
+     * 将用户传入的数组最大二叉堆化(heapify)
+     * 
+     * @param arr 传入的数组
+     */
+    public MaxHeap(E[] arr) {
+        data = new Array<>(arr);  // 实例化这个数组为一个堆
+
+        // 遍历这个堆，从最后一个元素索引的父级索引开始
+        for (int i = parent(arr.length -1); i >=0; i --)
+            siftDown(i); // 逐一做是父亲元素大于孩子元素的比较交换(数据下沉)
+    }
+
+    /**
      * 获取最大二叉堆的元素个数
      * 
      * @return 元素个数
@@ -87,7 +101,7 @@ public class MaxHeap<E extends Comparable<E>> {
      */
     public void add(E e) {
         data.addLast(e);
-        siftUp(data.getSize() - 1);
+        siftUp(data.getSize() - 1); // 如果是最小二叉堆，则使用siftDown
     }
 
     /**
@@ -112,7 +126,7 @@ public class MaxHeap<E extends Comparable<E>> {
 
         data.swap(0, data.getSize() - 1); // 将头元素放在末尾
         data.removeLast(); // 删除最后一个元素
-        siftDown(0); //将头元素做下沉
+        siftDown(0); //将头元素做下沉 // 如果是最小二叉堆，则使用siftUp
 
         return max;
     }
@@ -151,6 +165,22 @@ public class MaxHeap<E extends Comparable<E>> {
             data.swap(index, j);
             index = j; // 进行下一轮循环
         }
+    }
+
+    /**
+     * 取最大二叉堆中最大的元素，并用新元素替换
+     * 且要满足最大二叉堆的属性
+     * 
+     * @param e 新元素
+     * @return 最大元素
+     */
+    public E replace(E e) {
+        E max = findMax();
+
+        data.set(0, e);
+        siftDown(0);
+
+        return max;
     }
 
     /**
