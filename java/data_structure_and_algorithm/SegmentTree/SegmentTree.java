@@ -55,7 +55,7 @@ public class SegmentTree<E> {
         bindSegmentTree(rightTreeIndex, mid + 1, r); 
 
         // 当前树索引 ＝ 将左孩子树的融合值与右孩子的树的融合值 融合
-        tree[treeIndex] = merger.merger(tree[leftTreeIndex], tree[rightTreeIndex]);
+        tree[treeIndex] = merger.merge(tree[leftTreeIndex], tree[rightTreeIndex]);
     }
 
     /**

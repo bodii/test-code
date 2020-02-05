@@ -11,7 +11,7 @@ public class TestSegmentTree {
         Integer[] arr = {-2, 0, 3, -5, 2, -1};
         SegmentTree<Integer> segment = new SegmentTree<>(arr, new Merger<Integer>() {
             @Override
-            public Integer merger(Integer a, Integer b) {
+            public Integer merge(Integer a, Integer b) {
                 return a + b;
             }
         });
