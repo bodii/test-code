@@ -110,6 +110,47 @@ public class SegmentTree<E> {
     }
 
     /**
+     * 更新线段树某个索引的值
+     * 
+     * @param index 指定的索引
+     * @param e 新元素值
+     */
+    public void set(int index, E e) {
+        ensureIndex(index);
+
+        data[index] = e; // 更新数组这个索引的值
+        // 更新线段树的值
+        set(0, 0, data.length - 1, index, e);
+    }
+
+    /**
+     * 递归更新以treeIndex为根的线段树中更新index的值为e
+     * 
+     * @param treeIndex 当前索引
+     * @param l 左开始
+     * @param r 右结束
+     * @param index 指定要更新的索引
+     * @param e 新元素的值
+     */
+    private void set(int treeIndex, int l, int r, int index, E e) {
+        if (l == r) {
+            tree[treeIndex] = e;
+            return;
+        }
+
+        int mid = l + (r -l) / 2;
+        int leftTreeIndex = leftChild(treeIndex);
+        int rightTreeIndex = rightChild(treeIndex);
+
+        if (index >= mid + 1)
+            set(rightTreeIndex, mid + 1, r, index, e);
+        else
+            set(leftTreeIndex, l, mid, index, e);
+
+        tree[treeIndex] = merger.merge(tree[leftTreeIndex], tree[rightTreeIndex]);
+    }
+
+    /**
      * 获取原始数组的元素个数
      * 
      * @return 元素个数
