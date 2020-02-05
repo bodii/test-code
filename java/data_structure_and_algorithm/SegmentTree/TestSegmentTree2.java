@@ -12,5 +12,7 @@ public class TestSegmentTree2 {
         SegmentTree<Integer> segment = new SegmentTree<>(arr, (a, b) -> a + b);
 
         System.out.println(segment);
+        // 查询测试
+        System.out.println("查询0-2区间的值:" + segment.query(0, 2));
     }
 }

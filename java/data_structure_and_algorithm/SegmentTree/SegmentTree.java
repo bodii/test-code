@@ -59,6 +59,57 @@ public class SegmentTree<E> {
     }
 
     /**
+     * 查询两个索引区间的结果
+     * 
+     * @param queryL 左开始
+     * @param queryR 右结束
+     * @return 区间结果
+     */
+    public E query(int queryL, int queryR) {
+        ensureIndex(queryL);
+        ensureIndex(queryR);
+        if (queryL > queryR)
+            throw new IllegalArgumentException("Index is illegal.");
+
+        return query(0, 0, data.length - 1, queryL, queryR);
+    }
+
+    /**
+     * 递归查询两个区间索引在线段树中的索引位置，并返回区间的值
+     * 
+     * @param treeIndex 当前索引
+     * @param l 左开始区间
+     * @param r 右开始区间
+     * @param queryL 要查询的左开始
+     * @param queryR 要查询的右结束
+     * @return 区间的结果
+     */
+    private E query(int treeIndex, int l, int r, int queryL, int queryR) {
+        // 如果左开始区间等于要查询的左开始，并且右开始区间等于要查询的右开始
+        // 返回当前左区间到右区间，也就是当前值
+        if (l == queryL && r == queryR)
+            return tree[treeIndex]; 
+
+        int mid = l + (r - l) / 2; // 中间区间
+        int leftTreeIndex = leftChild(treeIndex);
+        int rightTreeIndex = rightChild(treeIndex);
+
+        // 如果要查询的左开始大于中间区间加1
+        // 则从右区间的开始查询，反之则从左区间查询
+        if (queryL >= mid + 1)
+            return query(rightTreeIndex, mid + 1, r, queryL, queryR);
+        else if (queryR <= mid)
+            return query(leftTreeIndex, l, mid, queryL, queryR);
+
+        // 如果要查询的左开始在左区间的右边
+        // 要查询的右开始在右区间的左边
+        E leftResult = query(leftTreeIndex, l, mid, queryL, mid);
+        E rightResult = query(rightTreeIndex, mid + 1, r,  mid + 1, queryR);
+
+        return merger.merge(leftResult, rightResult);
+    }
+
+    /**
      * 获取原始数组的元素个数
      * 
      * @return 元素个数
