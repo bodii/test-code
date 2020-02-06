@@ -25,7 +25,7 @@ class Test2 {
     public static void main(String[] args) {
         String[] words = {"gin", "zen", "gig", "msg"};
 
-        Solution solution = new Solution();
+        Solution2 solution = new Solution2();
         System.out.println(solution.uniqueMorseRepresentations(words));
     }
 }
