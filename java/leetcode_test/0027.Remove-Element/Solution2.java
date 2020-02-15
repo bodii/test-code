@@ -52,15 +52,15 @@ class Test2 {
     public static void main(String[] args) {
         Solution2 solution = new Solution2();
 
-        // int[] nums = {3,2,2,3};
-        // int val = 3;
+        int[] nums = {3,2,2,3};
+        int val = 3;
 
-        // int len = solution.removeElement(nums, val);
-        // System.out.println("len: " + len);
-        // for (int i = 0; i < len; i ++)
-        //     System.out.print(nums[i] + ", ");
+        int len = solution.removeElement(nums, val);
+        System.out.println("len: " + len);
+        for (int i = 0; i < len; i ++)
+            System.out.print(nums[i] + ", ");
 
-        // System.out.println();
+        System.out.println();
 
 
         int[] nums2 = {0,1,2,2,3,0,4,2};
@@ -73,14 +73,14 @@ class Test2 {
 
         System.out.println();
 
-        // int[] nums3 = {3, 3};
-        // int val3 = 3;
-        // int len3 = solution.removeElement(nums3, val3);
-        // System.out.println("len: " + len3);
-        // for (int i = 0; i < len3; i ++)
-        //     System.out.print(nums3[i] + ", ");
+        int[] nums3 = {3, 3};
+        int val3 = 3;
+        int len3 = solution.removeElement(nums3, val3);
+        System.out.println("len: " + len3);
+        for (int i = 0; i < len3; i ++)
+            System.out.print(nums3[i] + ", ");
 
-        // System.out.println();
+        System.out.println();
 
     }
 }
