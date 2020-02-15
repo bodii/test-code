@@ -1,23 +1,19 @@
 package remove_element;
 
+import java.util.ArrayList;
+
 class Solution {
     public int removeElement(int[] nums, int val) {
-        int len = nums.length;
-        for (int i = 0; i < len; i ++) {
-            if (nums[i] == val) {
-                moveEle(i, len--, nums);
-            }
-        }
+            ArrayList<Integer> arr = new ArrayList<>(nums.length);
 
-        return len;
-    }
+            for (int i = 0; i < nums.length; i ++)
+                if (val != nums[i])
+                    arr.add(nums[i]);
 
-    private void moveEle(int l , int r, int[] nums) {
-        if (l == r)
-            return ;
+            for (int i = 0; i < arr.size(); i++)
+                nums[i] = arr.get(i);
 
-        for (int i = l; i < r-1; i ++)
-            nums[i] = nums[i+1];
+            return arr.size();
     }
 }
 
