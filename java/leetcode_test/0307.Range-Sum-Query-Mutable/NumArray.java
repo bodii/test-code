@@ -7,18 +7,24 @@ class NumArray {
     private SegmentTree<Integer> segment;
 
     public NumArray(int[] nums) {
-        Integer[] data = new Integer[nums.length];
-        for (int i = 0; i < nums.length; i ++)
-            data[i] = nums[i];
+        if (nums.length > 0) {
+            Integer[] data = new Integer[nums.length];
+            for (int i = 0; i < nums.length; i ++)
+                data[i] = nums[i];
 
-        segment = new SegmentTree<>(data, (a, b) -> a + b);
+            segment = new SegmentTree<>(data, (a, b) -> a + b);
+        }
     }
     
     public void update(int i, int val) {
+        if (segment == null)
+            throw new IllegalArgumentException("Index out of bounds for length");
         segment.set(i, val);
     }
     
     public int sumRange(int i, int j) {
+        if (segment == null)
+            throw new IllegalArgumentException("Index out of bounds for length");
         return segment.query(i, j);
     }
 }
