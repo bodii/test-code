@@ -60,4 +60,41 @@ public class Trie {
         }
     }
 
+    /**
+     * 查询当前单词是否被字典树包含
+     * 
+     * @param word 要查询的单词
+     * @return  是否包含
+     */
+    public boolean contains(String word) {
+        Node current = root;
+        for (int i = 0; i < word.length(); i ++) {
+            char c = word.charAt(i);
+            if (current.next.get(c) == null)
+                return false;
+            current = current.next.get(c);
+        }
+
+        return current.isWord;
+    }
+
+    /**
+     * 查询当前词段是否是字典树的前缀树
+     * 
+     * @param word 要查询的单词段
+     * @return 是否在字典树中是前缀树
+     */
+    public boolean isPrefix(String word) {
+        Node current = root;
+        for (int i = 0; i < word.length(); i ++) {
+            char c = word.charAt(i);
+            if (current.next.get(c) == null)
+                return false;
+
+            current = current.next.get(c);
+        }
+
+        return true;
+    }
+
 }
