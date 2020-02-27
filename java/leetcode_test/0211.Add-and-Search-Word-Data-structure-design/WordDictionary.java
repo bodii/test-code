@@ -48,29 +48,7 @@ class WordDictionary {
     
     /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
     public boolean search(String word) {
-        Node current = root;
-        StringBuilder prefix = new StringBuilder();
-        for (int i = 0; i < word.length(); i ++) {
-            char c = word.charAt(i);
-            if (c == '.') {
-                char j = 'a';
-                for(;  j <= 'z';  j ++) {
-                    prefix.append(j);
-                    if (isPrefix(prefix.toString()))
-                        break;
-                    else 
-                        prefix.delete(prefix.length() -1, prefix.length());
-                } 
-                current = current.next.get(j);
-            } else {
-                if (current.next.get(c) == null)
-                    return false;
-                prefix.append(c);
-                current = current.next.get(c);
-            }
-        }
-
-        return current.isWord;
+        return match(root, word, 0);
     }
 
     /**
@@ -79,17 +57,21 @@ class WordDictionary {
      * @param word 要查询的单词段
      * @return 是否在字典树中是前缀树
      */
-    private boolean isPrefix(String word) {
-        Node current = root;
-        for (int i = 0; i < word.length(); i ++) {
-            char c = word.charAt(i);
-            if (current.next.get(c) == null)
-                return false;
+    private boolean match(Node node, String word, int index) {
+        if (index == word.length())
+            return node.isWord;
 
-            current = current.next.get(c);
+        char c = word.charAt(index);
+        if (c == '.') {
+            for (char nextChar : node.next.keySet())
+                if (match(node.next.get(nextChar), word, index + 1)) 
+                    return true;
+            return false;
         }
 
-        return true;
+        if (node.next.get(c) == null)
+            return false;
+        return match(node.next.get(c), word, index + 1 );
     }
 }
 
