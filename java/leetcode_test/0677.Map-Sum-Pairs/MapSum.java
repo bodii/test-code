@@ -96,8 +96,9 @@ class MapSum {
             result = current.val;
 
         // 如果当前查询的字符串只是前缀树的前缀字符，并遍历累加后面的值
-        for (char nextChar : current.next.keySet())
+        for (char nextChar : current.next.keySet()) {
             result += getVal(current, nextChar, 0);
+        }
 
         return result;
     }
@@ -156,10 +157,10 @@ class MapSum {
 
         node = node.next.get(c);
         if (node.val > 0)
-            System.out.println("val: " + node.val);
-        total += node.val;
+            total += node.val;
+            
         for (char nextChar : node.next.keySet())
-            return getVal(node, nextChar, total);
+            total = getVal(node, nextChar, total);
 
         return total;
     }
@@ -305,5 +306,6 @@ class Test {
         System.out.println(sum.sum("ab")); // 0
         System.out.println(sum.sum("aa")); // 38
         System.out.println(sum.sum("a")); // 294
+        sum.print();
     }
 }
