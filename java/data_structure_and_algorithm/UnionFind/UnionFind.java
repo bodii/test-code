@@ -34,7 +34,7 @@ public class UnionFind  implements UnionFindable {
      * @return 集合编号
      */
     private int find(int p) {
-        if (p < 0 && p > id.length)
+        if (p < 0 && p >= id.length)
             throw new IllegalArgumentException("p is out of bound.");
 
         return id[p];

@@ -38,7 +38,7 @@ public class Test {
         int m = 10000;
 
         UnionFind u1 = new UnionFind(size);
-        System.out.println("union find:   " + testUnionFind(u1, m));
+        System.out.println("union find 1:  " + testUnionFind(u1, m));
 
         UnionFind2 u2 = new UnionFind2(size);
         System.out.println("union find 2: " + testUnionFind(u2, m));
@@ -48,5 +48,8 @@ public class Test {
 
         UnionFind4 u4 = new UnionFind4(size);
         System.out.println("union find 4: " + testUnionFind(u4, m));
+
+        UnionFind5 u5 = new UnionFind5(size);
+        System.out.println("union find 5: " + testUnionFind(u5, m));
     }
 }

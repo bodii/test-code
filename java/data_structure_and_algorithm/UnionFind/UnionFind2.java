@@ -35,7 +35,7 @@ public class UnionFind2  implements UnionFindable {
      * @return 集合编号
      */
     private int find(int p) {
-        if (p < 0 && p > parent.length)
+        if (p < 0 && p >= parent.length)
             throw new IllegalArgumentException("p is out of bound.");
 
         while (p != parent[p])
