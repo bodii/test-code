@@ -5,6 +5,8 @@ import java.util.Random;
 import union_find.UnionFindable;
 import union_find.UnionFind;
 import union_find.UnionFind2;
+import union_find.UnionFind3;
+import union_find.UnionFind4;
 
 public class Test {
 
@@ -40,5 +42,11 @@ public class Test {
 
         UnionFind2 u2 = new UnionFind2(size);
         System.out.println("union find 2: " + testUnionFind(u2, m));
+
+        UnionFind3 u3 = new UnionFind3(size);
+        System.out.println("union find 3: " + testUnionFind(u3, m));
+
+        UnionFind4 u4 = new UnionFind4(size);
+        System.out.println("union find 4: " + testUnionFind(u4, m));
     }
 }
