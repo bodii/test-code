@@ -7,6 +7,8 @@ import union_find.UnionFind;
 import union_find.UnionFind2;
 import union_find.UnionFind3;
 import union_find.UnionFind4;
+import union_find.UnionFind5;
+import union_find.UnionFind6;
 
 public class Test {
 
@@ -49,7 +51,10 @@ public class Test {
         UnionFind4 u4 = new UnionFind4(size);
         System.out.println("union find 4: " + testUnionFind(u4, m));
 
-        UnionFind5 u5 = new UnionFind5(size);
-        System.out.println("union find 5: " + testUnionFind(u5, m));
+        // UnionFind5 u5 = new UnionFind5(size);
+        // System.out.println("union find 5: " + testUnionFind(u5, m));
+
+        UnionFind6 u6 = new UnionFind6(size);
+        System.out.println("union find 6: " + testUnionFind(u6, m));
     }
 }
