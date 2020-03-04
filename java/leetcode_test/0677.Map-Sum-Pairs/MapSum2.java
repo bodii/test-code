@@ -6,7 +6,7 @@ import java.util.TreeMap;
  * 键值映射类
  * MapSum class
  */
-class MapSum {
+class MapSum2 {
     /**
      * 内部节点类
      */
@@ -31,7 +31,7 @@ class MapSum {
     private int size; // 已添加的组合词组的个数
 
     /** Initialize your data structure here. */
-    public MapSum() {
+    public MapSum2() {
         root = new Node();
         size = 0;
     }
@@ -67,102 +67,29 @@ class MapSum {
     public int sum(String prefix) {
         int result = 0;
         Node current = root;
-        // 如果要查询的字符串为空则直接返回0
-        if (prefix.isEmpty()) 
-            return result;
-
-        // 是否是前缀
-        boolean isPrefix = isPrefix(prefix);
-        if (!isPrefix) // 如果前缀树中不包含当前字符串，则返回0
-            return result;
-
-        // 是否是单词
-        boolean isWord = isWord(prefix);
         for (int i = 0; i < prefix.length(); i ++) {
             char c = prefix.charAt(i);
+
             current = current.next.get(c);
-            // 并且当前键对应的值小于等于0, 跳过
-            if (current.val <= 0)
-                continue;
-
-            // 如果要查询的字符串不是单词边界，则累加对应的值
-            if (!isWord)
-                result += current.val;
+            if (current == null)
+                return result;
         }
 
-        // 如果要查询的字符串是单词边界，则以当前键对应的值作为初始值，
-        // 并向后查看是否结束，如果没有结束累加后面的值
-        if (isWord)
-            result = current.val;
+        return sum(current);
+    }
 
-        // 如果当前查询的字符串只是前缀树的前缀字符，并遍历累加后面的值
-        for (char nextChar : current.next.keySet()) {
-            result += getVal(current, nextChar, 0);
-        }
+    /**
+     * 递归计算子节点val的和
+     * 
+     * @param node
+     * @return 子节点val的和
+     */
+    private int sum(Node node) {
+        int result = node.val;
+        for (char c: node.next.keySet())
+            result += sum(node.next.get(c));
 
         return result;
-    }
-
-    /**
-     * 检测当前字符串是否在前缀树中是一个已添加的组合词组 
-     * 
-     * @param word 要查询的字符串
-     * @return 是否在前缀树中是一个已添加的组合词组
-     */
-    private boolean isWord(String word) {
-        Node current = root;
-        for (int i = 0; i < word.length(); i ++) {
-            char c = word.charAt(i);
-
-            if (current.next.get(c) == null)
-                return false;
-
-            current = current.next.get(c);
-        }
-
-        return current.isWord;
-    }
-
-    /**
-     * 检测当前字符串是否是前缀树的前缀元素 
-     * 
-     * @param prefix 要查询的字符串
-     * @return 是否是前缀树的前缀元素 
-     */
-    private boolean isPrefix(String prefix) {
-        Node current = root;
-        for (int i = 0; i < prefix.length(); i ++) {
-            char c = prefix.charAt(i);
-
-            if (current.next.get(c) == null)
-                return false;
-
-            current = current.next.get(c);
-        }
-
-        return true;
-    }
-
-    /**
-     * 获取前缀字符串后面所有匹配前缀键的值
-     * 
-     * @param node 上一个节点
-     * @param c 要查询的键
-     * @param total 累计的值
-     * @return 计算后的值
-     */
-    private int getVal(Node node, char c, int total) {
-        if (node.next.get(c) == null)
-            return total;
-
-        node = node.next.get(c);
-        if (node.val > 0)
-            total += node.val;
-            
-        for (char nextChar : node.next.keySet())
-            total = getVal(node, nextChar, total);
-
-        return total;
     }
 
     /**
@@ -201,9 +128,9 @@ class MapSum {
  * int param_2 = obj.sum(prefix);
  */
 
-class Test {
+class Test2 {
     public static void main(String[] args) {
-        MapSum sum = new MapSum();
+        MapSum2 sum = new MapSum2();
         // sum.insert("apple", 3);
         // sum.insert("a", 3);
         // // sum.print();
