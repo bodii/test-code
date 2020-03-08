@@ -1,8 +1,7 @@
-package binary_search_tree;
+package avl_tree;
 
 import java.util.Queue;
-import java.util.Stack;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * 平衡二分搜索树泛型类(二叉树)
@@ -21,6 +20,7 @@ public class AVLTree<K extends Comparable<K>, V> {
         public V value;
         public Node left;
         public Node right;
+        public int height;
 
         public Node (K key, V value) {
             this.key = key;
@@ -37,7 +37,7 @@ public class AVLTree<K extends Comparable<K>, V> {
     /**
      * 构造函数
      */
-    public BinarySearchTree() {
+    public AVLTree() {
         root = null;
         size = 0; 
     }
@@ -107,6 +107,27 @@ public class AVLTree<K extends Comparable<K>, V> {
 
         // 计算当前节点的平衡因子
         int balanceFactor = getBalanceFactor(node);
+        
+        // 平衡维护
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0)
+        	return rightRotate(node);
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0)
+            return leftRotate(node);
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        // RL
+        if (balanceFactor < -1 && getBalanceFactor(node.right) > 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
 
         // 说明i当前最多节点的平衡因子与最小节点的平衡因子相差大于1
         if (Math.abs(balanceFactor) > 1) 
@@ -205,112 +226,75 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * 二分搜索树的前序遍历
-     */
-    public void preOrder() {
-        preOrder(root);
-    }
-
-    /**
-     * 二分搜索树的前序遍历(私有方法)
-     * @param node
-     */
-    private void preOrder(Node node) {
-        // if (node == null) // 终止条件
-        //     return;
-
-        if (node != null) { // 先判断不为空(终止条件)
-            System.out.println(node);
-            preOrder(node.left);
-            preOrder(node.right);
-        }
-    }
-
-    /**
-     * 二分搜索树的中序遍历
-     */
-    public void inOrder() {
-        inOrder(root);
-    }
-
-    /**
-     *  二分搜索树的中序遍历(私有方法)
+     * 判断该二叉树是不是二分搜索树
      * 
-     * @param node
+     * @return 是否是二分搜索树
      */
-    private void inOrder(Node node) {
+    public boolean isBinarySearchTree() {
+        ArrayList<K> keys = new ArrayList<>();
+        inOrder(root, keys);
+        for (int i = 1; i < keys.size(); i ++)
+            if (keys.get(i - 1).compareTo(keys.get(i)) > 0) 
+                return false;
+
+        return true;
+    }
+
+    /**
+     * 二叉树的中序遍历
+     * 
+     * @param node 当前节点
+     * @param keys 一个ArrayList<K> 的数组
+     */
+    private void inOrder(Node node, ArrayList<K> keys) {
         if (node == null)
-            return;
+            return ;
 
-        inOrder(node.left);
-        System.out.println(node);
-        inOrder(node.right);
+        inOrder(node.left, keys);
+        keys.add(node.key);
+        inOrder(node.right, keys);
     }
 
     /**
-     * 二分搜索树的后序遍历
-     */
-    public void postOrder() {
-        postOrder(root);
-    }
-
-    /**
-     *  二分搜索树的后序遍历(私有方法)
+     * 对节点y进行向右旋转操作，返回旋转后新的根节点x
      * 
-     * @param node
+     * @param y y节点
+     * @return
      */
-    private void postOrder(Node node) {
-        if (node == null)
-            return;
+    private Node rightRotate(Node y) {
+        Node x = y.left;
+        Node T3 = x.right;
 
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.println(node);
+        // 向右旋转过程
+        x.right = y;
+        y.left = T3;
+
+        // 更新hight
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
     }
-
+    
     /**
-     * 二分搜索树的递归前序遍历
-     */
-    public void preOrderNR() {
-        Stack<Node> stack = new Stack<>();
-        stack.push(root);
-        while(!stack.isEmpty()) {
-            Node current = stack.pop();
-            System.out.println(current);
-
-            if(current.right != null)
-                stack.push(current.right);
-            if (current.left != null)
-                stack.push(current.left);
-        }
-    }
-
-    /**
-     * 二分搜索树的层序遍历(广度优先)
-     */
-    public void levelOrder() {
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            Node current = queue.remove();
-            System.out.println(current);
-
-            if (current.left != null) 
-                queue.add(current.left);
-            if (current.right != null)
-                queue.add(current.right);
-        }
-    }
-
-    /**
-     * 获取二分搜索树中最小的key(最左key)
+     * 对节点y进行向左旋转操作，返回旋转后新的根节点x
      * 
-     * @return K 最小key
+     * @param y y节点
+     * @return
      */
-    public K min() {
-        nonEmpty();
-
-        return minNode(root).key;
+    private Node leftRotate(Node y) {
+    	Node x = y.right;
+    	Node T2 = x.left;
+    	
+    	// 向左旋转过程
+    	x.left = y;
+    	y.right = T2;
+    	
+    	// 更新height
+    	y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+    	x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+    	
+    	return x;
     }
 
     /**
@@ -327,17 +311,6 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * 获取二分搜索树中最大的key(最右元素)
-     * 
-     * @return E 最大key
-     */
-    public E max() {
-        nonEmpty();
-
-        return maxNode(root).key;
-    }
-
-    /**
      *  获取二分搜索树中最小元素的节点(递归遍历)
      * 
      * @param node 当前节点
@@ -351,76 +324,18 @@ public class AVLTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * 删除二分搜索树中的最小元素
-     * 
-     * @return 被删除的元素
-     */
-    public E removeMin() {
-        E min = min();
-        root = removeMin(root);
-
-        return min;
-    }
-
-    /**
-     * 删除二分搜索树中的最左(最小)元素的节点
-     * 
-     * @param node 当前节点
-     * @return 下一个节点
-     */
-    private Node removeMin(Node node) {
-        if (node.left == null) {
-            Node rightNode = node.right;
-            node.right = null;
-            size --;
-            return rightNode;
-        }
-
-        node.left = removeMin(node.left);
-
-        return node;
-    }
-
-    /**
-     * 删除二分搜索树中最大的元素
-     * 
-     * @return 最大的元素
-     */
-    public E removeMax() {
-        E max = max();
-        root = removeMax(root);
-
-        return max;
-    }
-
-    /**
-     * 删除二分搜索树中的最右(最大)元素的节点
-     * 
-     * @param node 当前节点
-     * @return 下一个节点
-     */
-    private Node removeMax(Node node) {
-        if (node.right == null) {
-            Node leftNode = node.left;
-            node.right = null;
-            size --;
-
-            return leftNode;
-        }
-
-        node.right = removeMax(node.right);
-
-        return node;
-    }
-
-    /**
      * 删除二分搜索树的某个key对应的节点
      * 
      * @param K 对应的key
      * 
      */
-    public void remove(K key) {
-        remove(root, key);
+    public V remove(K key) {
+        Node node = getNode(root, key);
+        if (node != null) {
+            root = remove(root, key);
+            return node.value;
+        }
+        return null;
     }
 
     /**
@@ -428,24 +343,25 @@ public class AVLTree<K extends Comparable<K>, V> {
      * @param node
      * @param K 指定的key
      * @return
-     */
+  */
     private Node remove(Node node, K key) {
         if (node == null)
             return null;
 
+        Node retNode;
         if (key.compareTo(node.key) < 0) {
             node.left = remove(node.left, key);
-            return node;
+            retNode = node;
         } else if (key.compareTo(node.key) > 0) {
-            node.right = remove(node.right, e);
-            return node;
+            node.right = remove(node.right, key);
+            retNode = node;
         } else {
             // 如果左子树为空，则将右子树返回
             if (node.left == null) {
                 Node rightNode = node.right;
                 node.right = null;
                 size --;
-                return rightNode;
+                retNode = rightNode;
             } 
 
             // 如果右子树为空，则将左子树返回
@@ -453,71 +369,49 @@ public class AVLTree<K extends Comparable<K>, V> {
                 Node leftNode = node.left;
                 node.left = null;
                 size --;
-                return leftNode;
+                retNode = leftNode;
             }
 
             // 如果左右子树均不为空
             // 将右子树的最小元素节点删除并作为新节点，替换掉要删除的节点
             Node newNode = minNode(node.right); // 获取当前节点右子树的最小元素节点(或最大值节点也行，也叫前驱)
-            newNode.right = removeMin(node.right); // 将当前节点右子树的最小元素节点删除后返回的节点树，作为新节点的右子树
+            newNode.right = remove(node.right, newNode.key); // 将当前节点右子树的最小元素节点删除后返回的节点树，作为新节点的右子树
             newNode.left = node.left; // 将当前节点的左子树，赋给新节点
             node.left = node.right = null;  // 将当前节点的左右子树销毁
-            return newNode; // 返回新的节点树
+            retNode = newNode; // 返回新的节点树
         }
 
-    }
+        if (retNode == null)
+            return null;
 
-    /**
-     * 检测当前二分搜索树是否不为空，则否抛出异常
-     * 
-     * @throws IllegalArgumentException
-     */
-    private void nonEmpty() {
-        if (size ==0)
-            throw new IllegalArgumentException("Binary search tree is empty.");
-    }
+        // 更新height
+        retNode.height = 1 + Math.max(getHeight(retNode.left), getHeight(retNode.right));
 
-    /**
-     * 将当前二分搜索树转换成字符串
-     */
-    @Override public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(String.format("Binary search tree of size = %d\n", size));
-        generateBSTString(root, 0, result);
-        return result.toString();
-    }
+        // 计算平衡
+        int balanceFactor = getBalanceFactor(retNode);
 
-    /**
-     * 生成二分搜索树节点与深度字符串
-     * 
-     * @param node 当前节点
-     * @param depth 当前节点距离根节点的深度
-     * @param result 生成的字符串
-     */
-    private void generateBSTString(Node node, int depth, StringBuilder result) {
-        if (node == null ) {
-            result.append(generateDepthString(depth) + "null\n");
-            return;
+        // 平衡维护
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) >= 0)
+            return rightRotate(retNode);
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(retNode.right) <= 0)
+            return leftRotate(retNode);
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) < 0) {
+            retNode.left = leftRotate(retNode.left);
+            return rightRotate(retNode);
         }
 
-        result.append(generateDepthString(depth) + node.key + "\n");
-        generateBSTString(node.left, depth + 1, result);
-        generateBSTString(node.right, depth + 1, result);
-    }
+        // RL
+        if (balanceFactor < -1  && getBalanceFactor(retNode.right) > 0) {
+            retNode.right = rightRotate(retNode.right);
+            return leftRotate(retNode);
+        }
 
-    /**
-     * 生成二分搜索树深度的字符串
-     * e.g. depth=1 "--"; depth=3 "------".
-     * 
-     * @param depth int 深度值
-     * @return 拼接好的深度字符串
-     */
-    private String generateDepthString(int depth) {
-        StringBuilder result = new StringBuilder();
+        return retNode;
+   }
 
-        for (int i = 0; i < depth; i++)
-            result.append("--");
-
-        return result.toString();
-    }
 }
