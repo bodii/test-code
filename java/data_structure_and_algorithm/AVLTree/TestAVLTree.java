@@ -1,14 +1,14 @@
 package binary_search_tree;
 
-import binary_search_tree.BinarySearchTree;
+import binary_search_tree.AVLTree;
 
-public class TestBinarySearchTree {
+public class TestAVLTree {
     public static void main(String[] args) {
-        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        AVLTree<Integer, Integer> bst = new AVLTree<>();
         
         int[] nums = {5, 3, 6, 8, 4, 2};
-        for (int num : nums)
-            bst.add(num);
+        for (int i = 0; i < nums.length; i ++)
+            bst.add(i, nums[i]);
 
         System.out.println("size: " + bst.getSize());
 

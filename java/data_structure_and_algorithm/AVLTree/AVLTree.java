@@ -27,7 +27,7 @@ public class AVLTree<K extends Comparable<K>, V> {
             this.value = value;
             left = null;
             right = null;
-            height = 1;
+            height = 1; // 节点的高度
         }
     }
 
@@ -96,9 +96,9 @@ public class AVLTree<K extends Comparable<K>, V> {
         } 
         
         if (key.compareTo(node.key) < 0)
-            node.left =  add(node.left, key, value)
+            node.left =  add(node.left, key, value);
         else if (key.compareTo(node.key) > 0)
-            node.right = add(node.right, key, value)
+            node.right = add(node.right, key, value);
         else 
             node.value = value;
 
@@ -115,8 +115,44 @@ public class AVLTree<K extends Comparable<K>, V> {
         return node;
     }
 
-    public void set(K key, V value) {
+    /**
+     * 获取以Node为根节点的二分搜索树中，key所在的节点
+     */
+    private Node getNode(Node node, K key) {
+        if (node == null)
+            return null;
+            
+        if (key.compareTo(node.key) < 0)
+            return getNode(node.left, key);
+        else if (key.compareTo(node.key) > 0)
+            return getNode(node.right, key);
+        // key.compareTo(node.key) == 0
+        return node;
+    }
 
+    /**
+     * 设置指定key对应的值
+     * 
+     * @param key 
+     * @param value
+     */
+    public void set(K key, V value) {
+        Node node = getNode(root, key);
+        if (node == null)
+            throw new IllegalArgumentException(key + " doesn't exists!");
+
+        node.value = value;
+    }
+
+    /**
+     * 获取指定key对应的值
+     * 
+     * @param key
+     * @return 值
+     */
+    public V get(K key) {
+        Node node = getNode(root, key);
+        return node == null ? null : node.value;
     }
 
     /**
@@ -130,19 +166,6 @@ public class AVLTree<K extends Comparable<K>, V> {
             return 0;
 
         return getHeight(node.left) - getHeight(node.right);
-    }
-
-    /**
-     * 获取以Node为根节点的二分搜索树中，key所在的节点
-     */
-    private Node getNode(Node node, K key) {
-        if (node == null)
-            return null;
-            
-        if (key.equals(node.key))
-            return node;
-
-        
     }
 
     /**
@@ -178,26 +201,7 @@ public class AVLTree<K extends Comparable<K>, V> {
      * @return 是否包含
      */
     public boolean contains(K key) {
-        return contains(key, root);
-    }
-
-    /**
-     * 查询某个key键是否包含在二叉搜索树中(私有方法)
-     * 
-     * @param K key键
-     * @param node 节点
-     * @return 是否包含
-     */
-    private boolean contains(K key, Node node) {
-        if (node == null)
-            return false;
-
-        if (key.compareTo(node.key)== 0)
-            return true;
-        else if (key.compareTo(node.key)< 0)
-            return contains(key, node.left);
-        else
-            return contains(key, node.right);
+        return getNode(root, key) != null;
     }
 
     /**
