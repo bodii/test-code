@@ -310,6 +310,14 @@ public class AVLTree<K extends Comparable<K>, V> {
         return minNode(node.left);
     }
 
+    public K min() {
+        return minNode(root).key;
+    }
+
+    public K max() {
+        return maxNode(root).key;
+    }
+
     /**
      *  获取二分搜索树中最小元素的节点(递归遍历)
      * 
