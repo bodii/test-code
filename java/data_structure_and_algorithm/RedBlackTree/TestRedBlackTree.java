@@ -7,8 +7,10 @@ public class TestRedBlackTree {
         RedBlackTree<Integer, Integer> rbt = new RedBlackTree<>();
         
         int[] nums = {5, 3, 6, 8, 4, 2};
-        for (int i = 0; i < nums.length; i ++)
+        for (int i = 0; i < nums.length; i ++) {
             rbt.add(nums[i], i);
+            System.out.println(rbt);
+        }
 
         System.out.println("contains 8: " + rbt.contains(8));
         System.out.println(rbt);
