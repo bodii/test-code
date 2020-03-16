@@ -1,5 +1,8 @@
 package hash_code;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class Student {
     int grade;
     int classes;
@@ -29,6 +32,23 @@ public class Student {
         return hash;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (o == null) 
+            return false;
+
+        if (getClass() != o.getClass())
+            return false;
+
+        Student another = (Student) o;
+        return this.grade == another.grade && this.classes == another.classes
+                    && this.firstName.toLowerCase().equals(firstName.toLowerCase())
+                    && this.lastName.toLowerCase().equals(another.lastName.toLowerCase());
+    }
+
     public static void main(String[] args) {
         int a = 42;
         System.out.println(((Integer)a).hashCode());
@@ -44,5 +64,14 @@ public class Student {
 
         Student student = new Student(3, 2, "ping", "wu");
         System.out.println(student.hashCode());
+
+        HashSet<Student> set = new HashSet<>();
+        set.add(student);
+
+        HashMap<Student, Integer> map = new HashMap<>();
+        map.put(student, 10);
+
+        Student student2 = new Student(5, 6, "meimei", "han");
+        System.out.println(student2.hashCode());
     }
 }
