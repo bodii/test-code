@@ -1,5 +1,6 @@
 package hash_code;
 
+import java.util.Hashtable;
 import java.util.TreeMap;
 
 /**
@@ -86,6 +87,61 @@ public class HashTable2<K, V> {
             resize(M / 2);
 
         return result;
+    }
+
+    /**
+     * 设置指定key对应的值
+     * 
+     * @param key  指定的key
+     * @param value 新值
+     */
+    public void set(K key, V value) {
+        TreeMap<K, V> map = hashtable[hash(key)];
+        if (!map.containsKey(key))
+            throw new IllegalArgumentException(key + " doesn't exist!");
+
+        map.put(key, value);
+    }
+
+    /**
+     *  查询当前key是否存在
+     * 
+     * @param key 指定的key
+     * @return 是否存在
+     */
+    public boolean contains(K key) {
+        return hashtable[hash(key)].containsKey(key);
+    }
+
+    /**
+     *  获取指定key对应的值
+     * 
+     * @param key 要获取的元素对应的key
+     * @return 查询到的值
+     */
+    public V get(K key) {
+        return hashtable[hash(key)].get(key);
+    }
+
+    /**
+     * 重置当前哈希表的列长
+     * 
+     * @param newM 要设置长度的新值
+     */
+    private void resize(int newM) {
+        TreeMap<K, V>[] newMap = new TreeMap[newM];
+        for (int i = 0; i < newM; i++)
+            newMap[i] = new TreeMpa<>();
+
+        int oldM = M;
+        this.M = newM;
+        for (int i = 0; i < oldM; i ++) {
+            TreeMap<K, V> map = hashtable[i];
+            for (K key : map.keySet())
+                newMap[hash(key)].put(key, map.get(key));
+        }
+
+        hashtable = newMap;
     }
 
 }
