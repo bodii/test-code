@@ -126,12 +126,14 @@ class DoubleLinkedTable:
         从链表的尾部弹出一个节点元素
         :return: 返回被删除的节点
         """
-        root = self.__head
+        root = self.__head.next
         while(root.next is not None):
-            root = root.next
+            root.next = root.next.next
 
         result = root
-        root.prev.next = None
+        root = root.next
+        self.size -= 1
+        
         return result
 
     def shift(self):
@@ -142,6 +144,7 @@ class DoubleLinkedTable:
         root = self.__head
         result = root.next
         root.next = root.next.next
+        self.size -= 1
 
         return result
 
@@ -218,14 +221,14 @@ if __name__ == '__main__':
     linked.set(3, 20)
     print(linked)
 
-    print("从链表中弹出末尾节点：", linked.pop());
+    print("从链表中弹出末尾节点：", linked.pop())
     print(linked)
 
-    print("从链表中移出头部节点：", linked.shift());
+    print("从链表中移出头部节点：", linked.shift())
     print(linked)
 
     insert = Node(33, 19)
-    print("从链表中索引为3之后插入：%s 是否成功:" %  insert,  linked.insert(3, insert));
+    print("从链表中索引为3之后插入：%s 是否成功:" %  insert,  linked.insert(3, insert))
     print(linked)
 
 
