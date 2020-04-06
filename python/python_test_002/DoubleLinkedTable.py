@@ -6,6 +6,11 @@ from typing import *
 # 节点类
 class Node:
     def __init__(self, k = None, v = None):
+        """
+        节点类
+        :param: key 键
+        :param: value 值
+        """
         self.prev = None
         self.next = None
         self.key = k
@@ -128,10 +133,10 @@ class DoubleLinkedTable:
         """
         root = self.__head.next
         while(root.next is not None):
-            root.next = root.next.next
+            root = root.next
 
         result = root
-        root = root.next
+        root.prev.next = root.next
         self.size -= 1
         
         return result
