@@ -1,7 +1,5 @@
 package chapter17;
 
-import java.math.BigDecimal;
-
 public class Calculation3 {
     public static void main(String[] args) {
         int itemsBought = 0;
