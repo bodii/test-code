@@ -4,7 +4,7 @@
 from threading import Thread, Event
 from multiprocessing import cpu_count
 from typing import List
-from task import Task
+from task import Task, AsyncTask
 from queue import ThreadSafeQueue
 
 '''
@@ -31,6 +31,10 @@ class ProcessThread(Thread):
             if not isinstance(task_q, Task):
                 continue
             result = task_q.callable(*task_q.args, **task_q.kwargs)
+
+            # 判断是否是异步任务
+            if isinstance(task_q, AsyncTask):
+                task_q.set_result(result)
 
     def dismiss(self):
         self.dismiss_flag.set()

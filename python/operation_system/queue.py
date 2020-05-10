@@ -4,6 +4,9 @@
 
 from threading import Lock, Condition, Thread
 import time
+from typing import List, Any
+
+from task import Task, AsyncTask
 
 class ThreadSafeQueueException(Exception):
     pass
@@ -33,7 +36,7 @@ class ThreadSafeQueue:
 
         return size
 
-    def put(self, item):
+    def put(self, item: Task):
         """
         往队列里放入元素
         """
@@ -51,7 +54,7 @@ class ThreadSafeQueue:
         self.condition.notify()
         self.condition.release()
 
-    def batch_put(self, item_list):
+    def batch_put(self, item_list: List[Task]):
         """
         往队列内添加元素列表
         """
@@ -60,7 +63,7 @@ class ThreadSafeQueue:
         for item in item_list:
             self.put(item)
 
-    def pop(self, block=False, timeout=None):
+    def pop(self, block: bool=False, timeout: int=None)-> Any: 
         """
         从队列中取出元素
 
@@ -90,7 +93,7 @@ class ThreadSafeQueue:
         return item
 
 
-    def get(self, index):
+    def get(self, index: int)-> Any:
         """
         获取列表中指定索引的元素
 

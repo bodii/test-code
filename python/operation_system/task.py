@@ -3,6 +3,9 @@
 
 
 import uuid
+from threading import Condition
+
+__all__ = ['Task', 'AsyncTask']
 
 '''
 任务类
@@ -16,6 +19,39 @@ class Task:
 
     def __str__(self):
         return f"Task id: {self.id}"
+
+
+'''
+异步任务类
+'''
+class AsyncTask(Task):
+    def __init__(self, func, *args, **kwargs):
+        self.result = None
+        self.condition = Condition()
+        super().__init__(func, *args, **kwargs)
+
+    def set_result(self, result):
+        """
+        设置运行结果
+        """
+        self.condition.acquire()
+        self.result = result
+        self.condition.notify()
+        self.condition.release()
+
+    def get_result(self):
+        """
+        获取运行结果
+        """
+        self.condition.acquire()
+        # 如果没有，则等待
+        if not self.result:
+            self.condition.wait()
+        result = self.result
+        self.condition.release()
+
+        return result
+
 
 '''
 测试任务的事件方法
