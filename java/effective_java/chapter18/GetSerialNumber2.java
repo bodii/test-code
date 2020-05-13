@@ -1,13 +1,13 @@
 package chapter18;
 
-import chapter18.GenerateSerialNumber;
+import chapter18.GenerateSerialNumber2;
 
-public class GetSerialNumber {
+public class GetSerialNumber2 {
     public static void main(String[] args) {
         Thread thread1 = new Thread(
             () -> {
                 System.out.println(
-                    GenerateSerialNumber.generateSerialNumber()
+                    GenerateSerialNumber2.generateserialNumber()
                     );
             }
         );
@@ -17,12 +17,13 @@ public class GetSerialNumber {
                 int i = 10;
                 while (i -- > 0)
                     System.out.println(
-                        GenerateSerialNumber.generateSerialNumber()
+                        GenerateSerialNumber2.generateserialNumber()
                         );
             }
         );
 
-        thread1.start();
+        
         thread2.start();
+        thread1.start();
     }
 }
