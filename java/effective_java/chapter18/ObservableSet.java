@@ -1,10 +1,13 @@
-package chapter10;
+package chapter18;
 
+import chapter18.SetObserver;
+import chapter18.ForwardingSet;
 import java.util.*;
-import chapter10.ForwardingSet;
 
 public class ObservableSet<E> extends ForwardingSet<E> {
-    public ObservableSet(Set<E> set) { super(set); }
+    public ObservableSet(Set<E> set) {
+        super(set);
+    }
 
     private final List<SetObserver<E>> observers = new ArrayList<>();
 
@@ -20,7 +23,7 @@ public class ObservableSet<E> extends ForwardingSet<E> {
         }
     }
 
-    private void notifyElementAdded(E element) {
+    public void notifyElementAdded(E element) {
         synchronized(observers) {
             for (SetObserver<E> observer : observers)
                 observer.added(this, element);
@@ -38,7 +41,7 @@ public class ObservableSet<E> extends ForwardingSet<E> {
         boolean result = false;
         for (E element : c)
             result |= add(element);
-        
-            return result;
+
+        return result;
     }
 }
