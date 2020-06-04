@@ -17,6 +17,7 @@ public final class Person {
         return address;
     }
 
+    @Override
     public String toString() {
         return "[ Person: name = " + name + ", address = " + address + " ]";
     }
