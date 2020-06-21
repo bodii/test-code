@@ -4,11 +4,8 @@ public class Blackhole {
     public static void enter(Object obj) {
 
         System.out.println("Step 1");
-        try {
-        magic(obj);
-        } catch (InterruptedException e) {
 
-        }
+        magic(obj);
 
         System.out.println("Step 2");
 
@@ -17,7 +14,7 @@ public class Blackhole {
         }
     }
 
-    public static void magic(Object obj) throws InterruptedException {
+    public static void magic(Object obj) {
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -34,14 +31,17 @@ public class Blackhole {
             }
         };
 
-        synchronized (thread) {
-            thread.setName("Lock");
-            thread.start();
-            while (thread.getName().equals("Lock")) {
-                thread.wait();
+        try {
+            synchronized (thread) {
+                thread.setName("Lock");
+                thread.start();
+                while (thread.getName().equals("Lock")) {
+                    thread.wait();
+                }
             }
-        }
+        } catch (InterruptedException e) {
 
+        }
 
     }
 }
