@@ -1,29 +1,25 @@
 package chapter10;
 
 public class Service {
-    private volatile static boolean isShutdown = false;
+    private static GracefulThread thread = null;
     // 开始运行服务
-    public static void service() {
+    public synchronized static void service() {
         System.out.print("service");
-        for (int i = 0; i < 50; i++) {
-            if (!isShutdown) {
-                System.out.print(".");
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-
-                }
-            }
+        if (thread != null && thread.isAlive()) {
+            // Balking
+            System.out.println(" is balked");
+            return;
         }
-        System.out.println("done.");
+        // Thread-Per-Message
+        thread = new ServiceThread();
+        thread.start();
     }
 
     // 停止服务
-    public static void cancel() {
-        try {
-            Thread.currentThread().join();
-        } catch (InterruptedException e) {
-
+    public synchronized static void cancel() {
+        if (thread != null) {
+            System.out.println("cancel.");
+            thread.shutdownRequest();
         }
     }
 }
