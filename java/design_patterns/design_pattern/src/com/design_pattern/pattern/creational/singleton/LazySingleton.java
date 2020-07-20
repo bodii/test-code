@@ -6,7 +6,7 @@ public class LazySingleton {
     /**
      * 拒绝被实例化
      */
-    private LazySingleton() {}
+    private LazySingleton() { }
 
     public static LazySingleton getInstance() {
         if (lazySingleton == null) {
