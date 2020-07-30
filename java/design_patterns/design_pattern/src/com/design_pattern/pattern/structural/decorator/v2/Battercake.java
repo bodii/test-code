@@ -1,8 +1,8 @@
-package com.design_pattern.pattern.decorator.v2;
+package com.design_pattern.pattern.structural.decorator.v2;
 
 public class Battercake extends ABattercake {
     @Override
-    public String getDoce() {
+    public String getDose() {
         return "煎饼";
     }
 

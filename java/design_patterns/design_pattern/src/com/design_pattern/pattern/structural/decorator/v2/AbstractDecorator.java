@@ -1,4 +1,4 @@
-package com.design_pattern.pattern.decorator.v2;
+package com.design_pattern.pattern.structural.decorator.v2;
 
 public class AbstractDecorator extends ABattercake {
     private ABattercake aBattercake;
@@ -8,8 +8,8 @@ public class AbstractDecorator extends ABattercake {
     }
 
     @Override
-    String getDoce() {
-        return aBattercake.getDoce();
+    String getDose() {
+        return aBattercake.getDose();
     }
 
     @Override

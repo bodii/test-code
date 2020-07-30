@@ -1,4 +1,4 @@
-package com.design_pattern.pattern.decorator.v2;
+package com.design_pattern.pattern.structural.decorator.v2;
 
 public class SausageDoractor extends AbstractDecorator {
     public SausageDoractor(ABattercake aBattercake) {
@@ -6,8 +6,8 @@ public class SausageDoractor extends AbstractDecorator {
     }
 
     @Override
-    String getDoce() {
-        return super.getDoce() + " 加一根火腿";
+    String getDose() {
+        return super.getDose() + " 加一根火腿";
     }
 
     @Override
