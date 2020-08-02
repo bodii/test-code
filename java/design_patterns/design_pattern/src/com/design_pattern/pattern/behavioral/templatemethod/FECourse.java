@@ -8,7 +8,7 @@ public class FECourse extends ACourse {
     }
 
     public FECourse() {
-        writeArticleFlag = false;
+        this(false);
     }
 
     @Override

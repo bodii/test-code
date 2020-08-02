@@ -4,7 +4,7 @@ public class DesignPtternCourse extends ACourse {
     private boolean writeArticleFlag;
 
     public DesignPtternCourse() {
-        writeArticleFlag = false;
+        this(false);
     }
 
     public DesignPtternCourse(boolean writeArticleFlag) {
