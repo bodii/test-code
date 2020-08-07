@@ -20,6 +20,12 @@ fun testApply() {
     println(a)
     // 等价于
     a.let { println(it) }
+
+    val b = mutableListOf<String>().apply {
+        add("A")
+        add("B")
+        println(this)
+    }
 }
 
 fun main(args: Array<String>) {
