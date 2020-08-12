@@ -73,8 +73,8 @@ public class ReflectionDemo {
         Method[] methods = studentServiceClass.getMethods();
 
         try {
-            methods[0].getName();
-            methods[0].invoke(studentService, "Jack", 20);
+            System.out.println(methods[0].getName());
+            methods[0].invoke(studentService, new Student("Jack", 20));
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
