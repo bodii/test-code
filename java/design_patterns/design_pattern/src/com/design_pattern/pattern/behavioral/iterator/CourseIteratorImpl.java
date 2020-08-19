@@ -9,7 +9,7 @@ public class CourseIteratorImpl implements CourseIterator {
     private Course course;
 
     public CourseIteratorImpl(List courseList) {
-        this.courseList = courseList;
+        this.courseList = courseList;  
     }
 
     @Override
