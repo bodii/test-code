@@ -24,7 +24,7 @@ public class CourseVideoContext {
         courseVideoState.speed();
     }
 
-    public void pasue() {
+    public void pause() {
         courseVideoState.pause();
     }
 
