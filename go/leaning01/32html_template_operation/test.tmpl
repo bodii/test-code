@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>test<title>
+</head>
+<body>
+	{{/* a comment */}}
+
+	{{/* 定义一个变量 */}}
+	$obj := {{.}}
+	<p>name: {{$obj.Name}}</p>
+	<p>gender: {{$obj.Gender}}</p>
+	<p>age: {{$obj.Age}}</p>
+	
+	{{/* 移除左右两边的空白 */}}
+	<p>{{-   .Name    -}}</p>
+
+	{{/* if else */}}
+	<p>{{if true}} if {{end}}</p>
+	<p>{{if true}} if {{else}} else {{end}}</p>
+	<p>{{if true}} if {{else if 1==1}} else if {{end}}</p>
+
+	{{/* range pipeline 的值必须是数组、切片、字典或者通道 */}}
+	{{/* with pipeline 如果pipeline为空不产生输出，否则将dot设为pipline的值并执行T1 */}} t1 {{/*end*/}}
+		
+</body>
+</html>
