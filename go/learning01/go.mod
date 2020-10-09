@@ -12,6 +12,7 @@ require (
 	github.com/onsi/gomega v1.10.2 // indirect
 	github.com/shirou/gopsutil v2.20.9+incompatible // indirect
 	github.com/sirupsen/logrus v1.7.0
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58
+	go.mongodb.org/mongo-driver v1.4.2 // indirect
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	google.golang.org/protobuf v1.25.0
 )
