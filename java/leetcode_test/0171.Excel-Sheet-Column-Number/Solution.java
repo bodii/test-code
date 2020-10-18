@@ -10,10 +10,6 @@ class Solution {
         return result;
     }
 
-    public int charToNumber(char c) {
-        return c - 'A' + 1;
-    }
-
     public static void main(String[] args) {
         Solution s = new Solution();
         System.out.println(s.titleToNumber("A"));
