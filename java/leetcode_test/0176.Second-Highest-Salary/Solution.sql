@@ -17,40 +17,41 @@ LIMIT 1;
 
 /*
 # 2
-SELECT 
-    IFNULL((SELECT 
-                    Salary
-                FROM
-                    Employee
-                WHERE
-                    Salary NOT IN (SELECT 
-                            MAX(Salary) AS ms
-                        FROM
-                            Employee)
-                ORDER BY Salary DESC
+SELECT
+    IFNULL((SELECT
+        Salary
+    FROM
+        Employee
+    WHERE
+                    Salary NOT IN (SELECT
+        MAX(Salary) AS ms
+    FROM
+        Employee)
+    ORDER BY Salary DESC
                 LIMIT 1),
             NULL) AS SecondHighestSalary;
 */
 
+/*
 # 3
-SELECT 
-    IFNULL((SELECT 
-                    Salary
-                FROM
-                    Employee
-                GROUP BY Salary
-                ORDER BY Salary DESC
+SELECT
+    IFNULL((SELECT
+        Salary
+    FROM
+        Employee
+    GROUP BY Salary
+    ORDER BY Salary DESC
                 LIMIT 1 , 1),
             NULL) AS SecondHighestSalary;
-
+*/
 
 # 4
-SELECT 
+SELECT
     IFNULL((SELECT DISTINCT
-                    Salary
-                FROM
-                    Employee
-                ORDER BY Salary DESC
-                LIMIT 1 OFFSET 1),
+        Salary
+    FROM
+        Employee
+    ORDER BY Salary DESC
+                LIMIT 1, 1),
             NULL) AS SecondHighestSalary;
 
