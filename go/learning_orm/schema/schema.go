@@ -1,4 +1,4 @@
-package scheam
+package schema
 
 import (
 	"go/ast"
@@ -17,7 +17,7 @@ type Field struct {
 type Schema struct {
 	Model      interface{}
 	Name       string
-	Fields      []*Field
+	Fields     []*Field
 	FieldNames []string
 	fieldMap   map[string]*Field
 }
@@ -27,6 +27,7 @@ func (schema *Schema) GetField(name string) *Field {
 	return schema.fieldMap[name]
 }
 
+// Parse parse sql
 func Parse(dast interface{}, d dialect.Dialect) *Schema {
 	modelType := reflect.Indirect(reflect.ValueOf(dast)).Type()
 	schema := &Schema{
@@ -41,11 +42,11 @@ func Parse(dast interface{}, d dialect.Dialect) *Schema {
 			continue
 		}
 
-		field := &Field {
-			Name : p.Name,
-			Type: d.DataTypeOf(reflect.Indirect(reflect.New(p.Type)))
+		field := &Field{
+			Name: p.Name,
+			Type: d.DataTypeOf(reflect.Indirect(reflect.New(p.Type))),
 		}
-		if v, ok := p.Tag.Lookup("learning_orm"); ok != nil {
+		if v, ok := p.Tag.Lookup("learning_orm"); ok == true {
 			field.Tag = v
 		}
 		schema.Fields = append(schema.Fields, field)
