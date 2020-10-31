@@ -2,12 +2,14 @@ package learning_orm
 
 import (
 	"database/sql"
+	"learning_orm/dialect"
 	"learning_orm/log"
 	"learning_orm/session"
 )
 
 type Engine struct {
-	db *sql.DB
+	db      *sql.DB
+	dialect dialect.Dialect
 }
 
 // NewEngine create an new engine
@@ -22,6 +24,13 @@ func NewEngine(driver, source string) (e *Engine, err error) {
 		log.Error(err)
 		return
 	}
+
+	dial, ok := dialect.GetDialect(driver)
+	if !ok {
+		log.Errorf("dialect %s Not Found", driver)
+		return
+	}
+
 	e = &Engine{db: db}
 	log.Info("Connect database success")
 	return
@@ -38,5 +47,5 @@ func (engine *Engine) Close() {
 
 // NewSession create session
 func (engine *Engine) NewSession() *session.Session {
-	return session.New(engine.db)
+	return session.New(engine.db, engine.dialect)
 }
