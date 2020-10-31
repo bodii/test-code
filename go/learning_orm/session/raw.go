@@ -2,20 +2,27 @@ package session
 
 import (
 	"database/sql"
+	"learning_orm/dialect"
 	"learning_orm/log"
+	"learning_orm/schema"
 	"strings"
 )
 
 // Session type struct
 type Session struct {
-	db      *sql.DB
-	sql     strings.Builder
-	sqlVars []interface{}
+	db       *sql.DB
+	dialect  dialect.Dialect
+	refTable *schema.Schema
+	sql      strings.Builder
+	sqlVars  []interface{}
 }
 
 // New create Session instance
-func New(db *sql.DB) *Session {
-	return &Session{db: db}
+func New(db *sql.DB, dialect dialect.Dialect) *Session {
+	return &Session{
+		db:      db,
+		dialect: dialect,
+	}
 }
 
 // Clear reset Session
