@@ -31,7 +31,7 @@ func NewEngine(driver, source string) (e *Engine, err error) {
 		return
 	}
 
-	e = &Engine{db: db}
+	e = &Engine{db: db, dialect: dial}
 	log.Info("Connect database success")
 	return
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"learning_orm"
 
 	_ "github.com/mattn/go-sqlite3"

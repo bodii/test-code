@@ -1,6 +1,9 @@
 package clause
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type generator func(values ...interface{}) (string, []interface{})
 
@@ -31,13 +34,13 @@ func _insert(values ...interface{}) (string, []interface) {
 	return fmt.Sprintf("insert into %s (%v)", tableName, fields), []interface{}{}
 }
 
-func _values(values ...inteface{}) (string, []interface{}) {
+func _values(values ...interface{}) (string, []interface{}) {
 	var bindStr string
 	var sql strings.Builder
-	var vars []inteface{}
+	var vars []interface{}
 	sql.WriteString("values ")
 	for i, value := range values {
-		v := value.([]inteface{})
+		v := value.([]interface{})
 		if bindStr == "" {
 			bindStr = genBindVars(len(v))
 		}
@@ -54,7 +57,7 @@ func _values(values ...inteface{}) (string, []interface{}) {
 func _select(values ...interface{}) (string, []interface{}) {
 	tableName := values[0]
 	fields := strings.Join(values[1].([]string), ",")
-	return fmt.Sprintf("select %v from %s", fields, tableName), []inteface{}{}
+	return fmt.Sprintf("select %v from %s", fields, tableName), []interface{}{}
 }
 
 func _limit(values ...interface{}) (string, []interface{}) {
@@ -68,5 +71,5 @@ func _where(values ...interface{}) (string, []interface{}) {
 }
 
 func _orderBy(values ...interface{}) (string, []interface{}) {
-	return fmt.Sprintf("order by %s", values[0], []interface{}{}
+	return fmt.Sprintf("order by %s", values[0]), []interface{}{}
 }

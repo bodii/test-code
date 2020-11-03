@@ -1,4 +1,4 @@
-package main
+package orm_test
 
 import (
 	"fmt"
