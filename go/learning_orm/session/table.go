@@ -1,7 +1,15 @@
 package session
 
+import (
+	"learning_orm/log"
+	"learning_orm/schema"
+	"reflect"
+	"fmt"
+	"strings"
+)
+
 // Model reflect table model
-func (s *Session) Model(value interface) *Session {
+func (s *Session) Model(value interface{}) *Session {
 	if s.refTable == nil || reflect.TypeOf(value) != reflect.TypeOf(s.refTable.Model) {
 		s.refTable = schema.Parse(value, s.dialect)
 	}

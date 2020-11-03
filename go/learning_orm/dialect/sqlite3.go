@@ -35,7 +35,7 @@ func (s *sqlite3) DataTypeOf(typ reflect.Value) string {
 			return "datatime"
 		}
 	}
-	panic(fmt.Sprintf("invalid sql type %s(%s)", typ.Type().name, typ.Type.Kind()))
+	panic(fmt.Sprint("invalid sql type %s(%s)", typ.Type().Name(), typ.Type().Kind()))
 
 }
 

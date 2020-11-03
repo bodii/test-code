@@ -1,16 +1,47 @@
 package session
 
 import (
+	"errors"
 	"learning_orm/clause"
 	"reflect"
 )
+
+func (s *Session) Where(dest string, args ...interface{}) *Session {
+	var vars []interface{}
+	s.clause.Set(clause.WHERE, append(append(vars, dest), args...)...)
+	return s
+}
+
+func (s *Session) OrderBy(dest string) *Session {
+	s.clause.Set(clause.ORDERBY, dest)
+	return s
+}
+
+func (s *Session) Limit(num int) *Session {
+	s.clause.Set(clause.LIMIT, num)
+	return s
+}
+
+func (s *Session) First (value interface{}) error {
+	dest := reflect.Indirect(reflect.ValueOf(value))
+	destSlice := reflect.New(reflect.SliceOf(dest.Type())).Elem()
+	if err := s.Limit(1).Find(destSlice.Addr().Interface()); err != nil {
+		return err
+	}
+	if destSlice.Len() == 0 {
+		return errors.New("Not Found")
+	}
+
+	dest.Set(destSlice.Index(0))
+	return nil
+}
 
 func (s *Session) Insert(values ...interface{}) (int64, error) {
 	recordValues := make([]interface{}, 0)
 	for _, value := range values {
 		table := s.Model(value).RefTable()
-		s.clause.Set(clause.INSERT, table.Name, tabble.FieldNames)
-		recordValues = append(recordValues, table.recordValues(value))
+		s.clause.Set(clause.INSERT, table.Name, table.FieldNames)
+		recordValues = append(recordValues, table.RecordValues(value))
 	}
 
 	s.clause.Set(clause.VALUES, recordValues...)
@@ -49,4 +80,43 @@ func (s *Session) Find(values interface{}) error {
 		destSlice.Set(reflect.Append(destSlice, dest))
 	}
 	return rows.Close()
+}
+
+func (s *Session) Update(kv ...interface{}) (int64, error) {
+	m, ok := kv[0].(map[string]interface{})
+	if !ok {
+		m = make(map[string]interface{})
+		for i := 0; i < len(kv); i += 2 {
+			m[kv[i].(string)] = kv[i+1]
+		}
+	}
+	s.clause.Set(clause.UPDATE, s.RefTable().Name, m)
+	sql, vars := s.clause.Build(clause.UPDATE,clause.WHERE)
+	result, err := s.Raw(sql, vars...).Exec()
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
+func (s *Session) Delete() (int64, error) {
+	s.clause.Set(clause.DELETE, s.RefTable().Name)
+	sql, vars := s.clause.Build(clause.DELETE, clause.WHERE)
+	result, err := s.Raw(sql, vars...).Exec()
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
+func (s  *Session) Count() (int64, error) {
+	s.clause.Set(clause.COUNT, s.RefTable().Name)
+	sql, vars := s.clause.Build(clause.COUNT, clause.WHERE)
+	row := s.Raw(sql, vars...).QueryRow()
+	var tmp int64
+	if err := row.Scan(&tmp); err != nil {
+		return 0, err
+	}
+
+	return tmp, nil
 }
