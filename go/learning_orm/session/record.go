@@ -73,6 +73,8 @@ func (s *Session) Find(values interface{}) error {
 			values = append(values, dest.FieldByName(name).Addr().Interface())
 		}
 
+		s.CallMethod(AfterQuery, dest.Addr().Interface())
+
 		if err := rows.Scan(values...); err != nil {
 			return err
 		}

@@ -1,4 +1,4 @@
-package main
+package orm_test
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ func main() {
 	engine, _ := learning_orm.NewEngine("sqlite3", "test.db")
 	defer engine.Close()
 
-	s := engine.NewSessio()
+	s := engine.NewSession()
 	_, _ = s.Raw("drop table if exists User;").Exec()
 	_, _ = s.Raw("create table User(Name text);").Exec()
 	_, _ = s.Raw("create table User(Name text);").Exec()

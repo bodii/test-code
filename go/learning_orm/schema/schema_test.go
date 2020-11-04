@@ -1,4 +1,4 @@
-package main
+package schema
 
 import (
 	"learning_orm/dialect"

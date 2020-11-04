@@ -1,4 +1,5 @@
 package orm_test
+// package main
 
 import (
 	"fmt"
