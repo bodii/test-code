@@ -13,11 +13,21 @@ import (
 type Session struct {
 	db       *sql.DB
 	dialect  dialect.Dialect
+	tx 	*sql.Tx
 	refTable *schema.Schema
 	clause   clause.Clause
 	sql      strings.Builder
 	sqlVars  []interface{}
 }
+
+type CommonDB interface {
+	Query(query string, args ...interface{}) (*sql.Rows, error)
+	QueryRow(query string, args ...interface{}) *sql.Row
+	Exec(query string, args ...interface{}) (sql.Result, error)
+}
+
+var _ CommonDB = (*sql.DB)(nil)
+var _ CommonDB = (*sql.Tx)(nil)
 
 // New create Session instance
 func New(db *sql.DB, dialect dialect.Dialect) *Session {
@@ -27,16 +37,19 @@ func New(db *sql.DB, dialect dialect.Dialect) *Session {
 	}
 }
 
+// DB return db object
+func (s *Session) DB() CommonDB {
+	if s.tx != nil {
+		return s.tx
+	}
+	return s.db
+}
+
 // Clear reset Session
 func (s *Session) Clear() {
 	s.sql.Reset()
 	s.sqlVars = nil
 	s.clause = clause.Clause{}
-}
-
-// DB return db object
-func (s *Session) DB() *sql.DB {
-	return s.db
 }
 
 // Raw create sql content
