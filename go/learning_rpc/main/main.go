@@ -1,12 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"learning_rpc"
-	"learning_rpc/codec"
 	"log"
 	"net"
+	"sync"
 	"time"
 )
 
@@ -20,6 +19,7 @@ func startServer(addr chan string) {
 	learning_rpc.Accept(l)
 }
 
+/*
 func main() {
 	addr := make(chan string)
 	go startServer(addr)
@@ -43,4 +43,30 @@ func main() {
 		_ = cc.ReadBody(&reply)
 		log.Println("reply:", reply)
 	}
+}
+*/
+
+func main() {
+	log.SetFlags(0)
+	addr := make(chan string)
+	go startServer(addr)
+	client, _ := learning_rpc.Dial("tcp", <-addr)
+	defer func() { _ = client.Close() }()
+
+	time.Sleep(time.Second)
+
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			args := fmt.Sprintf("learning_rpc req %d", i)
+			var reply string
+			if err := client.Call("Foo.Sum", args, &reply); err != nil {
+				log.Fatal("call Foo.Sum error:", err)
+			}
+			log.Println("reply:", reply)
+		}(i)
+	}
+	wg.Wait()
 }
