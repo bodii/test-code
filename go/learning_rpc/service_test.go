@@ -1,5 +1,11 @@
 package learning_rpc
 
+import (
+	"fmt"
+	"reflect"
+	"testing"
+)
+
 type Foo int
 
 type Args struct{ Num1, Num2 int }
@@ -9,7 +15,7 @@ func (f Foo) Sum(args Args, reply *int) error {
 	return nil
 }
 
-func (f Foo) sum(arg Args, reply *int) error {
+func (f Foo) sum(args Args, reply *int) error {
 	*reply = args.Num1 + args.Num2
 	return nil
 }
@@ -37,6 +43,6 @@ func TestMethodType_Call(t *testing.T) {
 	replyv := mType.newReplyv()
 	argv.Set(reflect.ValueOf(Args{Num1: 1, Num2: 3}))
 	err := s.call(mType, argv, replyv)
-	_assert(err == nil && *replyv.Interface().(*int) == 4 
-		&& mType.NumCalls() == 1, "failed to call Foo.Sum")
+	_assert(err == nil && *replyv.Interface().(*int) == 4 &&
+		mType.NumCalls() == 1, "failed to call Foo.Sum")
 }

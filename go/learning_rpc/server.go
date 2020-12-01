@@ -108,7 +108,7 @@ func (server *Server) serveCodec(cc codec.Codec) {
 			continue
 		}
 		wg.Add(1)
-		go server.handleRequest(cc, req, sending, wg)
+		go server.handleRequest(cc, req, sending, wg, time.Second)
 	}
 	wg.Wait()
 	_ = cc.Close()
@@ -246,6 +246,8 @@ func (server *Server) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 // It is still necedssary to invoke http.Serve(), typically in a go statement
 func (server *Server) HandleHTTP() {
 	http.Handle(defaultRPCPath, server)
+	http.Handle(defaultDebugPath, debugHTTP{server})
+	log.Println("rpc server debug path:", defaultDebugPath)
 }
 
 // HandleHTTP is a convenient approach for default server to register HTTP handlers

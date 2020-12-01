@@ -1,14 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"learning_rpc"
 	"learning_rpc/codec"
 	"log"
 	"net"
-	"reflect"
-	"strings"
 	"sync"
 	"time"
 )
@@ -64,61 +63,82 @@ func serverTest() {
 	}
 }
 
-func clientTest() {
-	log.SetFlags(0)
-	addr := make(chan string)
-	go startServer(addr)
-	client, _ := learning_rpc.Dial("tcp", <-addr)
-	defer func() { _ = client.Close() }()
+// func clientTest() {
+// 	log.SetFlags(0)
+// 	addr := make(chan string)
+// 	go startServer(addr)
+// 	client, _ := learning_rpc.Dial("tcp", <-addr)
+// 	defer func() { _ = client.Close() }()
 
+// 	time.Sleep(time.Second)
+
+// 	var wg sync.WaitGroup
+// 	for i := 0; i < 5; i++ {
+// 		wg.Add(1)
+// 		go func(i int) {
+// 			defer wg.Done()
+// 			args := fmt.Sprintf("learning_rpc req %d", i)
+// 			var reply string
+// 			if err := client.Call("Foo.Sum", args, &reply); err != nil {
+// 				log.Fatal("call Foo.Sum error:", err)
+// 			}
+// 			log.Println("reply:", reply)
+// 		}(i)
+// 	}
+// 	wg.Wait()
+// }
+
+// func getMethodRecord() {
+// 	var wg sync.WaitGroup
+// 	typ := reflect.TypeOf(&wg)
+// 	for i := 0; i < typ.NumMethod(); i++ {
+// 		method := typ.Method(i)
+// 		argv := make([]string, 0, method.Type.NumIn())
+// 		returns := make([]string, 0, method.Type.NumOut())
+// 		// start from j, the 0th input is wg itself
+// 		for j := 1; j < method.Type.NumIn(); j++ {
+// 			argv = append(argv, method.Type.In(j).Name())
+// 		}
+// 		for j := 0; j < method.Type.NumOut(); j++ {
+// 			returns = append(returns, method.Type.Out(j).Name())
+// 		}
+// 		fmt.Printf("func (w *%s) %s(%s) %s\n",
+// 			typ.Elem().Name(),
+// 			method.Name,
+// 			strings.Join(argv, ","),
+// 			strings.Join(returns, ","))
+// 	}
+// }
+
+// func sendRPCRequest() {
+// 	log.SetFlags(0)
+// 	addr := make(chan string)
+// 	go startServer(addr)
+// 	client, _ := learning_rpc.Dial("tcp", <-addr)
+// 	defer func() { _ = client.Close() }()
+
+// 	time.Sleep(time.Second)
+// 	var wg sync.WaitGroup
+// 	for i := 0; i < 5; i++ {
+// 		wg.Add(1)
+// 		go func(i int) {
+// 			defer wg.Done()
+// 			args := &Args{Num1: i, Num2: i * i}
+// 			var reply int
+// 			if err := client.Call("Foo.Sum", args, &reply); err != nil {
+// 				log.Fatal("call Foo.Sum error:", err)
+// 			}
+// 			log.Printf("%d + %d = %d", args.Num1, args.Num2, reply)
+// 		}(i)
+// 	}
+// 	wg.Wait()
+// }
+
+func call(addrCh chan string) {
+	client, _ := learning_rpc.DialHTTP("tcp", <-addrCh)
+	defer func() { _ = client.Close() }()
 	time.Sleep(time.Second)
 
-	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
-		wg.Add(1)
-		go func(i int) {
-			defer wg.Done()
-			args := fmt.Sprintf("learning_rpc req %d", i)
-			var reply string
-			if err := client.Call("Foo.Sum", args, &reply); err != nil {
-				log.Fatal("call Foo.Sum error:", err)
-			}
-			log.Println("reply:", reply)
-		}(i)
-	}
-	wg.Wait()
-}
-
-func getMethodRecord() {
-	var wg sync.WaitGroup
-	typ := reflect.TypeOf(&wg)
-	for i := 0; i < typ.NumMethod(); i++ {
-		method := typ.Method(i)
-		argv := make([]string, 0, method.Type.NumIn())
-		returns := make([]string, 0, method.Type.NumOut())
-		// start from j, the 0th input is wg itself
-		for j := 1; j < method.Type.NumIn(); j++ {
-			argv = append(argv, method.Type.In(j).Name())
-		}
-		for j := 0; j < method.Type.NumOut(); j++ {
-			returns = append(returns, method.Type.Out(j).Name())
-		}
-		fmt.Printf("func (w *%s) %s(%s) %s\n",
-			typ.Elem().Name(),
-			method.Name,
-			strings.Join(argv, ","),
-			strings.Join(returns, ","))
-	}
-}
-
-func sendRPCRequest() {
-	log.SetFlags(0)
-	addr := make(chan string)
-	go startServer(addr)
-	client, _ := learning_rpc.Dial("tcp", <-addr)
-	defer func() { _ = client.Close() }()
-
-	time.Sleep(time.Second)
 	var wg sync.WaitGroup
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
@@ -126,7 +146,7 @@ func sendRPCRequest() {
 			defer wg.Done()
 			args := &Args{Num1: i, Num2: i * i}
 			var reply int
-			if err := client.Call("Foo.Sum", args, &reply); err != nil {
+			if err := client.Call(context.Background(), "Foo.Sum", args, &reply); err != nil {
 				log.Fatal("call Foo.Sum error:", err)
 			}
 			log.Printf("%d + %d = %d", args.Num1, args.Num2, reply)
@@ -135,7 +155,15 @@ func sendRPCRequest() {
 	wg.Wait()
 }
 
+func debug() {
+	log.SetFlags(0)
+	ch := make(chan string)
+	go call(ch)
+	startServer(ch)
+}
+
 func main() {
 	// getMethodRecord()
-	sendRPCRequest()
+	// sendRPCRequest()
+	debug()
 }
