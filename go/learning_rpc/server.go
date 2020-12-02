@@ -195,6 +195,7 @@ func (server *Server) handleRequest(cc codec.Codec, req *request, sending *sync.
 
 }
 
+// Register publishes in the server the set of methods of the
 func (server *Server) Register(rcvr interface{}) error {
 	s := newService(rcvr)
 	if _, dup := server.serviceMap.LoadOrStore(s.name, s); dup {
@@ -203,6 +204,7 @@ func (server *Server) Register(rcvr interface{}) error {
 	return nil
 }
 
+// Register publishes the receiver's methods in the DefaultServer.
 func Register(rcvr interface{}) error { return DefaultServer.Register(rcvr) }
 
 func (server *Server) findService(serviceMethod string) (svc *service, mtype *methodType, err error) {
