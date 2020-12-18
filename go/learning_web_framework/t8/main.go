@@ -10,7 +10,7 @@ import (
 func onlyForV2() learning_web_framework.HandlerFunc {
 	return func(c *learning_web_framework.Context) {
 		t := time.Now()
-		// c.Fail(500, "Internal Server Error")
+		c.Fail(500, "Internal Server Error")
 		log.Printf("[%d] %s in %v for group v2", c.StatusCode, c.Req.RequestURI, time.Since(t))
 	}
 }

@@ -27,6 +27,11 @@ func New() *Engine {
 	return engine
 }
 
+// Use is defined to add middleware to the group
+func (group *RouterGroup) Use(middlewares ...HandlerFunc) {
+	group.middlewares = append(group.middlewares, middlewares...)
+}
+
 // Group is defined to create a new RouterGroup
 func (group *RouterGroup) Group(prefix string) *RouterGroup {
 	engine := group.engine
@@ -58,11 +63,6 @@ func (group *RouterGroup) POST(pattern string, handler HandlerFunc) {
 // Run method
 func (engine *Engine) Run(addr string) (err error) {
 	return http.ListenAndServe(addr, engine)
-}
-
-// Use is defined to add middleware to the group
-func (group *RouterGroup) Use(middlewares ...HandlerFunc) {
-	group.middlewares = append(group.middlewares, middlewares...)
 }
 
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
