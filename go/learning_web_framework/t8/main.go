@@ -19,7 +19,7 @@ func main() {
 	r := learning_web_framework.New()
 	r.Use(learning_web_framework.Logger())
 	r.GET("/", func(c *learning_web_framework.Context) {
-		c.HTML(http.StatusOK, "<h1>hello web</h1>")
+		c.HTML(http.StatusOK, "<h1>hello web</h1>", "")
 	})
 
 	v2 := r.Group("/v2")
