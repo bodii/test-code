@@ -38,7 +38,7 @@ func main() {
 
 	r.GET("/students", func(c *learning_web_framework.Context) {
 		c.HTML(http.StatusOK, "arr.tmpl", learning_web_framework.H{
-			"title":  "gee",
+			"title":  "web",
 			"stuArr": [2]*student{stu1, stu2},
 		})
 	})
