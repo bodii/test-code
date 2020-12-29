@@ -1,4 +1,4 @@
-package learningCache
+package lru
 
 import (
 	"reflect"
