@@ -9,12 +9,13 @@ import (
 	"sync"
 )
 
-var _ PerrGetter = (*httpGetter)(nil)
-
 const (
 	defaultReplicas = 50
 	defaultBasePath = "/_learningcache/"
 )
+
+var _ PeerGetter = (*httpGetter)(nil)
+var _ PeerPicker = (*HTTPPool)(nil)
 
 // HTTPPool implements PeerPicker for a pool of HTTP peers.
 type HTTPPool struct {
@@ -92,5 +93,3 @@ func (p *HTTPPool) PickPeer(key string) (PeerGetter, bool) {
 	}
 	return nil, false
 }
-
-var _ PeerPicker = (*HTTPPool)(nil)
