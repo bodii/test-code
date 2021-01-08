@@ -7,6 +7,17 @@ import (
 	"strings"
 )
 
+type HttpHandlerDecorator func(http.HandlerFunc) http.HandlerFunc
+
+// Handler pipeline decorator
+func Handler(h http.HandlerFunc, decors ...HttpHandlerDecorator) http.HandlerFunc {
+	for i := range decors {
+		d := decors[len(decors)-1-i]
+		h = d(h)
+	}
+	return h
+}
+
 func WithServerHeader(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println("--->WithServerHeader()")
@@ -61,9 +72,11 @@ func main() {
 	http.HandleFunc("/v1/hello", WithServerHeader(WithAuthCookie(hello)))
 	http.HandleFunc("/v2/hello", WithServerHeader(WithBasicAuth(hello)))
 	http.HandleFunc("/v3/hello", WithServerHeader(WithBasicAuth(WithDebugLog(hello))))
+	http.HandleFunc("/v4/hello", Handler(hello, WithServerHeader, WithBasicAuth, WithDebugLog))
 
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
+
 }
