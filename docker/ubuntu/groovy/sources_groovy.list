@@ -1,0 +1,11 @@
+deb http://mirrors.aliyun.com/ubuntu/ groovy main multiverse restricted universe
+ deb http://mirrors.aliyun.com/ubuntu/ groovy-backports main multiverse restricted universe
+ deb http://mirrors.aliyun.com/ubuntu/ groovy-proposed main multiverse restricted universe
+ deb http://mirrors.aliyun.com/ubuntu/ groovy-security main multiverse restricted universe
+ deb http://mirrors.aliyun.com/ubuntu/ groovy-updates main multiverse restricted universe
+ deb-src http://mirrors.aliyun.com/ubuntu/ groovy main multiverse restricted universe
+ deb-src http://mirrors.aliyun.com/ubuntu/ groovy-backports main multiverse restricted universe
+ deb-src http://mirrors.aliyun.com/ubuntu/ groovy-proposed main multiverse restricted universe
+ deb-src http://mirrors.aliyun.com/ubuntu/ groovy-security main multiverse restricted universe
+ deb-src http://mirrors.aliyun.com/ubuntu/ groovy-updates main multiverse restricted universe
+
