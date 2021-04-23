@@ -10,8 +10,9 @@ ADD sources_focal.list /etc/apt/sources.list
 ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -yqq update \
-    && apt-get install -yqq tzdata \
+RUN apt-get -yqq update 
+RUN apt-get install --assume-yes apt-utils 
+RUN apt-get install -yqq tzdata \
     && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && dpkg-reconfigure --frontend noninteractive tzdata \
