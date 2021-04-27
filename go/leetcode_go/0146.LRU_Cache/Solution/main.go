@@ -1,6 +1,9 @@
-package LRUCache
+package main
 
-import "container/list"
+import (
+	"container/list"
+	"fmt"
+)
 
 type LRUCache struct {
 	Cap  int
@@ -50,3 +53,21 @@ func (this *LRUCache) Put(key int, value int) {
  * param_1 := obj.Get(key);
  * obj.Put(key,value);
  */
+
+func test01() {
+	c := Constructor(2)
+	c.Put(1, 1)
+	c.Put(2, 2)
+	fmt.Println("get 1 result:", c.Get(1))
+	c.Put(3, 3)
+	fmt.Println("get 2 result:", c.Get(2))
+	c.Put(4, 4)
+	fmt.Println("get 1 result:", c.Get(1))
+	fmt.Println("get 3 result:", c.Get(3))
+	fmt.Println("get 4 result:", c.Get(4))
+
+}
+
+func main() {
+	test01()
+}
