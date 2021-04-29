@@ -56,8 +56,8 @@ func isValidChar(c byte) bool {
 }
 
 func test01() {
-	s := "Z man, a plan, a canal: Panama"
-	fmt.Println("test01 is ture result: ", isPalindrome(s))
+	s := "A man, a plan, a canal: Panama"
+	fmt.Println("test01 is false result: ", isPalindrome(s))
 }
 
 func test02() {
