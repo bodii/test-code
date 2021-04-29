@@ -23,27 +23,27 @@ func Constructor(capacity int) LRUCache {
 	}
 }
 
-func (this *LRUCache) Get(key int) int {
-	if el, ok := this.Keys[key]; ok {
-		this.List.MoveToFront(el)
+func (l *LRUCache) Get(key int) int {
+	if el, ok := l.Keys[key]; ok {
+		l.List.MoveToFront(el)
 		return el.Value.(pair).V
 	}
 	return -1
 }
 
-func (this *LRUCache) Put(key int, value int) {
-	if el, ok := this.Keys[key]; ok {
+func (l *LRUCache) Put(key int, value int) {
+	if el, ok := l.Keys[key]; ok {
 		el.Value = pair{K: key, V: value}
-		this.List.MoveToFront(el)
+		l.List.MoveToFront(el)
 	} else {
-		el := this.List.PushFront(pair{K: key, V: value})
-		this.Keys[key] = el
+		el := l.List.PushFront(pair{K: key, V: value})
+		l.Keys[key] = el
 	}
 
-	if this.List.Len() > this.Cap {
-		el := this.List.Back()
-		this.List.Remove(el)
-		delete(this.Keys, el.Value.(pair).K)
+	if l.List.Len() > l.Cap {
+		el := l.List.Back()
+		l.List.Remove(el)
+		delete(l.Keys, el.Value.(pair).K)
 	}
 }
 
