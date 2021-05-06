@@ -4,25 +4,15 @@ import "fmt"
 
 func distanceBetweenBusStops(distance []int, start int, destination int) int {
 	left, right := 0, 0
-	len := len(distance) - 1
+	len := len(distance)
 
-	for i := start; i < start+destination; i++ {
-		if i >= len {
-			left += distance[i-len]
-		} else {
-			left += distance[i]
-		}
+	for i := start; i != destination; i = (i + 1) % len {
+		left += distance[i]
 	}
 
-	for i := start + destination; i < start+destination+destination; i++ {
-		if i >= len {
-			right += distance[i-len]
-		} else {
-			right += distance[i]
-		}
+	for i := destination; i != start; i = (i + 1) % len {
+		right += distance[i]
 	}
-	fmt.Println("left:", left)
-	fmt.Println("right:", right)
 
 	if left < right {
 		return left
@@ -60,9 +50,18 @@ func test03() {
 func test04() {
 	distance := []int{7, 10, 1, 12, 11, 14, 5, 0}
 	start, desination := 7, 2
-	fmt.Printf("test03 distance:= %v, start:= %d, desination:=%d\n",
+	fmt.Printf("test04 distance:= %v, start:= %d, desination:=%d\n",
 		distance, start, desination)
 	fmt.Printf("success result: [ %d ]\n", 17)
+	fmt.Println("result:", distanceBetweenBusStops(distance, start, desination))
+}
+
+func test05() {
+	distance := []int{3, 6, 7, 2, 9, 10, 7, 16, 11}
+	start, desination := 6, 2
+	fmt.Printf("test05 distance:= %v, start:= %d, desination:=%d\n",
+		distance, start, desination)
+	fmt.Printf("success result: [ %d ]\n", 28)
 	fmt.Println("result:", distanceBetweenBusStops(distance, start, desination))
 }
 
@@ -71,4 +70,5 @@ func main() {
 	test02()
 	test03()
 	test04()
+	test05()
 }
