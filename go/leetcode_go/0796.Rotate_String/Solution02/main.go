@@ -13,8 +13,7 @@ func rotateString(A string, B string) bool {
 
 	for i := 0; i < ALen; i++ {
 		if B[0] == A[i] {
-			v := A[i:] + A
-			if v[0:ALen] == B {
+			if A[i:]+A[0:i] == B {
 				return true
 			}
 		}
