@@ -5,7 +5,20 @@ import (
 )
 
 func divisorGame(n int) bool {
-	return n%2 == 0
+	d := make([]bool, n+5)
+
+	d[1] = false
+	d[2] = true
+	for i := 3; i <= n; i++ {
+		for j := 1; j < i; j++ {
+			if i%j == 0 && !d[i-j] {
+				d[i] = true
+				break
+			}
+		}
+	}
+
+	return d[n]
 }
 
 func test01() {
