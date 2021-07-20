@@ -66,10 +66,20 @@ func test05() {
 	fmt.Println()
 }
 
+func test06() {
+	nums := []int{5, 4, -1, 7, 8}
+	succResult := 23
+	fmt.Println("test06 nums:=", nums)
+	fmt.Println("success result:=", succResult)
+	fmt.Println("result:=", maxSubArray(nums))
+	fmt.Println()
+}
+
 func main() {
 	test01()
 	test02()
 	test03()
 	test04()
 	test05()
+	test06()
 }
