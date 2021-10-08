@@ -21,13 +21,13 @@ func deleteNode(head *ListNode, val int) *ListNode {
 		return head.Next
 	}
 
-	root := head
-	for root.Next != nil && root.Next.Val != val {
-		root = root.Next
+	cur, next := head, head.Next
+	for next != nil && next.Val != val {
+		cur, next = next, next.Next
 	}
 
-	if root.Next != nil {
-		root.Next = root.Next.Next
+	if cur != nil {
+		cur.Next = next.Next
 	}
 
 	return head
