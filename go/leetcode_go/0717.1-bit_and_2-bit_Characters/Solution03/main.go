@@ -5,19 +5,12 @@ import (
 )
 
 func isOneBitCharacter(bits []int) bool {
-	endIdx := len(bits) - 2
-	if endIdx < 0 {
-		return true
+	bit := bits[0]
+	for i := 1; i < len(bits); i++ {
+		bit ^= bits[i]
 	}
 
-	count := 0
-	for i := endIdx; i >= 0; i-- {
-		if bits[i] == 1 {
-			count++
-		}
-	}
-
-	return count&1 == 0
+	return bit == 0
 }
 
 func test01() {
