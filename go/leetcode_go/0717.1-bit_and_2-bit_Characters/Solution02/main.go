@@ -12,9 +12,10 @@ func isOneBitCharacter(bits []int) bool {
 
 	count := 0
 	for i := endIdx; i >= 0; i-- {
-		if bits[i] == 1 {
-			count++
+		if bits[i] != 1 {
+			break
 		}
+		count++
 	}
 
 	return count&1 == 0
