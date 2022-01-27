@@ -6,6 +6,9 @@ It is based on golang to provide a back-end interface for user registration, log
 
 > `golang`、`jwt`、`cookie`、`mysql`、`react`、`typescript` ......
 
+### `Used golang formework`
+> `fiber`
+
 ### `Instructions for use`
 
 1. Create mysql database：

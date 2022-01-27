@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-auth/database"
+	"go-auth/databases"
 	"go-auth/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	database.Connetct()
+	databases.Connetct()
 
 	app := fiber.New()
 

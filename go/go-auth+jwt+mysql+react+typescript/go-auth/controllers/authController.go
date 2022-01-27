@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"go-auth/database"
+	"go-auth/databases"
 	"go-auth/models"
 	"strconv"
 	"time"
@@ -22,7 +22,7 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	emptyUser := new(models.User)
-	database.DB.Where("email = ?", data["email"]).First(&emptyUser)
+	databases.DB.Where("email = ?", data["email"]).First(&emptyUser)
 	if emptyUser.Id > 0 {
 		c.Status(fiber.StatusForbidden)
 		return c.JSON(fiber.Map{
@@ -37,7 +37,7 @@ func Register(c *fiber.Ctx) error {
 		Email:    data["email"],
 		Password: password,
 	}
-	database.DB.Create(&user)
+	databases.DB.Create(&user)
 
 	return c.JSON(user)
 }
@@ -49,7 +49,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	user := new(models.User)
-	database.DB.Where("email = ?", data["email"]).First(&user)
+	databases.DB.Where("email = ?", data["email"]).First(&user)
 	if user.Id == 0 {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(fiber.Map{
@@ -123,7 +123,7 @@ func User(c *fiber.Ctx) error {
 	}
 
 	var user models.User
-	database.DB.Where("id = ?", claims.Issuer).First(&user)
+	databases.DB.Where("id = ?", claims.Issuer).First(&user)
 
 	return c.JSON(user)
 }
