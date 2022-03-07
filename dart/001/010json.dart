@@ -19,14 +19,14 @@ void test01() {
   var firstScore = scores[0];
   assert(firstScore is Map);
   assert(firstScore['score'] == 40);
-  var jsonString = '''
+  var jsonString2 = '''
 	  {
 		  "name": "jack",
-		  "email": "jack@email.com",
+		  "email": "jack@email.com"
 	  }
-  '''
+  ''';
 
-  Map<String, dynamic> userMap = jsonDecode(jsonString);
+  Map<String, dynamic> userMap = jsonDecode(jsonString2);
   var user = User.fromJson(userMap);
   print('Howdy, ${user.name}!');
   print('We sent the verification link to ${user.email}.');
@@ -48,17 +48,17 @@ void test02() {
 }
 
 class User {
-	final String name;
-	final String email;
+  final String name;
+  final String email;
 
-	User(this.name, this.email);
+  User(this.name, this.email);
 
-	User.fromJson(Map<String, dynamic> json)
-		: name = json['name'],
-		email = json['email'];
+  User.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        email = json['email'];
 
-	Map<String, dynamic> toJson() => {
-		'name' : name,
-		'email':email,
-	};
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
+      };
 }
