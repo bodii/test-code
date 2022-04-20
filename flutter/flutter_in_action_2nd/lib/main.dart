@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_in_action_2nd/chapter02/003/new_route.dart';
+import 'package:flutter_in_action_2nd/chapter02/003/routes.dart';
 
 import 'chapter02/003/home_page.dart';
+import 'chapter02/003/new_app.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
   runApp(const MyApp());
+  // runApp(const NewApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +33,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: routes,
     );
   }
 }
