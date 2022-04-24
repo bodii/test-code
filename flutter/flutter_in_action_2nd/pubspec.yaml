@@ -90,6 +90,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/configs/employee.json
+    - assets/images/
 
   fonts:
     - family: Tangerine
