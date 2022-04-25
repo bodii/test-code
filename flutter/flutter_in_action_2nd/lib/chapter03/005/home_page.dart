@@ -5,6 +5,8 @@ import 'widgets/use_focus_widget.dart';
 import 'widgets/use_custom_style_widget.dart';
 import 'widgets/use_theme_style_widget.dart';
 import 'widgets/use_custom_border_side_widget.dart';
+// import 'widgets/use_form_widget.dart';
+import 'widgets/use_form_widget2.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,10 +18,11 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: const [
           // TextFieldWidget(),
-          UseFocusWidget(),
+          // UseFocusWidget(),
           UseCustomStyleWidget(),
           UseThemeStyleWidget(),
           UseCustomBorderSideWidget(),
+          UseFormWidget(),
         ],
       ),
     );
