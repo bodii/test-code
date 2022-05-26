@@ -11,7 +11,7 @@ class UseGestureRecognizerWidget extends StatefulWidget {
 
 class _UseGestureRecognizerWidgetState
     extends State<UseGestureRecognizerWidget> {
-  TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
+  final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   bool _toggle = false;
 
   @override
