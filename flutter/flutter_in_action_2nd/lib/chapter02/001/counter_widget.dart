@@ -15,12 +15,12 @@ class _CounterWidgetState extends State<CounterWidget> {
   void initState() {
     super.initState();
     _counter = widget.initValue;
-    print('initState');
+    debugPrint('initState');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build');
+    debugPrint('build');
     return Scaffold(
       body: Center(
         child: TextButton(
@@ -36,30 +36,30 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   didUpdateWidget(CounterWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print('didUpdateWidget');
+    debugPrint('didUpdateWidget');
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    print('deactivate');
+    debugPrint('deactivate');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('dispose');
+    debugPrint('dispose');
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    print('reassemble');
+    debugPrint('reassemble');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print('didChangeDependencies');
+    debugPrint('didChangeDependencies');
   }
 }

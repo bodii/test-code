@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 /// CustomWidget 包含子组件
 class CustomWidget extends LeafRenderObjectWidget {
+  const CustomWidget({Key? key}) : super(key: key);
+
   @override
   RenderObject createRenderObject(BuildContext context) {
     // 创建RenderObject

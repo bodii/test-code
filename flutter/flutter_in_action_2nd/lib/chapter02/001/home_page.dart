@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'cupertino_test_route.dart';
+// ignore: unused_import
 import 'get_state_object_route.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,6 +9,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTestRoute();
+    return const CupertinoTestRoute();
   }
 }
