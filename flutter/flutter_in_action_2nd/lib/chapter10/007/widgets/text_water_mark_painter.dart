@@ -85,25 +85,10 @@ class TextWaterMarkPainter extends WaterMarkPainter {
     final sin = orgSin.abs();
     final cos = math.cos(radians).abs();
 
-    final builder = ui.ParagraphBuilder(_textStyle.getParagraphStyle(
-      textDirection: textDirection,
-      textAlign: TextAlign.start,
-      textScaleFactor: devicePixelRatio,
-    ));
-    builder
-      ..pushStyle(_textStyle.getTextStyle())
-      ..addText(text);
-
-    ui.Paragraph paragraph = builder.build()
-      ..layout(const ui.ParagraphConstraints(width: double.infinity));
-
-    // 文本占用的真实高度
-    final fontSize = paragraph.height;
-
     final width = textWidth * cos;
-    final height = textHeight * sin;
-    final adjustWidth = fontSize * sin;
-    final adjustHeight = fontSize * cos;
+    final height = textWidth * sin;
+    final adjustWidth = textHeight * sin;
+    final adjustHeight = textHeight * cos;
 
     if (orgSin >= 0) {
       // 旋转角度为正
