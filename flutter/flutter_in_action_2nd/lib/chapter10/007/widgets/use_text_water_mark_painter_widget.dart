@@ -4,6 +4,7 @@ import 'text_water_mark_painter.dart';
 import 'stagger_text_water_mark_painter.dart';
 import 'water_mark.dart';
 import 'page.dart';
+import 'translate_with_expanded_painting_area.dart';
 
 class UseTextWaterMarkPainterWidget extends StatelessWidget {
   const UseTextWaterMarkPainterWidget({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class UseTextWaterMarkPainterWidget extends StatelessWidget {
       children: [
         Page('文本水印', wTextWaterMark(), padding: false),
         Page('交错文本水印', wStaggerTextWaterMark(), padding: false),
+        Page('文本偏移', wTextWaterMarkWithOffset(), padding: false),
+        Page('文本偏移02', wTextWaterMarkWithOffset2(), padding: false),
       ],
     );
   }
@@ -52,6 +55,60 @@ class UseTextWaterMarkPainterWidget extends StatelessWidget {
               ),
               padding2: const EdgeInsets.only(left: 40),
               rotate: -10,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget wTextWaterMarkWithOffset() {
+    return Stack(
+      children: [
+        wPage(),
+        IgnorePointer(child: LayoutBuilder(
+          builder: ((context, constraints) {
+            debugPrint(constraints.toString());
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Transform.translate(
+                offset: const Offset(-30, 0),
+                child: SizedBox(
+                  width: constraints.maxWidth + 30,
+                  height: constraints.maxHeight,
+                  child: WaterMark(
+                    painter: TextWaterMarkPainter(
+                      text: 'Flutter @wendux',
+                      textStyle: const TextStyle(
+                        color: Colors.black38,
+                      ),
+                      rotate: -20,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+        )),
+      ],
+    );
+  }
+
+  Widget wTextWaterMarkWithOffset2() {
+    return Stack(
+      children: [
+        wPage(),
+        IgnorePointer(
+          child: TranslateWithExpandedPaintingArea(
+            offset: const Offset(-30, 0),
+            child: WaterMark(
+              painter: TextWaterMarkPainter(
+                text: 'Flutter @wendux',
+                textStyle: const TextStyle(
+                  color: Colors.black38,
+                ),
+                rotate: -20,
+              ),
             ),
           ),
         ),
