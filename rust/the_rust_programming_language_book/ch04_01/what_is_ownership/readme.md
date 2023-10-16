@@ -76,5 +76,24 @@ let s2 = s1.clone();
 println("s1 = {}, s2 = {}", s1, s2);
 ```
 当出现clone调用时，一些特定的代码被执行而且这些代码可能相当消耗资源。
-#### 只有在栈上的数据: 拷贝
+### 只有在栈上的数据: 拷贝
 
+### 所有权和函数
+```Rust
+fn main() {
+  let s = String::from("hello");
+  takes_ownership(s);
+
+  let x = 5;
+  makes_copy(x);
+}
+
+fn takes_ownership(some_string: String) {
+  println!("{}", some_string);
+}
+
+fn makes_copy(some_integer: i32) {
+  println!("{}", some_integer);
+}
+```
+如果我们尝试调用takes_ownership后使用s, Rust会抛出编译错误。
