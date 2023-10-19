@@ -5,7 +5,7 @@ enum IpAddrKind {
 
 struct IpAddr {
     kind : IpAddrKind,
-    address String,
+    address: String,
 }
 
 // 更简洁的方式表达 IpAddrKind 和 IpAddr 相同的功能
@@ -20,10 +20,10 @@ enum IpAddrEnum2 {
 }
 
 // = struct Ipv4Addr 可以不加括号
-struct Ipv4Addr {}
-struct Ipv6Addr {}
+struct Ipv4Addr{}
+struct Ipv6Addr{}
 
-enum IpAddrEnum3 {
+enum _IpAddrEnum3 {
     V4(Ipv4Addr),
     V6(Ipv6Addr),
 }
