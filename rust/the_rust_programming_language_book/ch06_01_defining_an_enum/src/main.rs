@@ -56,13 +56,13 @@ fn main() {
     let loopback = IpAddr {
         kind: IpAddrKind::V6,
         address: String::from("::1"),
-    }
+    };
 
     let home = IpAddrEnum::V4(String::from("127.0.0.1"));
     let loopback = IpAddrEnum::V6(String::from("::1"));
 
     let home = IpAddrEnum2::V4(127, 0, 0, 1);
-    let loopback = IpAddrEnum2::v6(String::from("::1"));
+    let loopback = IpAddrEnum2::V6(String::from("::1"));
 
     let m = Message::Write(String::from("hello"));
     m.call();
