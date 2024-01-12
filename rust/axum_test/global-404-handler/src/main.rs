@@ -8,10 +8,9 @@ use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, Env
 
 #[tokio::main]
 async fn main() {
-    let filter_layer = EnvFilter::try_from_default_env()
-        // .unwrap_or_else(|_| "example_global_404_handler=debug".into());
-        .or_else(|_| EnvFilter::try_new("info"))
-        .unwrap();
+    // global-404-hander
+    let filter_layer =
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| "global_404_handler=debug".into());
     tracing_subscriber::registry()
         .with(filter_layer)
         .with(fmt::layer())

@@ -12,7 +12,7 @@ struct Input {
 #[tokio::main]
 async fn main() {
     let filter = tracing_subscriber::EnvFilter::try_from_default_env()
-        .unwrap_or_else(|_| "example_form=debug".into());
+        .unwrap_or_else(|_| "form=debug".into());
     tracing_subscriber::registry()
         .with(filter)
         .with(tracing_subscriber::fmt::layer())

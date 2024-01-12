@@ -1,5 +1,5 @@
 [package]
-name = "global-404-hander"
+name = "global-404-handler"
 version = "0.1.0"
 edition = "2021"
 
