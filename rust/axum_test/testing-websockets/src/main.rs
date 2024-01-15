@@ -5,18 +5,27 @@ use axum::{
     Router,
 };
 use futures::{Sink, SinkExt, Stream, StreamExt};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
 #[tokio::main]
 async fn main() {
-    tracting
+    let filter =
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| "testing_websockets=debug".into());
+    tracing_subscriber::registry()
+        .with(filter)
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
         .unwrap();
-    println!("listening on {}", listener.local_addr().unwrap());
+    tracing::debug!("listening on {}", listener.local_addr().unwrap());
     axum::serve(listener, app()).await.unwrap();
 }
 
 fn app() -> Router {
+    tracing::debug!("url: ws://127.0.0.1:3000/integration-testable");
+    tracing::debug!("route: /unit-testable");
     Router::new()
         .route("/integration-testable", get(integration_testable_handler))
         .route("/unit-testable", get(unit_testable_handler))
@@ -29,6 +38,7 @@ async fn integration_testable_handler(ws: WebSocketUpgrade) -> Response {
 async fn integration_testable_handler_socket(mut socket: WebSocket) {
     while let Some(Ok(msg)) = socket.recv().await {
         if let Message::Text(msg) = msg {
+            tracing::debug!("recv: {}", msg);
             if socket
                 .send(Message::Text(format!("You said: {msg}")))
                 .await
