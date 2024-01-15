@@ -8,6 +8,7 @@ use futures::{Sink, SinkExt, Stream, StreamExt};
 
 #[tokio::main]
 async fn main() {
+    tracting
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
         .unwrap();
