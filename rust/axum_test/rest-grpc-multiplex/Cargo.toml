@@ -1,0 +1,31 @@
+[package]
+name = "rest-grpc-multiplex"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]] # 用来运行HelloWorld gRPC 服务器的可执行文件
+name = "helloworld-server"
+path = "src/server.rs"
+
+[[bin]] # 用来运行HelloWorld gRPC 客户端的可执行文件
+name = "helloworld-client"
+path = "src/client.rs"
+
+[dependencies]
+axum = "0.7.4"
+futures = "0.3.30"
+hyper = { version = "1.1.0", features = ["full"] }
+prost = "0.12.3"
+tokio = { version = "1.35.1", features = ["full"] }
+tonic = "0.10.2"
+tonic-reflection = "0.10.2"
+tower = { version = "0.4.13", features = ["full"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+
+[build-dependencies]
+tonic-build = { version = "0.10.2", features = ["prost"] }
+
+
