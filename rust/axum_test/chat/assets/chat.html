@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WebSocket Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <style>
+    #username {
+      display:block;
+      width: 100px;
+      box-sizing: border-box;
+    } 
+
+    #join-chat { }
+
+    #chat {
+      display: block;
+      width: 600px;
+      height: 400px;
+      box-sizing: border-box;
+    }
+
+    #input {
+      display: block;
+      width: 600px;
+      box-sizing: border-box;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>WebSocket Chat Example</h1>
+
+    <input type="text" name="username" value="" id="username" placeholder="username">
+    <button id="join-chat" type="button">Join Chat</button>
+    <textarea id="chat" rows="10" cols="30"></textarea>
+    <input id="input" type="text" name="text" value="" placeholder="chat">
+
+    <script>
+      const username = document.querySelector("#username");
+      const join_btn = document.querySelector("#join-chat");
+      const textarea = document.querySelector("#chat");
+      const input = document.querySelector("#input");
+
+      join_btn.addEventListener("click", function(e) {
+        this.disabled = true;
+
+        const websocket = new WebSocket("ws://localhost:3000/websocket");
+        websocket.onopen = function() {
+          console.log("connection opened");
+          websocket.send(username.value);
+        }
+
+        const btn = this;
+        websocket.onclose = function() {
+          console.log("connection closed");
+          btn.disabled = false;
+        }
+
+        websocket.onmessage = function(e) {
+          console.log("received message: " + e.data);
+          textarea.value += e.data + "\r\n";
+        }
+
+        input.onkeydown = function(e) {
+          if (e.key == "Enter") {
+            websocket.send(input.value);
+            input.value = "";
+          }
+        }
+      });
+    </script>
+
+  </body>
+</html>
