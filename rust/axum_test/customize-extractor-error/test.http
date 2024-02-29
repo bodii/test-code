@@ -1,0 +1,10 @@
+### test error request
+
+### custom-extractor
+post :3000/custom-extractor
+
+# with-rejection
+post :3000/with-rejection
+
+# derive-from-request
+post :3000/derive-from-request
