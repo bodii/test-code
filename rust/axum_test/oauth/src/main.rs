@@ -1,3 +1,15 @@
+//! ```not_rust
+//! # start oauth server
+//! cd oauth-server
+//! go run server.go
+//!
+//! # start reqeust api
+//! CLIENT_ID=000000 CLIENT_SECRET=999999 cargo run
+//!
+//! # visit
+//! request in the browser: http://127.0.0.1:3000
+//! ```
+//!
 mod api;
 mod app_error;
 mod app_state;
