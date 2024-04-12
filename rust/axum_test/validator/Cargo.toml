@@ -1,0 +1,17 @@
+[package]
+name = "validator"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-trait = "0.1.79"
+axum = "0.7.5"
+http-body = "1.0.0"
+serde = { version = "1.0.197", features = ["derive"] }
+thiserror = "1.0.58"
+tokio = { version = "1.37.0", features = ["full"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+validator = { version = "0.18.1", features = ["derive"] }
