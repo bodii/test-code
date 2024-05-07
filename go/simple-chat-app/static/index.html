@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go chat 🚀</title>
+</head>
+
+<body>
+  <div style="display: flex; flex-direction: column">
+    <div id="inputs">
+      <form onsubmit="handleSubmit(event)" method="post">
+        <input id="username" type="text" name="username" placeholder="username" required />
+        <input id="message" type="text" name="message" placeholder="what's on your mind ?" required />
+        <input type="submit" value="Send" />
+      </form>
+    </div>
+    <div id="messages" style="display: flex; flex-direction: column"></div>
+  </div>
+</body>
+
+<script>
+  const websocket = new WebSocket("ws://localhost:8080/ws");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    websocket.send(
+      JSON.stringify({
+        from: e.target.username.value,
+        message: e.target.message.value,
+      }),
+    );
+  }
+
+  websocket.onmessage = function (event) {
+    console.log("revc message:", event.data);
+    const message = JSON.parse(event.data);
+    messages.innerHTML += `<p><b>${message.from}</b> says ${message.message}</p>`;
+  };
+</script>
+
+</html>
