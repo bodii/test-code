@@ -1,0 +1,14 @@
+// httpie: is a command line tool to make http request
+// test request with httpie
+
+// post method: add user info 
+http :8080/api/v1/user name=jack02 email=jack02@email.com phone=456 address=test02 -v
+
+// post method: add user info
+http :8080/api/v1/user name=jack02 email=jack02@email.com phone=456 address=test02 -v
+
+// get method: get user info
+http :8080/api/v1/user/jack@email.com -v
+
+// get method: get user info
+http :8080/api/v1/user/jack02@email.com -v
